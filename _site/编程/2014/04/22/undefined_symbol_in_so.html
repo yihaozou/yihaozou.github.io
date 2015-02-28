@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>动态链接库中的未定义符号</title>
+<meta name="description" content="由于一时疏忽，将c语言源码中的标准库函数strcmp写成了strcpm，然后使用xlc编译器编译成动态链接库so文件。在这个过程中没有报错。后来使用dlopen打开动态链接库so文件时，出现dlerr错误，具体为“Symbol strcpm was referenced from module apcomp.so...">
+<meta name="keywords" content="Jekyll, theme, Freshman21">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E7%BC%96%E7%A8%8B/2014/04/22/undefined_symbol_in_so.html">
+<link rel="alternate" type="application/atom+xml" title="阿华的博客" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">阿华的博客</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">Home</a>
+        
+        
+        
+        <a class="page-link" href="/about/">About</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">Archives</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">Categories</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">Guestbook</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">Tags</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">Subscribe</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">动态链接库中的未定义符号</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#编程">编程</a>&nbsp;
+     
+    
+    | 发表时间: Apr 22, 2014
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>由于一时疏忽，将c语言源码中的标准库函数strcmp写成了strcpm，然后使用xlc编译器编译成动态链接库so文件。在这个过程中没有报错。后来使用dlopen打开动态链接库so文件时，出现dlerr错误，具体为“Symbol strcpm was referenced from module apcomp.so, but a runtime definition was not found”。将源代码中的strcpm改成strcmp后重新编译，动态链接库文件正常工作。</p>
+
+<p>究其原因，是编译器在编译动态链接库时，并不检查符号的依赖项，也就是说如果如果引用了某符号却没有链接其对应的库，编译器仍然会编译通过。</p>
+
+<p>但是在加载动态链接库时会因为出现未定义符号而失败。编译器在生成可执行文件时，会严格检查符号是否都有定义。（还有一个与主题无关的问题，如果链接了一个未使用的库，其中的符号也会全部链接过来）</p>
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E7%BC%96%E7%A8%8B/2014/04/12/message_module.html" title="短信模块概要设计（简化）">&larr; 前一页</a></li>
+    
+    
+    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2014/05/04/fu_bing_zhi_du_1.html" title="府兵制（上）">后一页 &rarr;</a></li>
+    
+  </ul>
+</section>
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript">
+
+  var disqus_developer = 1;
+
+var disqus_shortname ='yihaozou';
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>我是政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+  微信号:692266086 
+
+
+  
+
+</div>
+
+<div class="sidebar-module"> <!-- sidebar-module-inset">-->
+  <h4>版权声明</h4>
+
+  
+
+  <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+    <img src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png">
+  </a>
+  <br />
+  <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/s">Attribution-NonCommercial-ShareAlike</a>
+
+  
+
+</div>
+
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="//%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙" rel="bookmark">十六国北朝－无序的车辙</a>
+  </li>
+  
+  <li>
+  <a href="//%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/10/06/thoughts_3.html" title="遐想（三）" rel="bookmark">遐想（三）</a>
+  </li>
+  
+  <li>
+  <a href="//%E8%AF%BB%E4%B9%A6/2014/09/01/hacker_and_painter.html" title="《黑客与画家》" rel="bookmark">《黑客与画家》</a>
+  </li>
+  
+  <li>
+  <a href="//%E7%BC%96%E7%A8%8B/2014/08/12/a_way_to_solve_dead_lock_problem.html" title="一种进程死锁场景及解决方案" rel="bookmark">一种进程死锁场景及解决方案</a>
+  </li>
+  
+  <li>
+  <a href="//%E8%AF%BB%E4%B9%A6/2014/08/10/review_of_my_war_experience.html" title="《我的战争回忆》（选译）" rel="bookmark">《我的战争回忆》（选译）</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="8">总结与遐想 (8)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="14">编程 (14)</a></li>
+  
+  <li><a href="/categories/#读书" title="读书" rel="12">读书 (12)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>标签</h4>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">阿华的博客</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+---
+author: yihaozou
+comments: true
+date: 2014-03-25 10:50:54+00:00
+layout: post
+slug: '%e5%8d%9a%e5%ae%a2%e6%81%a2%e5%a4%8d%e6%ad%a3%e5%b8%b8'
+title: 博客恢复正常
+wordpress_id: 337
+categories: 编程
+---
+
+博客主机提供商wopus将我租用的美国主机ip地址更改了，导致域名解析出现异常。后来使用了dnspod的域名解析服务才得以恢复。域名是在godaddy上注册的，还需要在godaddy上将dns server设置为dnspod提供的dns。
+
+设想万一博客内容都丢失了将是一件多么可怕的事情，这意味着过去一年多的记录全部化成灰了。即便我知道每一篇博客的内容，也很难提起心思重新写一遍了。
+
+所以一定要按时备份后台数据库，或者干脆新开一个新浪博客作为备份，毕竟什么事情都有可能发生。
