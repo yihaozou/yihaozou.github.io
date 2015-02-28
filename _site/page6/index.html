@@ -113,6 +113,8 @@ $(document).ready(function(){
         
         
         
+        
+        
       </div>
     </nav>
 
@@ -126,6 +128,35 @@ $(document).ready(function(){
   <div class="page-content col-sm-8">
     <div class="home">
   <div class="post">
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2013/12/16/manage_your_project.html">软件管理沉思录-管理你的项目（笔记）</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 发表时间: Dec 16, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p><strong>缺陷(defect)并非漏洞(bug)</strong>。一些人错误地把软件缺陷当做漏洞，这会让人们把一个危急的问题视为无足轻重并助长一种错误的对待态度。当软件工程师说在程序中仅存在少数几个漏洞时，人们的反应通常是如释重负。但是如果一名程序员告诉你，他已经对程序进行了彻底测试，其中仅有个别定时炸弹（缺陷），听众的好心情可能会消失殆尽。与漏洞相比，缺陷更像是炸弹。尽管不是所有的缺陷都会带来爆炸性影响，但是有一些缺陷的确会。。。此外，软件工程师是发现和更正自己所编写程序里的缺陷的最佳人选，因此，要软件工程师为自己的程序质量承担个人责任是软件质量管理中一个关键的措施。</p>
+
+<p><strong>质量是永无终止的流程。</strong>软件提升质量的旅程大致有下面会提到的几个阶段：1.测试并更正，在这一阶段提升质量的唯一方法是在测试上花费更多的时间和金钱；2.检查，在测试之前开始消除缺陷；3.局部测评，使用检查得到的数据改进检查过程，并将检查聚焦在最具破坏性的产品缺陷上；4.质量到人；5.个人测评，让开发人员了解自己引入及消除的缺陷、产品的规模以及他们花费的时间，并加以利用；6.设计；7.缺陷预防；8基于用户的测评。</p>
+
+<p><strong>以明确目标为起点</strong>。目标之所以重要，是因为它们提供了努力的焦点，而且建立了一种优先次序。当有人告诉你想让你做什么的时候，一般情况下他们心中已经有了一个目标，但是可能没有想办法清晰地表达出来。或者更加普遍的是，他们凭直觉知道什么是他们想要的，但是不能明确地定义它们。而只有你自己才知道是不是已经有了一个清晰的目标，即是同伴和管理者认为目标已经十分清楚，只要你对它有任何疑问，那么一定要大声地提出来。</p>
+
+<p><strong>制定计划。</strong>在特定情况下，管理者不知道某一个项目会花费多长时间，开发人员可能也不知道，在开发人员和管理者都在猜测的时候，管理者总是赢家。唯一能将开发人员解脱出来的方法就是去制定计划，并且尽最大努力去实现管理者想要达到的目标，之后，如果还是不能实现管理者给出的最后期限，开发人员会知道原因并为自己的进度辩解。在商业领域，产品计划是极其重要的，如果产品计划不准确，那么阶段计划也可能不准确。这样的话，管理层、营销部们、投资者甚至包括消费者就可能会被误导。相应的，意味着工程部门无法得到他们需要的资金。没有充足的资金，工程部门得消减它们的计划，这时又意味着开发人员可能会被解雇。</p>
+
+<p><strong>计划必须满足的要求。</strong>是否易于理解；是否清晰明白；是否详细描述；是否详细具体；是否精确缜密；是否准确无误；</p>
+
+    </article> <hr />
     
     
   
@@ -284,59 +315,6 @@ void g(AB&amp; ab)
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2013/07/16/using_in_C++.html">using声明与using指示</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Jul 16, 2013
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>（摘录自Stanley B. Lippman等c++ primer人民邮电出版社英文版第四版，p723）</p>
-
-<p>using声明（using declaration）一次引入命名空间（namespace)中的一个成员,该成员的作用范围是从using声明点开始，直到包含该using声明的作用域结尾。声明的名字仅仅在该作用域是可见，外部作用域中相同的名字被屏蔽。using声明的格式是 “using namespace name::member name”, 如”using std::map”用来声明使用std命名空间中的map容器。</p>
-
-<p>using指示（using directives)使得引入的命名空间中的所有成员可见。using指示的形式是“using namespace (namespace name)”,如“using namespace std”表示使用命名空间std。using指示可以出现在命名空间（namespace）、函数或者块（block）中，但不能用于类中（class scope）。</p>
-
-<p>举个例子用来说明using声明和using指示的具体使用，考虑下面的代码样本：</p>
-
-<pre><code>namespace exercise{
-      int ivar = 0;
-      double dvar = 0;
-      const int limit = 1000;
-}
-      
-int ivar = 0;
-//position 1
-      
-void manip() {
-      //position 2
-      double dvar = 3.1416;
-      int iobj = limit + 1;
-      ++ivar;
-      ++::ivar;
-}
-</code></pre>
-
-<p>对于以上代码，如果命名空间exercise中所有成员的using声明放在标记position 1的地方，则exercise中的成员在全局作用域中可见。using exercise::ivar会导致ivar重复定义，引起编译错误；函数manip()中的double dvar = 3.1416声明一个局部的变量dvar,在函数体作用域内它将屏蔽exercise::dvar。</p>
-
-<p>如果命名空间exercise中所有成员的using声明放在标记position 2的地方，则函数manip() 中的double dvar=3.1416是对dvar的重复定义，会引起编译错误；++ivar是对exercise中的ivar加1，++::ivar访问的是全局变量ivar。</p>
-
-<p>如果命名空间exercise的using指示放在标记position 1的地方，则manip中的double dvar  = 3.1416声明了一个局部的变量dvar，在函数体作用域内屏蔽exercise::dvar；++ivar访问的是exercise::ivar，++::ivar访问的是全局变量ivar。</p>
-
-<p>如果命名空间exercise中的using指示放在标记position 2的地方，则exercise中的成员看来好像是声明在全局作用域中一样，manip中的double dvar=3.1416，声明了一个局部变量dvar，在函数体中它将屏蔽exercise::dvar；++ivar出现二义性错误，编译器无法分辨是访问exercise::ivar，还是访问全局变量ivar，而++::ivar访问的是全局变量ivar。</p>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -389,6 +367,10 @@ void manip() {
   <h4>近期文章</h4>
   
   <li>
+  <a href="//%E8%AF%BB%E4%B9%A6/2015/02/16/yi_shui_bei_ge.html" title="易水悲歌－从神话时代至秦" rel="bookmark">易水悲歌－从神话时代至秦</a>
+  </li>
+  
+  <li>
   <a href="//%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙" rel="bookmark">十六国北朝－无序的车辙</a>
   </li>
   
@@ -404,10 +386,6 @@ void manip() {
   <a href="//%E7%BC%96%E7%A8%8B/2014/08/12/a_way_to_solve_dead_lock_problem.html" title="一种进程死锁场景及解决方案" rel="bookmark">一种进程死锁场景及解决方案</a>
   </li>
   
-  <li>
-  <a href="//%E8%AF%BB%E4%B9%A6/2014/08/10/review_of_my_war_experience.html" title="《我的战争回忆》（选译）" rel="bookmark">《我的战争回忆》（选译）</a>
-  </li>
-  
 </div>
 
 
@@ -420,7 +398,7 @@ void manip() {
   
   <li><a href="/categories/#编程" title="编程" rel="14">编程 (14)</a></li>
   
-  <li><a href="/categories/#读书" title="读书" rel="12">读书 (12)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="13">读书 (13)</a></li>
   
 </div>
 
@@ -434,6 +412,14 @@ void manip() {
 <div class="sidebar-module">
   <h4>存档</h4>
 
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
   
   
   
