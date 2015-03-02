@@ -1,5 +1,5 @@
 ---
-author: yihaozou
+author: 邹政华
 comments: true
 date: 2013-01-13 23:48:34+00:00
 layout: post
