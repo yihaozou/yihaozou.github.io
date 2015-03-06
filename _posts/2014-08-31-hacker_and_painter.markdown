@@ -4,7 +4,7 @@ comments: true
 date: 2014-08-31 22:45:26+00:00
 layout: post
 slug: '%e9%bb%91%e5%ae%a2%e4%b8%8e%e7%94%bb%e5%ae%b6'
-title: 《黑客与画家》
+title: 黑客与画家
 wordpress_id: 507
 categories: 读书
 ---
