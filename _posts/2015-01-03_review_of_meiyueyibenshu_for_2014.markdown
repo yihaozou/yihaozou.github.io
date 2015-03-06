@@ -2,6 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-01-04 00:03:28+00:00
+published: false
 layout: post
 title: 迟来的总结和祝福
 categories: 读书 
