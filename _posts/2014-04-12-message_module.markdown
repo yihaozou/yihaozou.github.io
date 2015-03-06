@@ -63,8 +63,7 @@ categories: 编程
 **流程设计：**
 
 
-[![短信流程图](http://zhenghua.info/blog/wp-content/uploads/2014/04/短信流程图1.jpg)](http://zhenghua.info/blog/?attachment_id=349)
-
+![短信流程图](/images/2014/2014-04-12-short_message_flow.jpg)
 
 **外部接口设计**
 
