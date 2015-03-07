@@ -3,7 +3,7 @@ author: 邹政华
 comments: true
 date: 2013-01-24 11:54:32+00:00
 layout: post
-published: false
+published: true
 slug: '%e5%81%b6%e5%83%8f%e7%9a%84%e9%bb%84%e6%98%8f'
 title: 偶像的黄昏
 wordpress_id: 67
@@ -45,4 +45,3 @@ categories: 读书
 
 
 
-（关于希腊和罗马。待续）
