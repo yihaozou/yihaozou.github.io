@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Archives
+title: 博客记录 
 permalink: /archives/
 ---
 

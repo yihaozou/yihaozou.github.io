@@ -1,10 +1,9 @@
 ---
 layout: page
-title: Guestbook
+title: 留言簿 
 comments: yes
 permalink: /guestbook/
 ---
-## Hi, welcome to leave a message here.:)
+## 若有好的建议，欢迎留言:)
 
-> To follow the path, look to the master, follow the master, walk with the master, see through the master, become the master.
 
