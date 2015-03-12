@@ -10,110 +10,79 @@ categories: 编程
 ---
 
 **C语言中数据类型的字节数**
-<table cellpadding="0" width="398" cellspacing="0" border="0" > 
-<tbody >
-<tr >
 
-<td width="120" height="18" >C声明
-</td>
 
-<td width="139" >32位机器（字节）
-</td>
-
-<td width="139" >64位机器（字节）
-</td>
+<table cellpadding="0" width="398" cellspacing="0" border="0"> 
+<tbody>
+<tr>
+<td width="120" height="18">C声明</td>
+<td width="139">32位机器（字节）</td>
+<td width="139">64位机器（字节）</td>
 </tr>
-<tr >
 
-<td height="18" >char
-</td>
 
-<td >1
-</td>
 
-<td >1
-</td>
+<tr>
+<td height="18">char</td>
+<td >1</td>
+<td >1</td>
 </tr>
-<tr >
 
-<td height="18" >short int
-</td>
 
-<td >2
-</td>
-
-<td >2
-</td>
+<tr>
+<td height="18" >short int</td>
+<td>2</td>
+<td>2</td>
 </tr>
-<tr >
 
-<td height="18" >int
-</td>
 
-<td >4
-</td>
-
-<td >4
-</td>
+<tr>
+<td height="18">int</td>
+<td>4</td>
+<td>4</td>
 </tr>
-<tr >
 
-<td height="18" >long int
-</td>
 
-<td >4
-</td>
-
-<td >8
-</td>
+<tr>
+<td height="18">long int</td>
+<td>4</td>
+<td>8</td>
 </tr>
-<tr >
 
-<td height="18" >long long int
-</td>
-
-<td >8
-</td>
-
-<td >8
-</td>
+<tr>
+<td height="18">long long int</td>
+<td>8</td>
+<td>8</td>
 </tr>
-<tr >
 
-<td height="18" >char *
-</td>
 
-<td >4
-</td>
-
-<td >8
-</td>
+<tr>
+<td height="18">char *</td>
+<td>4</td>
+<td>8</td>
 </tr>
-<tr >
 
-<td height="18" >float
-</td>
-
-<td >4
-</td>
-
-<td >4
-</td>
+<tr>
+<td height="18">float</td>
+<td>4</td>
+<td>4</td>
 </tr>
-<tr >
 
-<td height="18" >double
-</td>
 
-<td >8
-</td>
-
-<td >8
-</td>
+<tr>
+<td height="18">double</td>
+<td>8</td>
+<td>8</td>
 </tr>
+
 </tbody>
 </table>
+
+
+
 **整型和无符号整形的比较**
+
+
 <table cellpadding="0" width="479" cellspacing="0" border="0" > 
 <tbody >
 <tr >
@@ -218,6 +187,8 @@ categories: 编程
 </tbody>
 </table>
 **整型和无符号整型隐式转换带来的安全风险**
+
+
 <table cellpadding="0" width="598" cellspacing="0" border="0" > 
 <tbody >
 <tr >
