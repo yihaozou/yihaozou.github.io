@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 博客分类 
+title: 文章分类 
 permalink: /categories/
 ---
 

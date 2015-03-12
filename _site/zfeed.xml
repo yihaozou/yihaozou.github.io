@@ -5,8 +5,8 @@
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 12 Mar 2015 22:27:03 +0800</pubDate>
-    <lastBuildDate>Thu, 12 Mar 2015 22:27:03 +0800</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 22:35:34 +0800</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 22:35:34 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -79,11 +79,11 @@
   &lt;li&gt;
     &lt;p&gt;使用合适的主题来得到更简约的个人页面。大多数的jekyll模板非常简约，可以更加突
 出博客的内容。我个人比较的喜欢的主题除了整体风格的简约外，应该在首页显示最新发布
-博客的内容；侧边栏有文章分类;背景最好是白色的。满足这两项要求的主题在github上非
+博客的内容；侧边栏有文章分类;背景最好是白色的。满足这些要求的主题在github上非
 常容易找到，使用起来也很方便，直接fork即可。&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;博客发布非常方便简单。 发布博客就跟向github提交代码一样，只许几个命令即可。&lt;/p&gt;
+    &lt;p&gt;博客发布非常方便简单。 发布博客就跟向github提交代码一样，只需几个命令即可。&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
