@@ -1,0 +1,11 @@
+<p>花了一周的时间（下班后）做了这个wordpress插件。功能是备份wordpress数据库并发送到指定的邮箱。经过初步测试后，现在已经能够正常使用。</p>
+
+<p><img src="/images/2014/2014-06-27-backblogdb_01.jpg" alt="Backblogdb界面1" /></p>
+
+<p><img src="/images/2014/2014-06-27-backblogdb_02.jpg" alt="Backblogdb界面2" /></p>
+
+<p>原先没有接触过PHP语言，这次试用以后感觉上手还是挺快的。但是Backblogdb插件的实现结果绝对称不上优雅。主程序Backblogdb.php使用PHP的过程式语言风格写成的，后来为了发送邮件使用了外部邮件库class.simple_mail.php（https://github.com/eoghanobrien/php-simple-mail），这个是用类实现的（PHP的面向对象特性）。</p>
+
+<p>面向对象的优势之一在于可复用性。对于同一个对象，使用类来抽象，可以将该对象所有的行为打包在一起。而如果使用面向过程的方法来抽象的话，会显得过于凌乱。</p>
+
+<p>下一个版本会将插件用面向对象的方式来实现，同时增加备份文件功能（例如wordpress并没有把图片放到数据库里面）和博客自动备份功能。</p>

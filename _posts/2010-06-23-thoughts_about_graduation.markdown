@@ -4,7 +4,7 @@ comments: true
 date: 2010-06-23 00:03:28+00:00
 published: true
 layout: post
-title: 近况
+title: 写在毕业之际
 categories: 总结与遐想
 ---
 

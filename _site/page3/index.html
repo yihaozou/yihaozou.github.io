@@ -135,6 +135,27 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
+        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/07/01/thoughts_2.html">遐想（二）</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+      
+      
+      | 发表时间: Jul 1, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>人在年轻的时候总是热心于追逐虚幻遥远的目标，却在不经意间让真正重要的东西从身边溜走。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
         <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/06/23/backblogdb1_0_0.html">Backblogdb插件1.0.0版本</a>
       </h1>
       <p class="post-meta">
@@ -270,237 +291,6 @@ ppm_monitor.o: ppm_socket.c ppm_log_ex.c snapshot.c ppm_monitor.c 
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/05/11/data_types_in_c.html">信息表示与处理</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: May 11, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p><strong>C语言中数据类型的字节数</strong></p>
-
-<table cellpadding="0" width="398" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-<td width="120" height="18">C声明</td>
-<td width="139">32位机器（字节）</td>
-<td width="139">64位机器（字节）</td>
-</tr>
-
-
-
-<tr>
-<td height="18">char</td>
-<td>1</td>
-<td>1</td>
-</tr>
-
-
-<tr>
-<td height="18">short int</td>
-<td>2</td>
-<td>2</td>
-</tr>
-
-
-<tr>
-<td height="18">int</td>
-<td>4</td>
-<td>4</td>
-</tr>
-
-
-<tr>
-<td height="18">long int</td>
-<td>4</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td height="18">long long int</td>
-<td>8</td>
-<td>8</td>
-</tr>
-
-
-<tr>
-<td height="18">char *</td>
-<td>4</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td height="18">float</td>
-<td>4</td>
-<td>4</td>
-</tr>
-
-
-<tr>
-<td height="18">double</td>
-<td>8</td>
-<td>8</td>
-</tr>
-
-</tbody>
-</table>
-
-<p><strong>整型和无符号整形的比较</strong></p>
-
-<table cellpadding="0" width="479" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-
-<td width="224" height="18">表达式（后缀U表示无符号整型）
-</td>
-
-<td width="122">比较类型
-</td>
-
-<td width="133">结果
-</td>
-</tr>
-<tr>
-
-<td height="18">0==0U
-</td>
-
-<td>无符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&lt;0
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&lt;0U
-</td>
-
-<td>无符号
-</td>
-
-<td>0
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647&gt;-2147483647-1
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647U&gt;-2147483647-1
-</td>
-
-<td>无符号
-</td>
-
-<td>0
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647&gt;(int)2147483647U
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&gt;-2
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">(unsigned)-1&gt;-2
-</td>
-
-<td>无符号
-</td>
-
-<td>1
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>整型和无符号整型隐式转换带来的安全风险</strong></p>
-
-<table cellpadding="0" width="598" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-
-<td width="416" height="18">函数定义
-</td>
-
-<td width="182">安全风险
-</td>
-</tr>
-<tr>
-
-<td width="416" height="72">int strlonger(char *s, char *t){
-return strlen(s)-strlen(t)&gt;0
-}
-</td>
-
-<td width="182">strlen返回值size_t是定义成unsigned int。如果s的长度小于t，仍然会返回1
-</td>
-</tr>
-<tr>
-
-<td width="416" height="126">#define KSIZE 1024
-char kbuf[KSIZE];
-int copy_from_kernel(void *user_dest, int maxlen){
-int len=ksize &lt;maxlen?ksize:maxlen;
-memcpy(user_dest, kbuf, len);
-return len;
-}
-</td>
-
-<td width="182">memcpy的参数为size_t,定义为unsigned int。函数原型中定义的maxlen为整型。若程序员恶意传入负数，会引发非法地址错误
-</td>
-</tr>
-</tbody>
-</table>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -545,15 +335,15 @@ return len;
   </li>
   
   <li>
+  <a href="//%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html" title="使用jekyll和markdown写作博客" rel="bookmark">使用jekyll和markdown写作博客</a>
+  </li>
+  
+  <li>
   <a href="//%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙" rel="bookmark">十六国北朝－无序的车辙</a>
   </li>
   
   <li>
   <a href="//%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/10/06/thoughts_3.html" title="遐想（三）" rel="bookmark">遐想（三）</a>
-  </li>
-  
-  <li>
-  <a href="//%E8%AF%BB%E4%B9%A6/2014/09/01/hacker_and_painter.html" title="黑客与画家" rel="bookmark">黑客与画家</a>
   </li>
   
 </div>
@@ -566,7 +356,7 @@ return len;
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
-  <li><a href="/categories/#编程" title="编程" rel="14">编程 (14)</a></li>
+  <li><a href="/categories/#编程" title="编程" rel="15">编程 (15)</a></li>
   
   <li><a href="/categories/#读书" title="读书" rel="15">读书 (15)</a></li>
   
@@ -593,6 +383,9 @@ return len;
   
   
   <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
   
   
   
