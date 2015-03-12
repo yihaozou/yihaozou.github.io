@@ -4,7 +4,7 @@ comments: true
 date: 2010-05-01 00:03:28+00:00
 published: true
 layout: post
-title: 五一
+title: 五一假期中的思绪
 categories: 总结与遐想
 ---
 
