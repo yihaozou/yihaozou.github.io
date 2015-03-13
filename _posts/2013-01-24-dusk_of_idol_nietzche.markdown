@@ -7,6 +7,7 @@ published: true
 slug: '%e5%81%b6%e5%83%8f%e7%9a%84%e9%bb%84%e6%98%8f'
 title: 偶像的黄昏
 wordpress_id: 67
+tags: philosophy
 categories: 读书
 ---
 

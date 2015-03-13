@@ -6,6 +6,7 @@ layout: post
 slug: '%e5%9d%87%e7%94%b0%e5%88%b6'
 title: 均田制
 wordpress_id: 466
+tags: history
 categories: 读书
 ---
 

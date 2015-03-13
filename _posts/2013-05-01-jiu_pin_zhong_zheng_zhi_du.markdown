@@ -6,6 +6,7 @@ layout: post
 slug: '%e4%b9%9d%e5%93%81%e4%b8%ad%e6%ad%a3%e5%88%b6'
 title: 九品中正制
 wordpress_id: 96
+tags: history
 categories: 读书
 ---
 

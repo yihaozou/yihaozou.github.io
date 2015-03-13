@@ -6,6 +6,7 @@ layout: post
 slug: '%e5%ba%9c%e5%85%b5%e5%88%b6'
 title: 府兵制（上）
 wordpress_id: 369
+tags: history
 categories: 读书
 ---
 
