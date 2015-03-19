@@ -2,14 +2,17 @@
 author: 邹政华
 date: 2014-12-27
 tags: jekyll
+layout: post
 title: 使用jekyll和markdown写作博客
 categories: 编程
 ---
 
+
+
 我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
 后来在马楠(http://manan.org)的建议下，转向了jekyll，博客空间也迁移到了github。
 
-经过一段时间的熟悉后，我发现使用jekyll和markdown至少在一下几个方面更能满足我的需求：
+经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：
 
 1. 我一直想了解CSS和页面设计相关的知识。搭建jekyll，挑选合适的主题，不断优化页面可以帮助我熟悉关于网页设计的技巧；
 
