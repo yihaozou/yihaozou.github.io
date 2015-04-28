@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-03-03 
-published: false
+published: false/Users/yihaozou/git/yihaozou.github.io/_posts/2015-03-03-review_of_2014.markdown
 layout: post
 title: 回顾与展望－再见2014
 categories: 总结与遐想 
