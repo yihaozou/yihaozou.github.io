@@ -3,7 +3,7 @@ author: 邹政华
 date: 2015-04-15
 tags: 设计
 layout: post
-title: DESIGNING DESIGN
+title: 设计中的设计 
 categories: 读书
 ---
 
