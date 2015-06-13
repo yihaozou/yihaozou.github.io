@@ -3,6 +3,7 @@ author: 邹政华
 comments: true
 date: 2013-04-28 04:28:47+00:00
 layout: post
+published: false
 slug: lamp%e9%85%8d%e7%bd%ae
 title: LAMP配置（ubuntu 11.10）
 wordpress_id: 86
