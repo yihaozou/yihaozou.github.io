@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2010-05-01 00:03:28+00:00
-published: true
+published: false 
 layout: post
 title: 五一假期中的思绪
 categories: 总结与遐想

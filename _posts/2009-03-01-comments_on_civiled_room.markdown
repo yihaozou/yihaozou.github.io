@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2009-03-01 00:03:28+00:00
-published: true
+published: false 
 layout: post
 title: 关于文明寝室
 categories: 总结与遐想
