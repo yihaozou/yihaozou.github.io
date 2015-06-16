@@ -135,6 +135,84 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/04/12/message_module.html">短信模块概要设计（简化）</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: Apr 12, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>（短信模块的功能：向公司各产品提供接口，各产品通过短信模块向客户发送短信）</p>
+
+<p><strong>数据库设计：</strong></p>
+<table>
+<tbody>
+<tr>
+
+<td width="151" valign="top">表中文名称
+</td>
+
+<td width="180" valign="top">表英文名称
+</td>
+
+<td width="236" valign="top">描述
+</td>
+</tr>
+<tr>
+
+<td width="151" valign="top">短信配置参数表
+</td>
+
+<td width="180" valign="top">XXXXX
+</td>
+
+<td width="236" valign="top"> 包含各项配置参数，如服务器ip、端口，调用的脚本，用户名，密码（加密后），短信重发次数等
+</td>
+</tr>
+<tr>
+
+<td width="151" valign="top">短信入参表
+</td>
+
+<td width="180" valign="top">XXXXX
+</td>
+
+<td width="236" valign="top"> 包含短信内容，手机号，发送时间日期，发送机器的ip等信息
+</td>
+</tr>
+<tr>
+
+<td width="151" valign="top">短信发布明细表
+</td>
+
+<td width="180" valign="top">XXXXX
+</td>
+
+<td width="236" valign="top"> 记录短信发送结果等信息
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>流程设计：</strong></p>
+
+<p><img src="/images/2014/2014-04-12-short_message_flow.jpg" alt="短信流程图" /></p>
+
+<p><strong>外部接口设计</strong></p>
+
+<p>短信模块对外提供报文和文件两种接口。使用报文方式（流程图中的TCP/IP)发送单条短信，只需要使用短信入参组件向短信入参表插入短信内容即可。使用文件方式（流程图中的FTP）发送短信内容时，需要在短信入参表中指定文件发送脚本（由system函数调用），短信文件格式参照给定的例子，单个文件可包含5000条短信机收件人信息。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/03/31/how_to_make_product_customers_love.html">启示录：打造用户喜爱的产品（笔记）</a>
       </h1>
       <p class="post-meta">
@@ -265,31 +343,6 @@ $(document).ready(function(){
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/01/12/review_after_nomination.html">感慨一下</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
-      
-      
-      | 发表时间: Jan 12, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>被评为优秀新员工了，因为每个部门只有一个名额，所以获知消息后还是挺开心的。加上上次培训时候的优秀学员，工作以来已经跟“优秀”结缘了两次，算是一个不错的开始。回首求学阶段，自从换了专业后，自己已经与优秀绝缘了三年，期间的压抑和痛苦难以形容。由之导致的结果是我的内心明显强大起来，不会为被喜欢的女孩子拒绝这样的小事而过分难过了。研究生阶段科研和学习，有很多遗憾的地方，其中一项是不知道怎么跟老板相处，两个成熟男人之间的关系应该有一种更恰当的处理方式，总体原则是平等、相互尊重、互惠互利；还有一项呢是我自身的缺陷太多，过于感性过于浮躁，没有认真做事。好在现在我终于认识到自己是个普通人，会踏实地将一些小事做好。</p>
-
-<p>不过我深知与贵系毕业生平均水平的差距没有缩小，反而扩大了。有时候平台的局限不是个人的努力可以弥补的，就算可以弥补也会非常辛苦。而我会尽自己全力去做得好一点。</p>
-
-<p>2014年会将绝大部分精力放在专业技能上，博客更新内容绝大部分会是书评，并且也是专业相关的。基于对某位好友的承诺，我会每个月至少写一篇读书心得。</p>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -326,6 +379,10 @@ $(document).ready(function(){
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/06/12/the_cathedral_and_the_bazaar.html" title="大教堂与集市" rel="bookmark">大教堂与集市</a>
+  </li>
+  
+  <li>
   <a href="/%E8%AF%BB%E4%B9%A6/2015/04/15/Designing_design.html" title="设计中的设计" rel="bookmark">设计中的设计</a>
   </li>
   
@@ -341,10 +398,6 @@ $(document).ready(function(){
   <a href="/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html" title="使用jekyll和markdown写作博客" rel="bookmark">使用jekyll和markdown写作博客</a>
   </li>
   
-  <li>
-  <a href="/%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙" rel="bookmark">十六国北朝－无序的车辙</a>
-  </li>
-  
 </div>
 
 
@@ -357,7 +410,7 @@ $(document).ready(function(){
   
   <li><a href="/categories/#编程" title="编程" rel="14">编程 (14)</a></li>
   
-  <li><a href="/categories/#读书" title="读书" rel="16">读书 (16)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="17">读书 (17)</a></li>
   
 </div>
 
@@ -371,6 +424,9 @@ $(document).ready(function(){
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
   
   
   
