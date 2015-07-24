@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2010-06-23 00:03:28+00:00
-published: true
+published: false 
 layout: post
 title: 写在毕业之际
 categories: 总结与遐想

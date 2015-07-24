@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2010-10-28 00:03:28+00:00
-published: true
+published: false 
 layout: post
 title: 但行好事,莫问前程
 categories: 总结与遐想

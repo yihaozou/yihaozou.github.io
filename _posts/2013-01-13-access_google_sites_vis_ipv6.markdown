@@ -3,6 +3,7 @@ author: 邹政华
 comments: true
 date: 2013-01-13 23:48:34+00:00
 layout: post
+published: false
 slug: '%e7%94%a8ipv6%e8%ae%bf%e9%97%aegoogle-sites'
 title: 以ipv6方式访问google sites
 wordpress_id: 55
