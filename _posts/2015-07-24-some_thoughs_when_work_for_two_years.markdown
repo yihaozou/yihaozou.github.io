@@ -4,7 +4,7 @@ comments: true
 date: 2015-07-24
 published: true 
 layout: post
-title: 遐想4-毕业两周年 
+title: 遐想四-毕业两周年 
 categories: 总结与遐想 
 ---
 
