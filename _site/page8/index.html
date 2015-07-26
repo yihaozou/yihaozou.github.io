@@ -133,6 +133,59 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2013/07/16/using_in_C++.html">using声明与using指示</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: Jul 16, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>（摘录自Stanley B. Lippman等c++ primer人民邮电出版社英文版第四版，p723）</p>
+
+<p>using声明（using declaration）一次引入命名空间（namespace)中的一个成员,该成员的作用范围是从using声明点开始，直到包含该using声明的作用域结尾。声明的名字仅仅在该作用域是可见，外部作用域中相同的名字被屏蔽。using声明的格式是 “using namespace name::member name”, 如”using std::map”用来声明使用std命名空间中的map容器。</p>
+
+<p>using指示（using directives)使得引入的命名空间中的所有成员可见。using指示的形式是“using namespace (namespace name)”,如“using namespace std”表示使用命名空间std。using指示可以出现在命名空间（namespace）、函数或者块（block）中，但不能用于类中（class scope）。</p>
+
+<p>举个例子用来说明using声明和using指示的具体使用，考虑下面的代码样本：</p>
+
+<pre><code>namespace exercise{
+      int ivar = 0;
+      double dvar = 0;
+      const int limit = 1000;
+}
+      
+int ivar = 0;
+//position 1
+      
+void manip() {
+      //position 2
+      double dvar = 3.1416;
+      int iobj = limit + 1;
+      ++ivar;
+      ++::ivar;
+}
+</code></pre>
+
+<p>对于以上代码，如果命名空间exercise中所有成员的using声明放在标记position 1的地方，则exercise中的成员在全局作用域中可见。using exercise::ivar会导致ivar重复定义，引起编译错误；函数manip()中的double dvar = 3.1416声明一个局部的变量dvar,在函数体作用域内它将屏蔽exercise::dvar。</p>
+
+<p>如果命名空间exercise中所有成员的using声明放在标记position 2的地方，则函数manip() 中的double dvar=3.1416是对dvar的重复定义，会引起编译错误；++ivar是对exercise中的ivar加1，++::ivar访问的是全局变量ivar。</p>
+
+<p>如果命名空间exercise的using指示放在标记position 1的地方，则manip中的double dvar  = 3.1416声明了一个局部的变量dvar，在函数体作用域内屏蔽exercise::dvar；++ivar访问的是exercise::ivar，++::ivar访问的是全局变量ivar。</p>
+
+<p>如果命名空间exercise中的using指示放在标记position 2的地方，则exercise中的成员看来好像是声明在全局作用域中一样，manip中的double dvar=3.1416，声明了一个局部变量dvar，在函数体中它将屏蔽exercise::dvar；++ivar出现二义性错误，编译器无法分辨是访问exercise::ivar，还是访问全局变量ivar，而++::ivar访问的是全局变量ivar。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2013/05/01/jiu_pin_zhong_zheng_zhi_du.html">九品中正制</a>
       </h1>
       <p class="post-meta">
@@ -1486,6 +1539,10 @@ $7.00
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2015/07/24/some_thoughs_when_work_for_two_years.html" title="遐想4-毕业两周年" rel="bookmark">遐想4-毕业两周年</a>
+  </li>
+  
+  <li>
   <a href="/%E8%AF%BB%E4%B9%A6/2015/06/12/the_cathedral_and_the_bazaar.html" title="大教堂与集市" rel="bookmark">大教堂与集市</a>
   </li>
   
@@ -1501,10 +1558,6 @@ $7.00
   <a href="/%E8%AF%BB%E4%B9%A6/2015/01/02/editor_notes_for_meiyueyibenshu_2014.html" title="编者按合辑(一)" rel="bookmark">编者按合辑(一)</a>
   </li>
   
-  <li>
-  <a href="/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html" title="使用jekyll和markdown写作博客" rel="bookmark">使用jekyll和markdown写作博客</a>
-  </li>
-  
 </div>
 
 
@@ -1515,7 +1568,7 @@ $7.00
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
-  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="8">总结与遐想 (8)</a></li>
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
   
   <li><a href="/categories/#编程" title="编程" rel="13">编程 (13)</a></li>
   
@@ -1531,6 +1584,9 @@ $7.00
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
   
   
   
