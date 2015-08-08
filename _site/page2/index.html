@@ -115,6 +115,8 @@ $(document).ready(function(){
         
         
         
+        
+        
       </div>
     </nav>
 
@@ -128,6 +130,42 @@ $(document).ready(function(){
   <div class="page-content col-sm-8">
     <div class="home">
   <div class="post">
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/01/02/editor_notes_for_meiyueyibenshu_2014.html">编者按合辑(一)</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 发表时间: Jan 2, 2015
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>为微信公众号每月一本书“meiyueyibenshu”担任编辑期间写的编者按</p>
+
+<p><strong>《穆斯林的葬礼》</strong> 这本书的名字起得真好，文艺的气息扑面而来。关于书中涉及的穆斯林主题，有个很有意思的现象，若去各大论坛的军事板块或者氛围保守的网站里看，对于穆斯林几乎是一边倒的攻击，几乎上升到敌我矛盾了。但是在文艺青年眼里又是另外一番景象，只要一牵涉到信仰，话题立刻变得高上起来。就编者平时接触的信教或者不信教的同学来看，一个人是否有魅力跟宗教、民族这些标签并无多大的关系，更多的是这个人本身有没有同理心，既懂得坚守原则也能够体谅他人。</p>
+
+<p>书中用如此宏大的架构去突出几段爱情实在是因为作者心中充满了浪漫主义情怀，这也是本书的价值所在，反映了时代的特征。但是与责任、尊严、对维持社会运转基本规则的遵守相比，爱情并不见得就是最重要的。以爱情的名义可以做很多事情（例如书中姐夫和小姨子在一起），在特定环境下也是可以理解的，但是绝对不应该被讴歌宣扬。</p>
+
+<p>这篇书评写得很好，行文流畅、语言平实，观点像进入开阔地带的流水般缓缓舒展，没有一丝的压迫感。可以想见作者一定是个个性温柔的人。</p>
+
+<p><strong>《北京法源寺》</strong> 书中涉及的历史并不复杂，只是年轻天真的皇帝和毫无政治经验的书生在晚清掀起的一场小波澜。类似的桥段在近现代的中国发生过很多次，从当初的广场到台北中正纪念堂再到中环，美好而空洞的口号一再被重复，却缺乏可操作性，或者参与者自己也不知道到底在诉求什么。自由和理想，这些词汇的含义过于宽泛，拿来作为空谈真是再合适不过。</p>
+
+<p>不过我对于同乡谭嗣同倒是非常钦佩。在历史潮流里，也许个人的选择并不重要，但是不随波逐流并为自己的选择承担后果也是值得称道的吧。</p>
+
+<p><strong>《三体》</strong> 中学时代很多同学喜欢看科幻小说，那时候大家都天真单纯，对外面或未来的世界有很多美好的期待。待到上了大学工作后，很少有人将这份热爱坚持下去，因为今天的忧愁已经够多了，何必要过多地在乎明天会变得怎么样？
+一方面是经济社会急剧变革带来的浮躁，另一方面是技术快速进步给想像力造成的挑战，再加上并不丰厚的版税收入，国内的科幻创作环境总体而言十分恶劣。即便在这种情况下，仍有不少优秀的科幻作家坚持了下来，我猜他们一定是在内心世界深处建造了一个秘密花园，播下种子，辛勤耕耘，最终开花结果，洇染出最漂亮的颜色。</p>
+
+<p><strong>《巨流河》</strong> 在锦州和山海关之间，有一条长180公里、宽约8到15公里的狭长通道，被称为“辽西走廊”，沿着这条通道，传统的骑兵和现代的机械化部队可以直达山海关下。因为战略位置极为重要，所以也是兵事多发之地。历史上，皇太极、伊藤博文、张作霖、冈村宁次、林彪都在这条通道上留下过自己的影子，著名的关宁铁骑也部署在沿线。战争带来破坏和流离，当地人民的家国情怀可能也会更加细腻一点，齐邦媛关于故乡的回忆录《巨流河》更是受到了广泛的好评。</p>
+
+    </article> <hr />
     
     
   
@@ -335,43 +373,6 @@ $(document).ready(function(){
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/08/12/a_way_to_solve_dead_lock_problem.html">一种进程死锁场景及解决方案</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Aug 12, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>在网络服务器使用进程池模式来响应客户请求时，多个进程在监听同一描述字时调用了accept。但是system V内核以库函数形式实现accept函数，并非原子操作，如果我们仍然用多个进程同时accpt套接字描述符的话，某个子进程的accept就会返回EPROTO错误，表示协议错。解决问题的方法是在应用进程调用accpt前后设置某种形式的锁（lock），这样每次只有一个子进程阻塞在accpt调用，其他进程则阻塞在试图获取锁权限上。</p>
-
-<p>我们在设计ARE进程管理框架时同样使用了进程池模式，也使用了信号量方式用来保证accept操作的原子性。但是实际运行以后经常会出现无法响应客户请求的情况。经排查后发现，问题出现在信号处理函数上。</p>
-
-<pre><code>ppm_sig_handler_install(SIGHUP, worker_suicide);
-ppm_sig_handler_install(SIGTERM, worker_suicide);
-</code></pre>
-
-<p>worker_suicide为信号处理函数，接收到SIGHUP和SIGTERM信号后，终止子进程。但是进程终止后却没有释放信号量。于是其他的子进程一直阻塞在等待获取信号量上。</p>
-
-<p>解决方案非常简单，在信号处理函数worker_suicide中添加锁释放代码。</p>
-
-<pre><code>struct sembuf sop;
-sop.sem_op=1;
-sop.semflg=0;
-semop(mutex_id, &amp;sop, 1);
-</code></pre>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -407,6 +408,10 @@ semop(mutex_id, &amp;sop, 1);
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
+  </li>
+  
+  <li>
   <a href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2015/07/24/some_thoughs_when_work_for_two_years.html" title="遐想四-毕业两周年" rel="bookmark">遐想四-毕业两周年</a>
   </li>
   
@@ -422,17 +427,13 @@ semop(mutex_id, &amp;sop, 1);
   <a href="/%E8%AF%BB%E4%B9%A6/2015/02/16/yi_shui_bei_ge.html" title="易水悲歌" rel="bookmark">易水悲歌</a>
   </li>
   
-  <li>
-  <a href="/%E8%AF%BB%E4%B9%A6/2015/01/02/editor_notes_for_meiyueyibenshu_2014.html" title="编者按合辑(一)" rel="bookmark">编者按合辑(一)</a>
-  </li>
-  
 </div>
 
 
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="17">读书 (17)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="18">读书 (18)</a></li>
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
@@ -452,6 +453,9 @@ semop(mutex_id, &amp;sop, 1);
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
   
   
   
