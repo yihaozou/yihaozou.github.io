@@ -10,7 +10,7 @@ categories: 编程
 
 
 我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
-后来在马楠(http://manan.org)的建议下，转向了jekyll，博客空间也迁移到了github。
+后来在同学的建议下，转向了jekyll，博客空间也迁移到了github。
 
 经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：
 
@@ -26,4 +26,3 @@ categories: 编程
 4. 博客发布非常方便简单。 发布博客就跟向github提交代码一样，只需几个命令即可。
 
 
-**使用jekyll搭建博客的具体步骤，请参阅马楠的博客http://manan.org**
