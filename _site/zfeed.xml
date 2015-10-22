@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>邹政华的随想录</title>
+    <title>邹政华学习笔记</title>
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 06 Sep 2015 15:09:00 +0800</pubDate>
-    <lastBuildDate>Sun, 06 Sep 2015 15:09:00 +0800</lastBuildDate>
+    <pubDate>Thu, 22 Oct 2015 14:56:03 +0800</pubDate>
+    <lastBuildDate>Thu, 22 Oct 2015 14:56:03 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
@@ -321,7 +321,7 @@
       <item>
         <title>使用jekyll和markdown写作博客</title>
         <description>&lt;p&gt;我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
-后来在马楠(http://manan.org)的建议下，转向了jekyll，博客空间也迁移到了github。&lt;/p&gt;
+后来在同学的建议下，转向了jekyll，博客空间也迁移到了github。&lt;/p&gt;
 
 &lt;p&gt;经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：&lt;/p&gt;
 
@@ -343,7 +343,6 @@
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;strong&gt;使用jekyll搭建博客的具体步骤，请参阅马楠的博客http://manan.org&lt;/strong&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 27 Dec 2014 00:00:00 +0800</pubDate>
         <link>http://zhenghua.info/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html</link>
