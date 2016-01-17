@@ -135,6 +135,28 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
+        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/10/06/thoughts_3.html">遐想（三）</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+      
+      
+      | 发表时间: Oct 6, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>同样一些缺点，放在十六岁少年身上和放在三十岁成年人身上的含义是不一样的。年轻意味着潜力与可塑性，所以大可不必对年轻莽撞的伙伴过于苛刻。完善的人格、宽宏的气度、美好的感情从来不是一蹴而就的，都需要花费大量的耐心和精力去雕琢。</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/09/01/hacker_and_painter.html">黑客与画家</a>
       </h1>
       <p class="post-meta">
@@ -352,43 +374,6 @@ semop(mutex_id, &amp;sop, 1);
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/07/08/full_permutation_problem.html">全排列，递归及筛选</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Jul 8, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>一个朋友工作中遇到的问题：已知一个任意的自然数T，和一个大于1小于T的自然数L。求小于L的自然数R1，R2，R3…Rn, n个数不限但越小越好，使得R1xR2xR3…xRn大于等于T并最接近于T。同时有多个解取任意解。</p>
-
-<p>我想到的一种方法是全排列，即将所有可能的组合全部尝试一遍。目标组合的乘积R与T的差最小（前提是R&gt;=T),并且目标组合的元素个数最少（在差一样的情况下）。但是这样会碰到两个问题：</p>
-
-<ol>
-  <li>
-    <p>全排列的组合数目太大，对于数组{1,2…N},全排列的数量将是N！，在用递归来解决的时候，对机器性能要求过高（在n很大的情况下）。</p>
-  </li>
-  <li>
-    <p>在n较大的情况下，乘法运算容易导致溢出。而32位整数能够表示的最大自然数为0X7FFFFFFF.</p>
-  </li>
-</ol>
-
-<p>所以对排列进行筛选十分必要，在已有的条件下如果能够判断出候选组合不能满足条件，就没有必要继续递归了。比方说，目标组合有10个元素，但是其中4个元素的乘积与T的差已经大于当前最优方案了，那么就没有必要再计算所有10个元素的乘积了,目标组合被排除。这样可以节约时间并且防止溢出。</p>
-
-<p>解决方案是用c语言实现的，代码托管在https://github.com/yihaozou/select_permutaion</p>
-
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -424,6 +409,10 @@ semop(mutex_id, &amp;sop, 1);
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
   <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
   </li>
   
@@ -439,17 +428,13 @@ semop(mutex_id, &amp;sop, 1);
   <a href="/%E8%AF%BB%E4%B9%A6/2015/06/12/the_cathedral_and_the_bazaar.html" title="大教堂与集市" rel="bookmark">大教堂与集市</a>
   </li>
   
-  <li>
-  <a href="/%E8%AF%BB%E4%B9%A6/2015/04/15/Designing_design.html" title="设计中的设计" rel="bookmark">设计中的设计</a>
-  </li>
-  
 </div>
 
 
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="19">读书 (19)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="20">读书 (20)</a></li>
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
@@ -469,6 +454,9 @@ semop(mutex_id, &amp;sop, 1);
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
   
   
   
