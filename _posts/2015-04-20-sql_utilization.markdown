@@ -5,7 +5,7 @@ date: 2015-04-20
 published: true 
 tags: 数据库
 layout: post
-title: mysql sql优化实践 
+title: sql优化实践 
 categories: 编程 
 ---
 
