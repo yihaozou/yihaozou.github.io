@@ -3,9 +3,10 @@ author: 邹政华
 comments: true
 date: 2013-12-16 13:34:24+00:00
 layout: post
+tags: 软件工程
 published: true
 slug: '%e8%bd%af%e4%bb%b6%e7%ae%a1%e7%90%86%e6%b2%89%e6%80%9d%e5%bd%95-%e7%ae%a1%e7%90%86%e4%bd%a0%e7%9a%84%e9%a1%b9%e7%9b%ae%ef%bc%88%e7%ac%94%e8%ae%b0%ef%bc%89'
-title: 软件管理沉思录-管理你的项目（笔记）
+title: 软件管理沉思录-管理你的项目
 wordpress_id: 231
 categories: 读书
 ---

@@ -3,10 +3,11 @@ author: 邹政华
 comments: true
 date: 2013-07-16 15:33:43+00:00
 layout: post
+tags: c++
 slug: using%e5%a3%b0%e6%98%8e%ef%bc%88using-declaration%e4%b8%8eusing%e6%8c%87%e7%a4%bausing-directive
-title: using声明与using指示
+title: c++ primer-using声明与using指示
 wordpress_id: 129
-categories: 编程
+categories: 读书
 ---
 
 （摘录自Stanley B. Lippman等c++ primer人民邮电出版社英文版第四版，p723）

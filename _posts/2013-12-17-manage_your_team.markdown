@@ -4,8 +4,9 @@ comments: true
 date: 2013-12-17 12:41:28+00:00
 layout: post
 published: true
+tags: 软件工程
 slug: '%e8%bd%af%e4%bb%b6%e7%ae%a1%e7%90%86%e6%b2%89%e6%80%9d%e5%bd%95-%e7%ae%a1%e7%90%86%e4%bd%a0%e7%9a%84%e5%9b%a2%e9%98%9f%ef%bc%88%e7%ac%94%e8%ae%b0%ef%bc%89'
-title: 软件管理沉思录-管理你的团队（笔记）
+title: 软件管理沉思录-管理你的团队
 wordpress_id: 235
 categories: 读书
 ---

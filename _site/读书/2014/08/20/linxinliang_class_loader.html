@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>林信良Java学习笔记－类加载器</title>
+<meta name="description" content="类加载器的实际职责就是载入.class文档, JDK本身有默认的类加载器, 也可以建立自己的类加载器加入现有的加载器层级。">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2014/08/20/linxinliang_class_loader.html">
+<link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">邹政华学习笔记</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">林信良Java学习笔记－类加载器</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#读书">读书</a>&nbsp;
+     
+    
+    | 标签:
+    
+    <a href="/tags/#Java" title="Java">Java </a>
+    
+    
+    | 发表时间: Aug 20, 2014
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>类加载器的实际职责就是载入.class文档, JDK本身有默认的类加载器, 也可以建立自己的类加载器加入现有的加载器层级。</p>
+
+<p>在文本模式下执行“java ***”指令后, java执行程序会尝试寻找JRE安装目录, 然后寻找JVM, 接着启动JVM并进行初始化动作, 然后产生Bootstrap Loader, Bootstrap Loader会产生Extended Loader, 并将Extended Loader的父加载器设为Bootstrap Loader, 接着Bootstrap Loader会产生System Loader, 并将System Loader的父加载器设为Extended Loader。</p>
+
+<p>Bootstrap Loader通常由C编写; Extended Loader通常由Java编写, 如果是Oracle/Sun JDK, 实际上是对应于sun.misc.Lancher.ExtClassLoader; System Loader是由Java编写, 是加上对应于sun.misc.Launcher.AppClassLoader。</p>
+
+<ul>
+  <li>
+    <p>Bootstrap类加载器-JRE/lib/rt.jar, Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器, 如果你调用String.class.getClassLoader(), 会返回null, 任何基于此的代码会抛出NUllPointerException异常。Bootstrap加载器被称为初始类加载器。</p>
+  </li>
+  <li>
+    <p>Extension类加载器-JRE/lib/ext或者java.ext.dirs指向的目录, Extension将加载类的请求先委托给它的父加载器，也就是Bootstrap, 如果没有成功加载的话，再从jre/lib/ext目录下或者java.ext.dirs系统属性定义的目录下加载类。Extension加载器由sun.misc.Launcher$ExtClassLoader实现。</p>
+  </li>
+  <li>
+    <p>Application类加载器-CLASSPATH环境变量, 由-classpath或-cp选项定义, 或者是JAR中的Manifest的classpath属性定义.System类加载器(又叫作Application类加载器)了.它负责从classpath环境变量中加载某些应用相关的类, classpath环境变量通常由-classpath或-cp命令行选项来定义, 或者是JAR中的Manifest的classpath属性. Application类加载器是Extension类加载器的子加载器. 通过sun.misc.Launcher$AppClassLoader实现.</p>
+  </li>
+</ul>
+
+<p>ClassLoader可以使用loadClass()方法加载类, 使用loadClass()方法加载类时, 默认不会执行静态区块, 真正使用类建立实例时才会执行静态区块。</p>
+
+<p>Java真正需要某个类时才会加载对应的.class文档，而非在程序启动就加载所有类. Bootstrap Loader,Extended Loader,System Loader在程序启动后，就无法再改变它们的搜索路径，如果在程序运行过程中，打算动态决定从其他路径加载类，就要产生新的类加载器，新的类加载器建立后，父加载器建立后，父加载器会设为System Loader.</p>
+
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2014/08/19/lin_object_oriented.html" title="林信良Java学习笔记－面向对象">&larr; 前一页</a></li>
+    
+    
+    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2014/08/21/lin_dynamic_proxy.html" title="林信良Java学习笔记－动态代理">后一页 &rarr;</a></li>
+    
+  </ul>
+</section>
+
+<!-- <div id="disqus_thread"></div> -->
+
+<!-- 多说评论框 start -->
+<div class="ds-thread"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhenghua"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="30">读书 (30)</a></li>
+  
+  <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">邹政华学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@ comments: true
 date: 2014-08-10 10:21:51+00:00
 layout: post
 slug: '%e3%80%8a%e6%88%91%e7%9a%84%e6%88%98%e4%ba%89%e5%9b%9e%e5%bf%86%e3%80%8b%ef%bc%88%e9%80%89%e8%af%91%ef%bc%89'
-title: 《我的战争回忆》（选译）
+title: 我的战争回忆（选译）
 wordpress_id: 489
 categories: 读书
 ---

@@ -4,8 +4,9 @@ comments: true
 date: 2013-12-21 17:37:31+00:00
 layout: post
 published: true
+tags: 软件工程
 slug: '%e8%bd%af%e4%bb%b6%e7%ae%a1%e7%90%86%e6%b2%89%e6%80%9d%e5%bd%95-%e8%87%aa%e6%88%91%e7%ba%a6%e6%9d%9f%e7%ac%94%e8%ae%b0'
-title: 软件管理沉思录-自我约束(笔记)
+title: 软件管理沉思录-自我约束
 wordpress_id: 243
 categories: 读书
 ---

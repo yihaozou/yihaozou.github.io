@@ -5,9 +5,59 @@
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 18 Feb 2016 22:40:55 +0800</pubDate>
-    <lastBuildDate>Thu, 18 Feb 2016 22:40:55 +0800</lastBuildDate>
+    <pubDate>Sat, 02 Apr 2016 21:25:01 +0800</pubDate>
+    <lastBuildDate>Sat, 02 Apr 2016 21:25:01 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
+    
+      <item>
+        <title>Java程序员修炼之道－性能调优</title>
+        <description>&lt;p&gt;性能评估的几个指标:等待时间(latency), 吞吐率(throughput), 利用率(utilization)， 效率(efficiency), 容量(capacity), 扩展性(scalability), 退化(degradation)，这里的退化指的是在不增加资源的情况下，增加工作单元或客户端，一般等待时间或吞吐量都会发生变化。&lt;/p&gt;
+
+&lt;p&gt;在优化之前需要考虑的几个问题：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;你正在测量的代码有哪些可观测的环节&lt;/li&gt;
+  &lt;li&gt;如何测量那些可观测环节&lt;/li&gt;
+  &lt;li&gt;这些可观测环节的目标是什么&lt;/li&gt;
+  &lt;li&gt;你怎么判断性能调优是否做好了&lt;/li&gt;
+  &lt;li&gt;性能调优可接受的最大支出是多少（投入的时间和增加的代码复杂度）&lt;/li&gt;
+  &lt;li&gt;在优化过程中，哪些东西是不能舍弃的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;需要对目标有清醒的认识并理解它们的价值，能达成性能目标的90%通常就够了，可以利用节省下来的时间去做些别的事。将大量精力投入到极少用到的代码路径上，通过优化代码来减少程序运行时长的1%，完全是在浪费时间。&lt;/p&gt;
+
+&lt;p&gt;程序优化的一些原则：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;优化那些重要，而不是最容易的代码&lt;/li&gt;
+  &lt;li&gt;首先优化那些最重要（通常是调用最频繁）的方法&lt;/li&gt;
+  &lt;li&gt;在遇到那些唾手可得的优化时，把它办了，但要清楚代码的调用频率&lt;/li&gt;
+  &lt;li&gt;如果再也不需要调试日志，就去掉它&lt;/li&gt;
+  &lt;li&gt;可能不是代码导致等待时间过长，环境中其他部分也会产生等待时间&lt;/li&gt;
+  &lt;li&gt;最后再做一轮测量工作，以评估优化结果&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;性能可能会付出的代价&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;占用开发人员的时间&lt;/li&gt;
+  &lt;li&gt;引入额外的技术复杂度&lt;/li&gt;
+  &lt;li&gt;为了让主线程运行得更快，可能会引入额外得线程来执行辅助任务，但这些线程可能会再负载较高时对系统整体产生不可预料得影响。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;过早优化是万恶之源&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 20 Feb 2016 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html</guid>
+        
+        <category>Java</category>
+        
+        
+        <category>读书</category>
+        
+      </item>
     
       <item>
         <title>张文木－印度与印度洋</title>
@@ -289,6 +339,52 @@
       </item>
     
       <item>
+        <title>sql优化实践</title>
+        <description>&lt;p&gt;1.索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率.一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有必要;&lt;/p&gt;
+
+&lt;p&gt;2.任何地方都不要使用 select * from t ，用具体的字段列表代替“*”，不要返回用不到的任何字段;&lt;/p&gt;
+
+&lt;p&gt;3.嵌套一般不要超过3层，尽量使用联结替换嵌套查询;&lt;/p&gt;
+
+&lt;p&gt;4.对查询进行优化，应尽量避免全表扫描，首先应考虑在where及order by涉及的列上建立索引;&lt;/p&gt;
+
+&lt;p&gt;5.使用like进行模糊查询时应注意避免在关键词前加%
+&amp;gt;select*from contact where username like ‘%story%’&lt;br /&gt;
+   关键词%story%，由于story前面用到了“%”，因此该查询必然走全表扫描，除非必要，否则不要在关键词前加%，&lt;/p&gt;
+
+&lt;p&gt;6.不要以字符格式声明数字，要以数字格式声明字符值。（日期同样）否则会使索引无效，产生全表扫描;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SELECT emp.name, emp.job FROM emp WHERE emp.empno = 6789;
+不要使用：SELECT emp.name, emp.job FROM emp WHERE emp.empno = ‘6789’&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;7.避免使用耗费资源的操作，带有DISTINCT,UNION,MINUS,INTERSECT,ORDER BY的SQL语句会启动SQL引擎 执行，耗费资源的排序(SORT)功能. DISTINCT需要一次排序操作, 而其他的至少需要执行两次排序;&lt;/p&gt;
+
+&lt;p&gt;8.避免在WHERE子句中使用in，not  in，or 或者having,
+可以使用 exist 和not exist代替 in和not in;&lt;/p&gt;
+
+&lt;p&gt;9.在WHERE 语句中，尽量避免对索引字段进行计算操作,对索引字段进行计算操作可能会导致无法使用索引，降低效率&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;……
+where trunc(create_date)=trunc(:date1)
+虽然已对create_date 字段建了索引，但由于加了TRUNC，使得索引无法用上。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        <pubDate>Mon, 20 Apr 2015 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E7%BC%96%E7%A8%8B/2015/04/20/sql_utilization.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E7%BC%96%E7%A8%8B/2015/04/20/sql_utilization.html</guid>
+        
+        <category>数据库</category>
+        
+        
+        <category>编程</category>
+        
+      </item>
+    
+      <item>
         <title>设计中的设计</title>
         <description>&lt;p&gt;这本书的英文名《designing design》，直译为“设计（动词）设计（名词）”，其实表达的含义是“我理解的设计”，呼应书中“用语言表达设计是另一种设计行为”这一观点。引入中国后书名成了“设计中的设计”，读起来很顺口，但曲解了作者的意图，不过我暂时也找不到更合适的表述方式，只能作罢，免得从一开始就陷入细节中脱不出身来。&lt;/p&gt;
 
@@ -375,94 +471,72 @@
       </item>
     
       <item>
-        <title>易水悲歌</title>
-        <description>&lt;p&gt;这并不是一本关于传奇刺客荆轲的传记，而是中国历史上从神话时代到秦始皇一统中国期间，众多历史人物的生平事迹的合集。在书中作者陈舜臣充分发挥了自己的想像力和推理才能，将历史事件的细节和当事人的心理活动娓娓道来，虽然不能保证准确性，但成功地展现出了历史温情和人性化的一面，让读者更容易接受。&lt;/p&gt;
+        <title>Java并发编程实践－线程安全性</title>
+        <description>&lt;p&gt;一个线程是否需要是线程安全的，取决于它是否被多个线程访问。当多个线程访问某个状态变量并且其中有一个线程执行写入操作时，必须采用同步机制来协同这些线程对变量的访问。访问某个变量的代码越少，就越容易确保对变量的所有访问能实现正确同步，程序状态的封装性约好，就越容易实现程序的线程安全性。&lt;/p&gt;
 
-&lt;p&gt;加入作者的想像使得《易水悲歌》有了小说的味道，但要说本书全无参考价值，未免过于武断了。历史研究关注的领域包括制度、事件和人物，其中制度的内容及其背后的用意还原起来并不困难，历史事件往往也能保证客观性，但是人物的评价却有很多值得商榷的地方。类比到现实生活，从史书中去了解人物就像通过微信朋友圈去了解一个人一样，我们接触的内容往往经历过筛选，只能反应当事人的一个方面，而要全面立体的了解当事人，惟有深度融入到对方的生活社交圈子，需要花费很多的时间。现实生活中，最有资格评价导师的往往是他的学生，而要评价一个丈夫的好坏，最好咨询一下妻子的意见。按照这样的规则，我们要去准确地评价历史人物，几乎是不可能完成的任务。&lt;/p&gt;
+&lt;blockquote&gt;
 
-&lt;p&gt;既然准确地评价历史人物尤其是上古人物近乎不可能，作者就有了很多发挥的空间。陈舜臣是个日本人，以推理小说起家，也写过很多关于中国历史的书，从著作的丰富程度来看，其学识已不能用“渊博”二字所能形容。得益于作者广泛的实地调研、扎实的史学功底以及丰富的想像力，《易水悲歌》既能在脉络上符合史实，在细节上也能够做到圆通流畅。&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;比如关于苏妲己和纣王的故事，纣王是亡国之君，妲己是他的宠妃。纣王的荒淫表现与妲己有一定关联性，但若将王朝兴替的责任完全推到一个女人身上，未免太过荒唐。已经确定的史实是纣王失政导致殷国（商）国力衰弱，西方的属国周却在不断崛起。在这个过程中，周国除了加强内政外有没有可能采取措施削弱殷商呢，按照推理小说的套路，这里应该有一些阴谋，进一步展开，苏妲己应该是周国送给纣王的“礼物”，这是特洛伊木马的中国版本呀。而谁是这场阴谋的主导者呢？于是周公旦出场了，史书上记载周公是个宽仁厚道的人，这个说法应该是不成立的，因为一个老实人怎么可能长期处于权力之巅，还能废除皇帝呢。“真相”大白之后，周公原来是个智慧深沉的人物啊。同样的还有嫦娥和后羿的故事，这本来就是个传说，可以发挥的空间更大了，陈舜臣写到，后羿弄来两颗药，吃一颗可以长生不老，两颗可以成为神仙，嫦娥于是独吞了药丸然后飞到月亮上。嫦娥为什么要做出这么自私的决定呢，原来是因为他们的婚姻生活不和谐呀。&lt;/p&gt;
+&lt;p&gt;有时候，面向对象中的抽象和封装会降低程序的性能，但在编写并发应用程序时，一种正确的编程方法是，首先使程序正确运行，然后再提高代码的速度。即便如此，最好也只是当性能测试结果和应用需求告诉你必须提高性能，以及测量结果表明这种优化再实际环境中确实能带来性能提升时，才进行优化。&lt;/p&gt;
 
-&lt;p&gt;除了关于阴谋论的八卦外，《易水悲歌》也描写了很多个性鲜明却不讨人喜欢的人物。比如吴起因被羞辱而奋起杀人，欲取信于君王而杀害妻子，欲笼络士兵而吸取疽脓；比如伍子胥为报家仇而鞭挞楚王尸体；又如勾践卧薪尝胆。光从这些事件我们仅仅能得出这些人个性偏执、人生也带有悲剧性这样的结论。而陈舜臣进一步展开描写了他们的心理活动，以及当时人们的反应。这就很容易让读者产生代入感，也许在不经意间就洒下一掬眼泪来。&lt;/p&gt;
+&lt;blockquote&gt;
 
-&lt;p&gt;还有作者描写的“士”也异常动人，荆轲刺秦王，临别时唱道“风萧萧兮易水寒”，太子丹和一众随从禁不住呜咽起来。冬天的北京萧瑟凄冷，拒马河的支流易水几乎要静止不动，搭配上送别人员的白衣缟素，场面显得悲壮无比。而这个男人明知要赴死，却从没回头过。又如作为行刺任务的前期铺垫，樊于期主动割下头颅作为“投名状”献给秦王，又如田光交代完任务后马上自尽。这些行为的心理动机以及人物对话营造得悲怆而决绝，折射了一个个高贵的灵魂。&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;此外还有许多耳熟能详的人物如孙膑、管仲、嬴政、张良、公子小白、夫差等等，相关人物的主要经历是基于史实，细节部分和心理活动带了“戏说”的味道。作者意图通过此书向日本读者普及中国的上古历史，而对于我们，正好可以从一个新的角度去解读自己的历史吧。&lt;/p&gt;
+&lt;p&gt;无状态对象一定是线程安全的：无状态指的是既不包含任何域，也不包含任何对其他类中域的引用。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;当某个计算的正确性取决于多个线程的交替执行时序时，那么就会发生竞态条件，从而使结果变得不可靠。大多数竞态条件的本质，基于一种可能失效的观察结果来做出判断或者执行某个计算。这种类型的竞态条件称为“先检查后执行”，首先观察某个条件为真，然后根据这个观察结果采用相应的动作，但事实上，在你观察到这个结果以及开始创建文件之间，观察结果可能变得无效，从而导致各种问题。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;要保持状态的一致性，就需要在单个原子操作中更新所有相关的状态变量。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;重入：当线程请求一个由其他线程持有的锁时，发出请求的线程就会阻塞。但是某个线程试图获得一个已经由它自己持有的锁，那么这个请求就会成功。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;并非所有数据都需要锁的保护，只有被多个线程同时访问的可变数据才需要通过锁来保护。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;对在单个变量上实现原子操作来说，原子变量很有用，但由于我们已经使用了同步代码块来构造原子操作，而使用两种不同的同步机制不仅会带来混乱，也不会在性能或安全性上带来任何好处。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;在简单性和性能之间存在着相互制约因素。当实现某个同步策略时，一定不要盲目地为了性能而牺牲简单性，这可能会破坏安全性。&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;当执行时间较长的计算或者可能无法快速完成的操作时（例如网络I/O或者控制台I/O），一定不要持有锁。&lt;/p&gt;
+
 </description>
-        <pubDate>Mon, 16 Feb 2015 08:03:28 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/02/16/yi_shui_bei_ge.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/02/16/yi_shui_bei_ge.html</guid>
+        <pubDate>Tue, 10 Mar 2015 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html</guid>
         
-        <category>history</category>
+        <category>Java</category>
         
         
         <category>读书</category>
-        
-      </item>
-    
-      <item>
-        <title>编者按合辑(一)</title>
-        <description>&lt;p&gt;为微信公众号每月一本书“meiyueyibenshu”担任编辑期间写的编者按&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;《穆斯林的葬礼》&lt;/strong&gt; 这本书的名字起得真好，文艺的气息扑面而来。关于书中涉及的穆斯林主题，有个很有意思的现象，若去各大论坛的军事板块或者氛围保守的网站里看，对于穆斯林几乎是一边倒的攻击，几乎上升到敌我矛盾了。但是在文艺青年眼里又是另外一番景象，只要一牵涉到信仰，话题立刻变得高上起来。就编者平时接触的信教或者不信教的同学来看，一个人是否有魅力跟宗教、民族这些标签并无多大的关系，更多的是这个人本身有没有同理心，既懂得坚守原则也能够体谅他人。&lt;/p&gt;
-
-&lt;p&gt;书中用如此宏大的架构去突出几段爱情实在是因为作者心中充满了浪漫主义情怀，这也是本书的价值所在，反映了时代的特征。但是与责任、尊严、对维持社会运转基本规则的遵守相比，爱情并不见得就是最重要的。以爱情的名义可以做很多事情（例如书中姐夫和小姨子在一起），在特定环境下也是可以理解的，但是绝对不应该被讴歌宣扬。&lt;/p&gt;
-
-&lt;p&gt;这篇书评写得很好，行文流畅、语言平实，观点像进入开阔地带的流水般缓缓舒展，没有一丝的压迫感。可以想见作者一定是个个性温柔的人。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;《北京法源寺》&lt;/strong&gt; 书中涉及的历史并不复杂，只是年轻天真的皇帝和毫无政治经验的书生在晚清掀起的一场小波澜。类似的桥段在近现代的中国发生过很多次，从当初的广场到台北中正纪念堂再到中环，美好而空洞的口号一再被重复，却缺乏可操作性，或者参与者自己也不知道到底在诉求什么。自由和理想，这些词汇的含义过于宽泛，拿来作为空谈真是再合适不过。&lt;/p&gt;
-
-&lt;p&gt;不过我对于同乡谭嗣同倒是非常钦佩。在历史潮流里，也许个人的选择并不重要，但是不随波逐流并为自己的选择承担后果也是值得称道的吧。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;《三体》&lt;/strong&gt; 中学时代很多同学喜欢看科幻小说，那时候大家都天真单纯，对外面或未来的世界有很多美好的期待。待到上了大学工作后，很少有人将这份热爱坚持下去，因为今天的忧愁已经够多了，何必要过多地在乎明天会变得怎么样？
-一方面是经济社会急剧变革带来的浮躁，另一方面是技术快速进步给想像力造成的挑战，再加上并不丰厚的版税收入，国内的科幻创作环境总体而言十分恶劣。即便在这种情况下，仍有不少优秀的科幻作家坚持了下来，我猜他们一定是在内心世界深处建造了一个秘密花园，播下种子，辛勤耕耘，最终开花结果，洇染出最漂亮的颜色。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;《巨流河》&lt;/strong&gt; 在锦州和山海关之间，有一条长180公里、宽约8到15公里的狭长通道，被称为“辽西走廊”，沿着这条通道，传统的骑兵和现代的机械化部队可以直达山海关下。因为战略位置极为重要，所以也是兵事多发之地。历史上，皇太极、伊藤博文、张作霖、冈村宁次、林彪都在这条通道上留下过自己的影子，著名的关宁铁骑也部署在沿线。战争带来破坏和流离，当地人民的家国情怀可能也会更加细腻一点，齐邦媛关于故乡的回忆录《巨流河》更是受到了广泛的好评。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 02 Jan 2015 08:03:28 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/01/02/editor_notes_for_meiyueyibenshu_2014.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/01/02/editor_notes_for_meiyueyibenshu_2014.html</guid>
-        
-        
-        <category>读书</category>
-        
-      </item>
-    
-      <item>
-        <title>使用jekyll和markdown写作博客</title>
-        <description>&lt;p&gt;我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
-后来在同学的建议下，转向了jekyll，博客空间也迁移到了github。&lt;/p&gt;
-
-&lt;p&gt;经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;我一直想了解CSS和页面设计相关的知识。搭建jekyll，挑选合适的主题，不断优化页面可以帮助我熟悉关于网页设计的技巧；&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;更灵活的写作的方式。使用markdown语言来写作可以我让更专注于写作本身，而不用花费心思在格式编辑上。即便我用vi写作，不考虑格式，最终也能得到统一的页面输出；&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;使用合适的主题来得到更简约的个人页面。大多数的jekyll模板非常简约，可以更加突
-出博客的内容。我个人比较的喜欢的主题除了整体风格的简约外，应该在首页显示最新发布
-博客的内容；侧边栏有文章分类;背景最好是白色的。满足这些要求的主题在github上非
-常容易找到，使用起来也很方便，直接fork即可。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;博客发布非常方便简单。 发布博客就跟向github提交代码一样，只需几个命令即可。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Sat, 27 Dec 2014 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html</guid>
-        
-        <category>jekyll</category>
-        
-        
-        <category>编程</category>
         
       </item>
     

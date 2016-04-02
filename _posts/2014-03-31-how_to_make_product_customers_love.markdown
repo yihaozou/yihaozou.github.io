@@ -5,7 +5,7 @@ date: 2014-03-31 11:08:50+00:00
 layout: post
 published: true
 slug: '%e5%90%af%e7%a4%ba%e5%bd%95%ef%bc%9a%e6%89%93%e9%80%a0%e7%94%a8%e6%88%b7%e5%96%9c%e7%88%b1%e7%9a%84%e4%ba%a7%e5%93%81%ef%bc%88%e7%ac%94%e8%ae%b0%ef%bc%89'
-title: 启示录：打造用户喜爱的产品（笔记）
+title: 启示录：打造用户喜爱的产品
 wordpress_id: 342
 categories: 读书
 ---

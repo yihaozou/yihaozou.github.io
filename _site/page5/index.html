@@ -117,6 +117,10 @@ $(document).ready(function(){
         
         
         
+        
+        
+        
+        
       </div>
     </nav>
 
@@ -135,7 +139,67 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/06/01/fu_bing_zhi_du_2.html">府兵制（下）</a>
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/08/12/a_way_to_solve_dead_lock_problem.html">一种进程死锁场景及解决方案</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: Aug 12, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>在网络服务器使用进程池模式来响应客户请求时，多个进程在监听同一描述字时调用了accept。但是system V内核以库函数形式实现accept函数，并非原子操作，如果我们仍然用多个进程同时accpt套接字描述符的话，某个子进程的accept就会返回EPROTO错误，表示协议错。解决问题的方法是在应用进程调用accpt前后设置某种形式的锁（lock），这样每次只有一个子进程阻塞在accpt调用，其他进程则阻塞在试图获取锁权限上。</p>
+
+<p>我们在设计ARE进程管理框架时同样使用了进程池模式，也使用了信号量方式用来保证accept操作的原子性。但是实际运行以后经常会出现无法响应客户请求的情况。经排查后发现，问题出现在信号处理函数上。</p>
+
+<pre><code>ppm_sig_handler_install(SIGHUP, worker_suicide);
+ppm_sig_handler_install(SIGTERM, worker_suicide);
+</code></pre>
+
+<p>worker_suicide为信号处理函数，接收到SIGHUP和SIGTERM信号后，终止子进程。但是进程终止后却没有释放信号量。于是其他的子进程一直阻塞在等待获取信号量上。</p>
+
+<p>解决方案非常简单，在信号处理函数worker_suicide中添加锁释放代码。</p>
+
+<pre><code>struct sembuf sop;
+sop.sem_op=1;
+sop.semflg=0;
+semop(mutex_id, &amp;sop, 1);
+</code></pre>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/08/10/review_of_my_war_experience.html">我的战争回忆（选译）</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 发表时间: Aug 10, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>列日之战后，德军在东线也取得了一系列的胜利。得益于大胆的计划和果决的行动，在俄军数量远远超过德奥联军情况下，胜利的天平最终还是偏向了我们。这场战争对指挥官和士兵而言都是个巨大的挑战，但是他们的卓越表现最终获得了回报，战争的成果也足以名列军史。1916年8月19日以后，冯.兴登堡元帅和我又发起了一系列的攻势，战争的残酷程度远超以往。由于德国正在同整个世界作战，兵力和盟友又处于弱势，我们做出了很多艰难的决定，按照当时的情境和我们的信念，这些决定是站得住脚的。战斗方式与过往的战争并无区别，只是军队数量和装备性能提升了。真正值得一提的是战争的规模和范围，整个国家的人口正在使用全部的资源来支撑他们的军队作战。这种场面仅仅在普法战争（1870－1871）期间的法国曾出现过。在战争中，军队和平民就是一个整体，根本没法割裂开来。也正因为如此，关于这场战争的定义在字面上无限扩展，成为了世界大战。彼时彼刻，世界上最强大的国家们注意力高度集中，军队在漫长的边境和广袤的海洋厮杀，平民间道德和舆论力量也在不断攻击和分化。如果拥有足够数量的军队的话，发动和赢得战争并不困难。但是在战争的头三年里，元帅和我从未如此幸运。在已有的条件下，我们竭尽所能，凭借信念和经验，去争取战争的胜利，我们的努力最终也获得了胜利女神的青睐（指东线战事结束）。1918年3月份，我们集中了优势兵力发起进攻（西线），胜利指日可待。但不幸的是，敌人的力量也变得更加强大，最终我们的希望都化成了泡影。第一次世界大战给德国造成了巨大的压力，如果我们要赢得胜利，每个公民都必须做到极致，为工作和战斗流尽最后一滴血汗。同时又需要对胜利抱有信心，这很困难却又是必要的。就像橡树离不开土壤一样，我们的陆军和海军也需要祖国的支持，来获取力量和勇气。对于军需物资，盟友和占领地能够提供一部分，而更关键的士气和情感支持，却必须由国内来提供。有了这些，士兵们才能前赴后继、奋力拼杀。如果得不到补充，我们的处境就很危险了。随着战争持续的时间越来越长，士气和物资的补充变得越发困难，军队面临的形势也会更加严峻。</p>
+
+<p>英文原文： The coup de main at Liege was the first of the series of German victories. The decision was a bold one, and its execution extremely daring. The campaigns of 1914, 1915 and the summer of 1916 in the East were tremendous achievements, equal to the greatest military feats of any age. They made the highest demands on both commanders and troops. The Russians were then greatly superior in numbers to the allied German and Austro-Hungarian armies opposed to them. But, indeed, the operations which Field-Marshal von Hindenburg and I had to conduct from the 19th August, 1916, the day we assumed supreme command, rand among the most formidable in history. Nothing more awe-inspiring and destructive has ever been seen on earth. Germany, inferior in numbers and with weak allies, was contending against the world. Decisions of the utmost gravity had to be taken. They were the inevitable and logical results of the situation, our general conception of war, and the particular circumstance of this war. The armies and fleets fought as they had fought in days past, even though numbers and equipment were mightier than ever before. What made this war different from all others was the manner in which the home population supported and reinforced their armed forces with all the resources at thier disposal. Only in France, in 1870-71, had anything of the kind been seen before. In this war it was impossible to distinguish where sphere of the Army and Navy began and that of the people ended. Army and people were one. The world witnessed the war of Nations in the most literal sense of the word. In this mighty concentration of effort the Great Powers of the earth faced each other. And not only between the armed forces did the combat rage along those huge fronts and on distant oceans. The moral and vital force of the civil population was assailed with the purpose of corroding and paralysing them. With big battalions it is neither difficult nor very risky to wage war and fight battles. But in the first three years of the war the Field-Marshal and I never found ourselves in that enviable position. We could but act as duty and conscience dictated, and adopt the measures we deemed necessary to secure victory. During this period success crowned our efforts. When, in March, 1918, we attacked with the balance of numbers more in our facour than had previously been the case, our strength sufficed to win great victories, but not to bring about a rapid decision. Then it dwindled, while the enemy grew stronger. II The world-wide war of nations made enormous demands on us Germans, on whom its whole overwhelming burden fell. Every individual had to give his very utmost, if we were to win. We had literally to fight and work to the last drop of blood and sweat, and yet maintain our fighting spirit and, above all, our confidence in victory: a hard but imperative necessity, in spite of the dearth of food which the enemy imposed on us, and the onslaught of his propaganda, which was of amazing force, if unobtrusive. Our Army and Navy are rooted in the Nation, as is the oak in German soil. They live upon the homeland, and from it they draw their strength. They can keep, but cannot produce, what they need, and can only fight with the moral, material and physical means which the country provides. These means make possible victory, faithful devotion and unselfish self-sacrifice in the daily battle and the miseries of war. They alone could secure Germany’s final success. With them our country waged the titanic conflict against the world, even allowing for the assistance of our Allies and the exploitation of occupied territories as far as the laws of land warfare permitted. They Army and Navy had thus to look to the homeland for their constant renewal and rejuvenation in moral, numbers and equipment. It was essential to maintain the moral and war spirit of those at home at highest pitch. Woe to us if they should fail! The longer the war lasted, the greater grew the danger of this, the harder it became to overcome difficulties, and the more imperious were the demands of the Army and Navy for spiritual and moral reinforcement.</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/07/31/jun_tian_zhi_du.html">均田制</a>
       </h1>
       <p class="post-meta">
       目录:
@@ -148,30 +212,52 @@ $(document).ready(function(){
       <a href="/tags/#history" title="history">history </a>
       
       
-      | 发表时间: Jun 1, 2014
+      | 发表时间: Jul 31, 2014
       </p>
     </header>
 
     <article class="post-content">
-      <p>（部分观点参考了《府兵制考释》和《中国历代政治得失》，按照在他T受过的学术训练要求，应该标注引用来源的。可是本文通篇都是用通俗语句写成的，大部分观点多少带了点主观成分，也不知道借鉴了此前读过的具体哪本书，待日后再补上吧。如果再花多一点时间，能写的更饱满一点，但是心里的“负罪感”也会更加强烈，毕竟写的这些东西对于职业发展并无直接的帮助。）</p>
+      <p>主参考书目为《中国田制史》，作者万国鼎农学出身，后来转而研究农史，是中国农业历史研究的主要奠基人。这本书也是作者根据在原金陵大学的授课讲义整理汇编而成，书的体例类似于中学政治教材，正文部分列举纲要，引证辩论部分编入小注。作为教材，这样编排的优势在于可以快速勾勒出主旨部分，便于复习和背诵；缺点是阅读的舒适度不高，想必大家都有阅读中学政治课本的经验。作为对比，历史类书籍的另外一种编排体例是较少地原文引用其他文献，自由叙述，自成一家之言，例如钱穆的《中国历代政治得失》以及黄仁宇的《中国大历史》等著作，行文一气呵成，阅读体验也很好。</p>
 
-<p><strong>府兵制与国家职能的关系</strong></p>
+<p>此次写作是先选择了题目以后才选择的阅读书目，以上提及的几本书均有阅读。这种阅读方式其实是受了研究生阶段做论文的启发：先确定方向，然后下载跟方向相关的论文，大部分文章泛读，少数文章精读，如此这般，往往能写出一篇论文来。《中国大历史》和《中国历代政治得失》对于均田制均是一笔带过，但是其中提到的制度背后的用意以及历史事件背后的经济基础对我有些启发。《中国田制史》则是以均田制为中心的，全书分四章，分别为上古田制之推测及土地私有制之成立、两汉之均产运动、北朝隋唐之均田制度、均田制度破坏后之唐宋元。一二章为均田制的推出做了铺垫，第三章描述北魏北齐北周隋唐时期均田制的具体形式，第四章是讲均田制的衰败。按照这个结构，此篇文章也分成了起源、内容、与府兵制及租庸调的关系、衰败四个部分。</p>
 
-<p>按照初中政治课本提出的观点，国家的职能体现在对内约束被统治者，对外维持或扩大领土。作为国家实现权力的主要工具，府兵也必然体现着国家职能的内外方面。</p>
+<p><strong>一、起源</strong></p>
 
-<p>对内方面，府兵制发轫之初，是为了笼络地方的乡兵，加强皇帝（或实际掌权）的权力。后来到了唐朝，中央集权进一步强化，府卫（折冲府）的设置集中在长安附近，造成“举关中之众以临四方”的态势。府兵与州郡兵（府兵并非唐朝兵制唯一形式）没有隶属关系，出征时混编在一起，相互牵制，由皇帝指定将军统领，将不专兵，这样可以防止地方割据势力的产生。府兵平时戍卫京师和军事要地，防止“盗贼”生事，“盗贼”是比较文艺的说法，其实是害怕有人造反。</p>
+<p>均田制的出现某种程度上是沿革自春秋时井田制和西晋占田制，其中井田制规定在贵族占有土地的前提下，将土体整理成方田，每块方田九百亩。方田再均分成九块（中间形成一个井字），周围八块分给八户耕农耕种，收成归耕农所有，中间一块由八家共同耕种，收成归土地所有者。井田制体现了平均田地的形式，是一种乌托邦式的田地制度，其是否真的推行过以及实行效果从没得到过证实。西晋的占田法考虑到在门阀世族占有大量土地的情况下，允许农民开垦荒地，并占有一定配额的土地。由于司马政权是在门阀望族的支持下才得以成立的，他们不会去挑战现有的利益分配格局。但是为了维护底层社会的稳定和争取人口劳力进而增加税收，他们选择了将新增资源的一部分用来照顾底层农民，“限制”门阀，这是一种充分考量现实条件后的权衡之举。</p>
 
-<p>对外方面，隋唐用兵高丽、突厥都将府兵作为主要力量。在这里需要提及的是，杨广用兵高丽时，使用了一百一十三万二千八百人，其中府兵占了一半。</p>
+<p>在进行土地分配的时候，政策制定者都绕不开井田制，不是因为他们倾向于平均田地，而在于井田制体现的限制土地兼并的形式对自上而下金字塔形的中央集权国家而言是极其重要的。土地兼并会导致失地农民依附于地方豪族，从而影响国家对基层的控制。另外，在以人丁户籍为基础的税收体系中，失地农民藏匿于富户豪族也会影响国家财政收入，解决这个问题可以通过以田地而不是人丁为单位征税，但是税收不仅仅意味着钱帛粮粟，同时也是权力的象征，国家失去对底层农民的控制，意味着权力金字塔的基座出现了松动。</p>
 
-<p><strong>府兵制的衰败。</strong></p>
+<p>“眼看他起高楼,眼看他宴宾客,眼看他楼塌了”，在传统农耕社会，国运的兴衰大多跟田地兼并状况有关系。</p>
 
-<p>首先是府兵制自身具备的弱点。军府分布在各地，相互之间没有任何介于中间的联系，各个府卫（北周称骠骑府、隋称鹰扬府，唐称折冲府）虽然统一听命于皇帝制敕或兵部鱼符，但是组织上却表现了分散和迟钝的特点。</p>
+<p>鲜卑拓拔氏在入主中原的时候显然意识到了这个问题，同时他们又面临着同西晋决策者类似的局面，拥有整个中国北方这么一大片“荒地”需要重新分配。但跟西晋相比，他们没有历史包袱，所以能够从容地从顶层进行设计，在全国范围内（北魏国土）推行均田制并以此为基础建立了完整的赋税、军事制度。均田制体现了限制土地兼并的思想，使底层农民保有一定限度可以耕种的土地，同时不过分触动权贵的利益，使权贵能够凭借奴婢和耕牛占有更多的土地。后者借鉴了占田制中分配“荒地”时照顾门阀的做法，同时又巧妙地维护了均田制形式上的统一，是政治智慧的体现。</p>
 
-<p>所以在政治动荡时期府兵的地位便相对地下降了，这个时候军队主要是对内履行职能。北周、隋、唐时期是中国历史上较具开创性的时代，期间出现的科举制、府兵制、租庸调、均田制都有很多值得圈点的地方，诗歌、佛教、石刻艺术异常繁荣，国力强盛，经过南北朝的混乱后重新进入统一时代。但与此同时，政治上的震荡却从未停止，隋代北周、唐代隋都是在不长的时间内完成的，唐朝时武则天、韦后都试图攫取过权力。按照传统观念，皇朝更替、女人染指最高权力都是非常之举，非要用强力的手段达成不可。这个时候府兵系统之外的禁军逐渐受到更多倚仗。禁军可以视为皇帝的私人军队，用起来更加顺手。而府兵则是从属于“政府”这一系统，受到系统的制约。国家的资源总是有限的，禁军受到重视，府兵的地位便要削弱。</p>
+<p>鲜卑拓拔氏建国时本质上还是个部落政权，到孝文帝时，已经建立复杂精密的官僚体系和政治制度，其中均田制、庸调制一直延续到了唐朝，为历史上东方最强大的帝国打下了制度基础。这个过程借助了北方胡人的胸怀和武力以及汉族士大夫的智慧，也体现了这个家族非同寻常的耐心和远见。</p>
 
-<p>吏治的松懈也是很重要的原因，府兵制的实行倚赖于均田制的推广和户口的精细统计，而后两者又需要庞大的官僚体系支撑。在一个朝代开启的时候，皇帝精力充沛，国家机器往往能够高效运转。到了后来，吏治腐败，制度也就跟着荒废了，历朝无不如此，这跟高度中央集权的统治模式以及领导人的选拔方式有关系。在现代国家政府，一个政客最终身居高位需要经过长时间的训练和层层的选拔，这样可以确保上位者有足够的经验来胜任自己的职位。而在传统的高度集权的政治体系内，皇帝的产生却是由血缘和出生次序来决定。在深宫里成长起来的皇帝在追求稳固自己权力的过程中可能会引发混乱。假定这个皇帝具有政治天分，最终建立起绝对的权威。但是由于缺乏对国家和社会实际状况的了解，使得他并不能有效履行自己作为帝国首脑的责任。而且在中央集权的政治体系里，皇帝的个人喜恶、性格上的弱点会成倍地放大，最终对整个帝国的命运产生决定性影响。比如唐朝到了玄宗后期，土地兼并严重，这便破坏了均田制度（均田制的用意不在于平均田地，而在于使底层农民保有最低限度可以耕种的土地）。对外用兵、内部叛乱、官员贪污又使得底层农民的负担加重，从而又引发反抗或者逃亡，府兵的兵源又成了问题。</p>
+<p>北魏孝文帝于太和九年（公元485年）颁布均田令，此时孝文帝还没有亲政，北魏的实际控制者为冯太后。历史上孝文帝因推进激进的汉化措施而闻名，史书自然要对此大加褒扬。但是从事后的效果看，这些措施引发了鲜卑上层贵族的不满并在某种程度上造成了北魏的分裂。改变服饰姓氏只是表面上的功夫而已，迁都洛阳在当时也显得操之过急了，将国都迁离安置有大量军队的北方边境显然不是明智之举（明朝朱棣笑而不语）。分裂后的东魏和西魏，汉化都受到了一定的限制，但由于均田制已经广泛推行并以此为基础建立整个上层建筑，作为一种大势已经不可逆转了。</p>
 
-<p>另外，一种制度的运转往往要顾及到社会实际状况。比如府兵制刚提出的时候，西魏历经战乱，地广人稀，这样府兵可以得到足够多的土地，到了隋唐时期，人口增加迅速，耕地增长有限，府兵得到的土地自然要小于名义上的配额。又如，府兵制提出之初，北朝尚武之风盛行，富户愿意充当府兵，而到了唐朝，天下承平一久，充当府兵便不再是一种荣耀了。又如国家善于敛财（隋文帝是个例子），造成国富民穷，底层的普遍贫困又无法提供满足要求的兵户，那么只有降低条件选拔府兵，这样军队的战斗力又成了问题。这个时候出现了外敌入侵的情况，情急之下只好花钱去募兵，好在国家也挺有钱的。如此种种因素综合在一起便宣判了府兵制的命运。</p>
+<p><strong>二、内容</strong></p>
+
+<p>推行均田制首先需要清理户籍，在李冲的建议下，北魏五户设一邻长，五邻设一里长，五里设一党长，三长（邻长、里长、党长）免除租调，由地方上的豪族担任，以减少推行的阻力。三长制实行后，北魏的基层组织得以确定，扭转了五胡乱华后，农户依附地方豪族的局面。</p>
+
+<p>户籍厘定清楚后，国家按照丁口授田。土地有桑田、露天之分。露田用于栽培农作物，有授有还，为国家所有。桑田用于栽种桑榆枣果等经济树种，为农户世业，不进行还授。将桑田世袭还有另外一层意思，因为树木的生长周期往往较长，如果像露田一样进行还授，则会存在“前人种树后人收的“的情况。</p>
+
+<p>男丁十五岁以上，受露天四十亩，妇人二十亩。男丁初次受桑田二十亩，需要种植桑树五十株，枣树五株，榆树三株，限三年种毕，否则国家取回所授土地。在达到规定的种植数目后，多出来的桑田也可用作别种经营，国家只是确定了大体的原则，实施的时候还是有变通的余地。耕牛受露田三十亩，以四牛为限。奴婢也同样能够受田，跟良丁（户籍登记人口）一致(由今天的经济学常识可以推测，此条政策会导致耕牛和奴婢的价格上升）。因为耕牛和奴婢往往集中在富户权贵手里，他们自然能占有更多的土地。</p>
+
+<p>在人少地广的地方，人均受田可以达到给定额度的两倍。在土地较差的情况下甚至可以达到4倍，即男丁最多可受160亩露天。桑田世袭，父死而归子。超出额度的桑田可以卖出，但不能卖至低于二十亩，桑田不够额度的可以买入，但不能买至超出二十亩。而在人多地少的地方，家里新添丁口又不愿迁出的，将其桑田当作露田分配，或者不授倍田，仍然不足的，考虑减少其他成员的土地用来分配给新增加的成员。这个时候均田制已不能正常实行，将土地在家庭成员内部调整，仅具有形式上的意义。政府鼓励田地不足的地区迁出人口，但是田多的地方人口不得随意流动。</p>
+
+<p>老免身死后，被授予的土地归还国家，奴婢和牛分配的土地随有无而进行还授。若受田后身亡或者发生买卖奴婢耕牛的行为，田地的清理在隔年正月进行。对新增丁口授田的地点取就近原则。子孙绝户后，宅基地及土地充为公田，再次授田的时候，优先授给其亲属。</p>
+
+<p><strong>三、与府兵制及租庸调的关系</strong></p>
+
+<p>北魏以后的西魏、北周、隋唐又在均田制的基础上建立和完善了府兵制和租庸调制度。</p>
+
+<p>在府兵制推出以前，政府通过募兵的方法来组建军队。平均一个兵员的花费需要五户家庭来负担，这对于国家财政来说是个极大的负担。府兵制推出后，政府划定区域设立府，每个府卫提供八百到一千的府兵。府兵从政府处获得田地，无需缴税，但需自行负担装备津贴。府兵平时种地，农隙训练，需要定期戍边或者宿卫都城。府兵分散在各地，由国家直接掌控。这样既可以防止地方割据，又能减少养兵的费用，所以府兵制受到了历任统治者的青睐。均田制为府兵制的推行提供了两个前提条件，一是国家对人口的直接掌控，二是有可供还授的土地。均田制破坏后，府兵制自然也就无法为继。</p>
+
+<p>租庸调是唐朝时的赋税制度，承袭自北魏的租调制。其中，租是田租，庸为力役，调为丝麻等乡土所产。租庸调的推行是需要均田制配合的，有身者必有田，有田然后有家，政府再根据田地和家庭所产收取一定的庸调。如果政府有意养民休息，将赋税调得较低，底层平民自然能够安居乐业，国家的权威也得以确立。反过来说，如果农民失去土地，自然无法缴纳赋税，进而引发逃亡或人口隐匿于地方豪族。</p>
+
+<p><strong>四、破坏</strong></p>
+
+<p>均田制的施行需要国家掌握大量的无主荒地，同时需要建立严密的基层组织以便对户口进行统计。在国家初创阶段，由于连年战争，地广人稀，国家能够掌握大量土地并重新进行分配，后来天下承平日久，人口繁衍，没有多余的土地可供还授，均田制便不能推行或仅具有形式上的意义了。其次，均田制的推行需要严密的统计人口的迁入迁出，出生和死亡，这又需要庞大的官僚体系支撑。如果吏治败坏，户籍的登记也会逐渐荒废掉，加上土地兼并，均田制的终结是可以预料的。再者，从人性和社会经济的发展规律看，底层平民拥有同样数目土地的状况也是不可持续的，人的天赋或者习性（勤劳或懒惰）不同，自然财富积累的速度不一样，作为传统农耕社会最重要的财富形式－－土地又怎么可能长久的保持一致。而且均田制本身也有缺陷，在具体的推行过程中，官员也能获得一定数目的土地，这些是不需要还给国家的，那么官员在不同地方的迁移或者新增的官员从总体上看要占据大量的土地，这又会对均田制的推行产生不利影响。</p>
 
     </article> <hr />
     
@@ -179,7 +265,7 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/05/19/makefile_sample.html">一种makefile编写范例</a>
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/07/08/full_permutation_problem.html">全排列，递归及筛选</a>
       </h1>
       <p class="post-meta">
       目录:
@@ -187,33 +273,28 @@ $(document).ready(function(){
       <a href="/categories/#编程">编程</a>&nbsp;
       
       
-      | 发表时间: May 19, 2014
+      | 发表时间: Jul 8, 2014
       </p>
     </header>
 
     <article class="post-content">
-      <p>makefile的编写应该考虑到代码移植的可能性，将可能发生改变的参数放在makefile文件起始部位定义成可配置的变量，从而减少修改makefile带来的工作量。</p>
+      <p>一个朋友工作中遇到的问题：已知一个任意的自然数T，和一个大于1小于T的自然数L。求小于L的自然数R1，R2，R3…Rn, n个数不限但越小越好，使得R1xR2xR3…xRn大于等于T并最接近于T。同时有多个解取任意解。</p>
 
-<pre><code>CC = gcc
-QFLAG =
-MACROS = -D_OS_LINUX_
-CCFLAGS= -m32
-INCL = ./
-C20 = $(CC)  $(QFLAG)  $(MACROS) ${CCFLAGS} -c $? -I$(INCL)
-O2E =  $(CC) ${MACROS} ${CCFLAGS} -O $@ $? -ldl
-</code></pre>
+<p>我想到的一种方法是全排列，即将所有可能的组合全部尝试一遍。目标组合的乘积R与T的差最小（前提是R&gt;=T),并且目标组合的元素个数最少（在差一样的情况下）。但是这样会碰到两个问题：</p>
 
-<p>代码中的编译器定义成CC（考虑到了UNIX用户的习惯），C2O是将源文件编译成目标文件，O2E是将目标文件连接成可执行文件或库文件。使用这些定义成变量的编译参数来编译源代码，可以减少编写makefile文件时敲击键盘的次数，同时提高makefile文件的可读性和移植性。下面给出一个实际项目的编译例子。</p>
+<ol>
+  <li>
+    <p>全排列的组合数目太大，对于数组{1,2…N},全排列的数量将是N！，在用递归来解决的时候，对机器性能要求过高（在n很大的情况下）。</p>
+  </li>
+  <li>
+    <p>在n较大的情况下，乘法运算容易导致溢出。而32位整数能够表示的最大自然数为0X7FFFFFFF.</p>
+  </li>
+</ol>
 
-<pre><code>all: ppmmonitor
-ppmmonitor: ppm_monitor.o snapshot.o ppm_loex.o
-            $(O2E) -lncurses
-ppm_monitor.o: ppm_socket.c ppm_log_ex.c snapshot.c ppm_monitor.c 
-            $(C2O)
-#此处省略snapshot.o和ppm_log_ex.o的编译
-</code></pre>
+<p>所以对排列进行筛选十分必要，在已有的条件下如果能够判断出候选组合不能满足条件，就没有必要继续递归了。比方说，目标组合有10个元素，但是其中4个元素的乘积与T的差已经大于当前最优方案了，那么就没有必要再计算所有10个元素的乘积了,目标组合被排除。这样可以节约时间并且防止溢出。</p>
 
-<p>可以看出编写出的makefile文件非常的简洁。如果要移植到AIX系统，只需要将CC定义成cc，QFLAG定义成qcpluscmt,同时注释掉MACROS即可。另外，如果代码文件较多，并且需要在不同系统间迁移，也可以使用gnu的autotools工具来打包源代码，生成安装脚本。</p>
+<p>解决方案是用c语言实现的，代码托管在https://github.com/yihaozou/select_permutaion</p>
+
 
     </article> <hr />
     
@@ -221,299 +302,20 @@ ppm_monitor.o: ppm_socket.c ppm_log_ex.c snapshot.c ppm_monitor.c 
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/05/11/data_types_in_c.html">信息表示与处理</a>
+        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/07/01/thoughts_2.html">遐想（二）</a>
       </h1>
       <p class="post-meta">
       目录:
       
-      <a href="/categories/#编程">编程</a>&nbsp;
+      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
       
       
-      | 发表时间: May 11, 2014
+      | 发表时间: Jul 1, 2014
       </p>
     </header>
 
     <article class="post-content">
-      <p><strong>C语言中数据类型的字节数</strong></p>
-
-<table cellpadding="0" width="398" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-<td width="120" height="18">C声明</td>
-<td width="139">32位机器（字节）</td>
-<td width="139">64位机器（字节）</td>
-</tr>
-
-
-
-<tr>
-<td height="18">char</td>
-<td>1</td>
-<td>1</td>
-</tr>
-
-
-<tr>
-<td height="18">short int</td>
-<td>2</td>
-<td>2</td>
-</tr>
-
-
-<tr>
-<td height="18">int</td>
-<td>4</td>
-<td>4</td>
-</tr>
-
-
-<tr>
-<td height="18">long int</td>
-<td>4</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td height="18">long long int</td>
-<td>8</td>
-<td>8</td>
-</tr>
-
-
-<tr>
-<td height="18">char *</td>
-<td>4</td>
-<td>8</td>
-</tr>
-
-<tr>
-<td height="18">float</td>
-<td>4</td>
-<td>4</td>
-</tr>
-
-
-<tr>
-<td height="18">double</td>
-<td>8</td>
-<td>8</td>
-</tr>
-
-</tbody>
-</table>
-
-<p><strong>整型和无符号整形的比较</strong></p>
-
-<table cellpadding="0" width="479" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-
-<td width="224" height="18">表达式（后缀U表示无符号整型）
-</td>
-
-<td width="122">比较类型
-</td>
-
-<td width="133">结果
-</td>
-</tr>
-<tr>
-
-<td height="18">0==0U
-</td>
-
-<td>无符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&lt;0
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&lt;0U
-</td>
-
-<td>无符号
-</td>
-
-<td>0
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647&gt;-2147483647-1
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647U&gt;-2147483647-1
-</td>
-
-<td>无符号
-</td>
-
-<td>0
-</td>
-</tr>
-<tr>
-
-<td height="18">2147483647&gt;(int)2147483647U
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">-1&gt;-2
-</td>
-
-<td>有符号
-</td>
-
-<td>1
-</td>
-</tr>
-<tr>
-
-<td height="18">(unsigned)-1&gt;-2
-</td>
-
-<td>无符号
-</td>
-
-<td>1
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>整型和无符号整型隐式转换带来的安全风险</strong></p>
-
-<table cellpadding="0" width="598" cellspacing="0" border="0"> 
-<tbody>
-<tr>
-
-<td width="416" height="18">函数定义
-</td>
-
-<td width="182">安全风险
-</td>
-</tr>
-<tr>
-
-<td width="416" height="72">int strlonger(char *s, char *t){
-return strlen(s)-strlen(t)&gt;0
-}
-</td>
-
-<td width="182">strlen返回值size_t是定义成unsigned int。如果s的长度小于t，仍然会返回1
-</td>
-</tr>
-<tr>
-
-<td width="416" height="126">#define KSIZE 1024
-char kbuf[KSIZE];
-int copy_from_kernel(void *user_dest, int maxlen){
-int len=ksize &lt;maxlen?ksize:maxlen;
-memcpy(user_dest, kbuf, len);
-return len;
-}
-</td>
-
-<td width="182">memcpy的参数为size_t,定义为unsigned int。函数原型中定义的maxlen为整型。若程序员恶意传入负数，会引发非法地址错误
-</td>
-</tr>
-</tbody>
-</table>
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/05/04/fu_bing_zhi_du_1.html">府兵制（上）</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#读书">读书</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#history" title="history">history </a>
-      
-      
-      | 发表时间: May 4, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>“宇文泰相魏，辅以苏绰经济之略，于军尤详。六军百府，始仿周典而稍还兵农不分之旧
-    。泰始藉民之才力者为府兵，身租庸调一切蠲之，以农隙讲阅战阵，马畜粮备，六家供
-    之，合为百府。每府一郎将主之，分属二十四军。泰督中外诸军，六人各督二大将军，
-    凡十二大将军。每大将军各统开府二人，开府各领一军。盖至是而广州、山南、北山皆
-    劲兵矣。”。 –《历代兵制》</p>
-
-<p>北魏孝文帝宏迁都洛阳后，南迁的鲜卑贵族加速汉化，驻留北方边境的鲜卑贵族及其部曲地位急速下降。汉化的不同步激发了矛盾并引发“六镇之乱”，在镇压叛乱的过程中，军权落入尔朱氏手中。后来高欢诛尔朱氏并主导成立了东魏，宇文泰得到关陇集团的支持主导成立了西魏。至此，北魏分裂，东魏和西魏的两位皇帝分别为高欢和宇文泰的傀儡。</p>
-
-<p>宇文泰是在贺拔岳死后被推举为关陇集团的首领的，并没有自己的嫡系部队。因为处在乱世，门阀都拥有自己的私人武装。为了稳固自己的统治，宇文泰需要设计出一套军事架构用来笼络各个门阀以及地方豪强的势力，于是便有了六柱国统领系统（实际为八柱国，西魏皇族占据两个名额，却没有领兵），取周制“天子六军”之意。六柱国统领系统有一个递归过程，先是六个柱国大将军统领六军，六军分左右，成为十二军，由十二大将军所领。十二军再分左右军成为二十四军，为各骠骑大将军、开府仪同三司所领。柱国大将军、大将军这两级统帅虽然存在，但皇朝政令通常直接地以二十四军为基本的宣达和执行单位。通过这一系统，地方豪强的私人武装逐渐中央化了。</p>
-
-<p>除了整顿地方乡兵外，宇文泰还采取”籍民为兵“的方式来扩充军队，这里的”籍“有户口的意思，即将”民籍“转为”军籍“，成为府兵。府兵平时还是种地，但是农隙之余，需要参加军事训练，需要宿卫（都城）或者戍边。作为交换，府兵可以拥有政府分配的土地，不用交租，不用服劳役，不用上供土特产（也就是免除了租庸调）。</p>
-
-<p>府兵的选择标准有三个，户等(家世）、丁口（成年男人数量）、材力（身体素质）。其中“户等”按照家产分成九等（类同于九品中正制），中上六等为选拔门槛。满足家世标准后，家有三丁者选身体素质优秀者一人充当府兵，或者五丁选二。从这里可以看出，宇文泰是想要地方豪强或富户充当军队的核心的，理由是将强力者纳入体制内有利于维护系统稳定，另外一方面，富裕家庭出来的孩子身体素质往往会好一些，从而提升军队素质。</p>
-
-<p>这样以后，府兵制的雏形便出来了。中央政府划定区域设立“府”，在该区域内按照给定标准和数量挑选”兵户“，”兵户“免除租庸调，但是得为中央政府提供兵员。府兵平时种地，农隙训练，战时出征。自己负责装备，没有津贴，出征时由中央政府指定将军统领，战后还是回来种地。这样一来，中央政府养兵的费用大大减少，又能防止地方割据势力的产生，府兵的装备维护保养工作也较为出色（关系自家性命），这些因素综合在一起使得府兵制格外受到统治者的青睐，历经西魏、北周、隋、唐朝而不衰。</p>
-
-<p>还有一个问题是为什么富户愿意充当府兵，这跟当时的均田制有密切关系，均田制规定“计口分田”，也就是按人口数均分田地，但是奴婢和耕牛也包括在内（有照顾地主的意思），那么富户能够分得田地和相应的租庸调都会不少，充当府兵有着现实的利益。另外，北朝尚武，“丈夫生世，会须履锋刃，平寇难，安社稷，以取功名”也是很重要的因素。</p>
-
-<p>宇文泰过世后，宇文护和宇文邕延续了这一政策，使的府兵制得以继续完善。南北朝期间英雄人物辈出，宇文泰、高欢、宇文邕等人文治武功冠绝一时，但是知名度不高，是一件很奇怪的事情。</p>
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/04/22/undefined_symbol_in_so.html">动态链接库中的未定义符号</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Apr 22, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>由于一时疏忽，将c语言源码中的标准库函数strcmp写成了strcpm，然后使用xlc编译器编译成动态链接库so文件。在这个过程中没有报错。后来使用dlopen打开动态链接库so文件时，出现dlerr错误，具体为“Symbol strcpm was referenced from module apcomp.so, but a runtime definition was not found”。将源代码中的strcpm改成strcmp后重新编译，动态链接库文件正常工作。</p>
-
-<p>究其原因，是编译器在编译动态链接库时，并不检查符号的依赖项，也就是说如果如果引用了某符号却没有链接其对应的库，编译器仍然会编译通过。</p>
-
-<p>但是在加载动态链接库时会因为出现未定义符号而失败。编译器在生成可执行文件时，会严格检查符号是否都有定义。（还有一个与主题无关的问题，如果链接了一个未使用的库，其中的符号也会全部链接过来）</p>
+      <p>人在年轻的时候总是热心于追逐虚幻遥远的目标，却在不经意间让真正重要的东西从身边溜走。</p>
 
     </article> <hr />
     
@@ -554,6 +356,10 @@ return len;
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
   <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
   </li>
   
@@ -569,23 +375,21 @@ return len;
   <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
   </li>
   
-  <li>
-  <a href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2015/07/24/some_thoughs_when_work_for_two_years.html" title="遐想四-毕业两周年" rel="bookmark">遐想四-毕业两周年</a>
-  </li>
-  
 </div>
 
 
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="21">读书 (21)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="30">读书 (30)</a></li>
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
   <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
   
-  <li><a href="/categories/#编程" title="编程" rel="13">编程 (13)</a></li>
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
   
 </div>
 
@@ -599,6 +403,9 @@ return len;
   
   
   <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
   
   
   
@@ -635,7 +442,25 @@ return len;
   
   
   
+  
+  
+  
+  
+  
+  
   <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
