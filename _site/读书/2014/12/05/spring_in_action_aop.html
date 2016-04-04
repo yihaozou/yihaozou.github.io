@@ -7,13 +7,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width initial-scale=1">
 
-<title>遐想（三）</title>
-<meta name="description" content="同样一些缺点，放在十六岁少年身上和放在三十岁成年人身上的含义是不一样的。年轻意味着潜力与可塑性，所以大可不必对年轻莽撞的伙伴过于苛刻。完善的人格、宽宏的气度、美好的感情从来不是一蹴而就的，都需要花费大量的耐心和精力去雕琢。">
+<title>spring in action－AOP</title>
+<meta name="description" content="切面实现了横切关注点(跨越多个应用对象的逻辑)的模块化。">
 <meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
 
 <link rel="icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="/css/main.css">
-<link rel="canonical" href="http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/10/06/thoughts_3.html">
+<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2014/12/05/spring_in_action_aop.html">
 <link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -135,19 +135,37 @@ $(document).ready(function(){
     <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">遐想（三）</h1>
+    <h1 class="post-title">spring in action－AOP</h1>
     <p class="post-meta">
     目录:
     
-    <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+    <a href="/categories/#读书">读书</a>&nbsp;
      
     
-    | 发表时间: Oct 6, 2014
+    | 标签:
+    
+    <a href="/tags/#Java" title="Java">Java </a>
+    
+    
+    | 发表时间: Dec 5, 2014
     </p>
   </header>
 
   <article class="post-content">
-    <p>同样一些缺点，放在十六岁少年身上和放在三十岁成年人身上的含义是不一样的。年轻意味着潜力与可塑性，所以大可不必对年轻莽撞的伙伴过于苛刻。完善的人格、宽宏的气度、美好的感情从来不是一蹴而就的，都需要花费大量的耐心和精力去雕琢。</p>
+    <p>切面实现了横切关注点(跨越多个应用对象的逻辑)的模块化。</p>
+
+<p>AOP时面向对象编程的一个补充，通过AspectJ, 我们现在可以将之前分散在应用各处的行为放入可重用的模块中。</p>
+
+<p>描述切面的几个术语：</p>
+
+<ul>
+  <li>通知(advice): 描述切面要完成的工作，以及何时执行这个工作</li>
+  <li>连接点(Joinpoint): 应用执行过程中能够插入切面的一个点，切面代码可以利用这些点插入到应用的正常流程之中，并添加新的行为。</li>
+  <li>切点(pointcut): 切点的定义会匹配通知所要织入的一个或多个连接点。可以使用明确的类和方法名称来指定这些切点，或利用正则表达式定义匹配的类和方法名来指定这些切点。</li>
+  <li>切面(aspect): 通知和切点的结合，通知和切点共同定义了切面的工作、时间和地点。</li>
+  <li>引入(introduction): 向现有的类添加新方法或属性。</li>
+  <li>织入(weaving): 将切面应用到目标对象来创建$新的代理对象$的过程.</li>
+</ul>
 
 
   </article>
@@ -158,10 +176,10 @@ $(document).ready(function(){
 <section class="pager">
   <ul>
     
-    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2014/09/01/hacker_and_painter.html" title="黑客与画家">&larr; 前一页</a></li>
+    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙">&larr; 前一页</a></li>
     
     
-    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙">后一页 &rarr;</a></li>
+    <li class="next"><a href="/%E5%B7%A5%E5%85%B7%E7%AE%B1/2014/12/15/web_master.html" title="站长工具箱">后一页 &rarr;</a></li>
     
   </ul>
 </section>

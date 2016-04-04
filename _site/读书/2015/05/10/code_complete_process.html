@@ -7,13 +7,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width initial-scale=1">
 
-<title>遐想（三）</title>
-<meta name="description" content="同样一些缺点，放在十六岁少年身上和放在三十岁成年人身上的含义是不一样的。年轻意味着潜力与可塑性，所以大可不必对年轻莽撞的伙伴过于苛刻。完善的人格、宽宏的气度、美好的感情从来不是一蹴而就的，都需要花费大量的耐心和精力去雕琢。">
+<title>代码大全－软件工艺</title>
+<meta name="description" content="计算机编程美学话题——程序源代码的布局。布局好的代码看起来不仅感觉漂亮而且结构也清晰。">
 <meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
 
 <link rel="icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="/css/main.css">
-<link rel="canonical" href="http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/10/06/thoughts_3.html">
+<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/05/10/code_complete_process.html">
 <link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -135,20 +135,83 @@ $(document).ready(function(){
     <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">遐想（三）</h1>
+    <h1 class="post-title">代码大全－软件工艺</h1>
     <p class="post-meta">
     目录:
     
-    <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+    <a href="/categories/#读书">读书</a>&nbsp;
      
     
-    | 发表时间: Oct 6, 2014
+    | 标签:
+    
+    <a href="/tags/#软件工程" title="软件工程">软件工程 </a>
+    
+    
+    | 发表时间: May 10, 2015
     </p>
   </header>
 
   <article class="post-content">
-    <p>同样一些缺点，放在十六岁少年身上和放在三十岁成年人身上的含义是不一样的。年轻意味着潜力与可塑性，所以大可不必对年轻莽撞的伙伴过于苛刻。完善的人格、宽宏的气度、美好的感情从来不是一蹴而就的，都需要花费大量的耐心和精力去雕琢。</p>
+    <p>计算机编程美学话题——程序源代码的布局。布局好的代码看起来不仅感觉漂亮而且结构也清晰。</p>
 
+<p>单条语句常规限制不超过80个字符，原因：超过了很难读、80个字符也防止了深层嵌套、80字符内方便打印。</p>
+
+<p>单条语句布局建议：</p>
+
+<ul>
+  <li>逻辑表达式使用空格可增强可读性</li>
+  <li>用空格使数组下标更好读</li>
+  <li>用空格使子程序参数更好读</li>
+  <li>使续行明显 放在第一行那部分要清楚的表明它是语句的一部分。最好方法是第一行部分独立出来则有明显的语法错误</li>
+  <li>把紧密关联的元素放在一起</li>
+  <li>子程序调用的续行可后退标准格数</li>
+  <li>使续行的结尾易于发现</li>
+  <li>每行仅写一条语句</li>
+  <li>数据类型定义布局</li>
+  <li>注意数据类型定义的对齐</li>
+  <li>每行定义一个数据</li>
+</ul>
+
+<p>注释布局:</p>
+
+<ul>
+  <li>一个好的注释能极大提高程序的可读性;</li>
+  <li>若注释不成功，则会帮倒忙;</li>
+  <li>注释行与相应的代码行同样缩排;</li>
+  <li>把注释行至少用一个空行分开</li>
+</ul>
+
+<p>如何将子程序布局好：</p>
+
+<ul>
+  <li>用空行把子程序各部分分开；</li>
+  <li>对子程序的参数用标准缩排；</li>
+  <li>文件、模块和程序布局；</li>
+  <li>把一板块放在一个文件里;</li>
+  <li>把一个文件内的子程序区分清楚;</li>
+  <li>如果文件里有多个模块，要把这些模块区分得清清楚楚;</li>
+  <li>各子程序按照字母顺序排列</li>
+</ul>
+
+<p>一些培养求知欲和把学习当做第一要务的特定方法：在开发过程中建立自我意识、对编程和开发过程做试验、阅读解决问题的有关方法、在行动之前做分析和计划、学习成功项目的开发经验、阅读文档、阅读其他书本期刊、同专业人士交往。</p>
+
+<p>最有关系的性格为：谦虚、求知欲、诚实、创造力和纪律、高明的偷懒。</p>
+
+<p>很多程序员不愿意主动吸收新知识和技术，只依靠工作时偶尔接触新的信息。如果你能抽出少量时间阅读和学习编程知识，要不了多久就能鹤立鸡群。</p>
+
+<p>好性格与培养正确的习惯关系很大。要成为杰出的程序员，先要养成良好的习惯，其他自然水到渠成。</p>
+
+<p>什么思想决定什么样行为;什么样行为决定什么样的习惯,什么样的习惯决定什么样性格,而什么性格决定什么样的命运。</p>
+
+<p>合作开发要求团队成员之间进行广泛沟通，其次同计算机交互；而单人开发是自我交流，其次才是与计算机。</p>
+
+<p>编程应基于问题域而非解决方案，这样便于复杂度管理。</p>
+
+<p>开发时迭代次数越多，产品的质量越好。</p>
+
+<p>墨守成规的方法有悖于高质量的软件开发。请将编程工具箱中填满各种编程工具，不断提高自己挑选合适工具的能力。</p>
+
+<p>软件开发资料库由几类信息构成：一类核心数据解释有效编程的基础概念；相关的数据解释编程技术管理及知识背景；还有关于编程语言、操作系统、环境和硬件等面向特定主题的参考书等。</p>
 
   </article>
   <hr />
@@ -158,10 +221,10 @@ $(document).ready(function(){
 <section class="pager">
   <ul>
     
-    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2014/09/01/hacker_and_painter.html" title="黑客与画家">&larr; 前一页</a></li>
+    <li class="previous"><a href="/%E7%BC%96%E7%A8%8B/2015/04/20/sql_utilization.html" title="sql优化实践">&larr; 前一页</a></li>
     
     
-    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html" title="十六国北朝－无序的车辙">后一页 &rarr;</a></li>
+    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2015/06/12/the_cathedral_and_the_bazaar.html" title="大教堂与集市">后一页 &rarr;</a></li>
     
   </ul>
 </section>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>Java并发编程实践－Executor框架</title>
+<meta name="description" content="线程池简化了线程的管理工作，java.util.concurrent提供了一种灵活的线程池实现作为Executor框架的一部分.在Java类库中, 任务执行的主要抽象不是Thread, 而是Executor。">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/03/12/java_concurency_object_share.html">
+<link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">邹政华学习笔记</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Java并发编程实践－Executor框架</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#读书">读书</a>&nbsp;
+     
+    
+    | 标签:
+    
+    <a href="/tags/#Java" title="Java">Java </a>
+    
+    
+    | 发表时间: Mar 12, 2015
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>线程池简化了线程的管理工作，java.util.concurrent提供了一种灵活的线程池实现作为Executor框架的一部分.在Java类库中, 任务执行的主要抽象不是Thread, 而是Executor。</p>
+
+<p>public interface Executors{
+	void execute(Runnable command);
+}</p>
+
+<p>Executor基于生产者－消费者模式，提交任务的操作相当于生产者，执行任务的线程则相当于消费者。如果要在程序中实现一个生产者－消费者的设计，那么最简单的方式通常就是使用Executor。</p>
+
+<pre><code>class taskExecutionWebServer{
+	private static final int NTHREADS = 100;
+	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
+
+	public static void main(String[] args) throws IOException{
+		ServerSocket socket = new ServerSocket(80);
+		while(true){
+			final Socket connection = socket.accept();
+			Runnable task = new Runnable(){
+				public void run(){
+					handleRequest(connection);
+				}
+			};
+			exec.execute(task);
+		}
+	}
+}
+</code></pre>
+
+<p>在TaskExecutionWebServer中，通过使用Executor，将请求处理任务的提交与任务实际执行解耦开来，并且只需采用另一种Executor实现，就可以改变服务器的行为。改变Executor实现或配置所带来的影响要远远小于改变任务提交方式带来的影响。</p>
+
+<p>在线程池中执行任务比单独为每个任务分配一个线程优势更多。首先可分摊线程创建和销毁过程中产生的巨大开销，提高响应性能。同时通过适当调整线程池的大小，提高处理器利用效率；还能防止过多线程耗尽系统资源。</p>
+
+<p>Executor的集中静态工厂方法：newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool.</p>
+
+<pre><code>class taskExecutionWebServer{
+	private static final int NTHREADS = 100;
+	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
+
+	public static void main(String[] args) throws IOException{
+		ServerSocket socket = new ServerSocket(80);
+		while(！exec.isShutdown()){
+			try{
+				final Socket connection = socket.accept();
+				Runnable task = new Runnable(){
+					public void run(){
+						handleRequest(connection);
+					}
+				};
+				exec.execute(task);
+			}catch(RejectedExecutionException e){
+				if(!exec.isShutdown())
+					log("task submission rejected", e);
+			}
+			
+		}
+	}
+	public void stop(){
+		exec.shutdown();
+	}
+
+	void handleRequest(Socket connection){
+		Request req = readRequest(connection);
+		if(isShutdownRequest(req))
+			stop();
+		else
+			dispatchRequest(req);
+	}
+}
+</code></pre>
+
+<p>ExecutorService是java.util.concurrent包提供的接口，在Executor的基础上提供生命周期管理。ExecutorService的生命周期有三种：运行，关闭，和已终止。其中shutdown方法将执行平缓的关闭过程，不再接受新的任务，同时等待已经执行完毕的任务执行完毕。</p>
+
+<p>在单个客户请求中仍有可能存在可发掘的并行性，下面给出一个页面浏览器的例子。</p>
+
+<p>最简单的方式是对html文档进行串行处理。当遇到文本标签是，将其绘制到页面中。当遇到图像缓存时，先通过网络获取它，然后再将起绘制到图像缓存中。图像下载过程中的大部分时间都是再等待I/O操作执行完成，在这期间CPU几乎不做任何工作，因此这种串行执行的方法没有充分地利用CPU，使得用户再看到最终页面之前要等待过长的时间。</p>
+
+<pre><code>public class SingleThreadRenderer{
+	void renderPage(CharSequence source){
+		renderText(source);
+		List&lt;ImageData&gt; imageData = new ArrayList&lt;ImageData&gt;();
+		for(ImageInfo imageInfo: scanForImageInfo(source))
+			imageData.add(imageInfo.downloadImage());
+		for(ImageData data: imageData)
+			renderImage(data);
+	}
+}
+</code></pre>
+
+<p>通过将问题分解为多个独立的任务并发执行，能够获得更高的CPU利用率和响应灵敏度。</p>
+
+<p>Runnable是一种有很大局限的抽象，虽然run能写入到日志文件或者将结果放入某个共享的数据结构，但它不能返回或抛出一个受检查的异常。</p>
+
+<p>Callable是一种更好的抽象:它认为主入口点（即call）将返回一个值，并可能抛出一个异常。再Executor中包含了一些辅助方法能将其他类型的任务封装为一个Callable，，例如Runnable。</p>
+
+<p>再Executor框架中，已提交但尚未开始的任务可以取消，但对于那些已经开始执行的任务，只有当它们能响应中断时，才能取消，取消一个已经完成的任务不会有任何影响。</p>
+
+<p>Callable和Future有助于标示协同任务之间的交互。再FutureRenderer中，我们创建了一个Callable来下载所有的图像，并将其提交到一个ExecutorService。这将返回一个描述任务执行情况的Future。当祝任务需要图像时，它会等待Furure.get的调用结果，这样，图像的下载任务和渲染页面是同步进行的。
+public class FutureRenderer{
+	private final ExecutorService executor= …;</p>
+
+<pre><code>void renderPage(CharSequence source){
+	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
+	Callable&lt;List&lt;ImageData&gt; task = new Callable&lt;List&lt;ImageData&gt;&gt;(){
+		public List&lt;ImageData&gt; call(){
+			List&lt;ImageData&gt; result = new ArrayList&lt;ImageData&gt;();
+			for(ImageInfo imageInfo:ImageInfos)
+				result.add(ImageInfo.downloadImage());
+			return result;
+		}
+	};
+
+	Future&lt;List&lt;ImageData&gt;&gt; future = executor.submit(task);
+	renderText(source);
+
+	try{
+		List&lt;ImageData&gt; imageData = future.get();
+		for(ImageData data:imageData)
+			renderImage(Data);
+	}catch(InterruptedException e){
+		Thread.currentThread().interrupt();
+		future.cancel(true);
+	}catch(ExecutionException e){
+		throw launderThrowable(e.getCause());
+	}
+} }
+</code></pre>
+
+<p>如果渲染文本的速度远远高于下载图像的速度，那么程序的性能与串行执行时的性能差别不大，因此程序还有优化的空间。</p>
+
+<p>只有当大量相互独立且同构的任务可以并发进行处理时，才能体现出将程序的工作负载分配到多个任务中带来的真正性能提升。</p>
+
+<p>CompletionService将Executor和BlockingQueue的功能融合在一起，可以将Callable交给它来执行，然后使用类似于队列操作的take和poll方法来获得已完成的结果，而这些结果会在完成时被封装为Future。</p>
+
+<p>public class Renderer{
+	private final ExecutorService executor;</p>
+
+<pre><code>Renderer(ExecutorService executor){
+	this.executor = executor;
+}
+
+void renderPage(CharSequence source){
+	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
+	CompletionService&lt;ImageData&gt; completionService = new ExecutorCompletionService&lt;ImageData&gt;(executor);
+	for(final ImageInfo imageInfo:info){
+		completionService.submit(new Callable&lt;ImageData&gt;(){
+			public ImageData call(){
+				return imageInfo.downloadImage();
+			}
+		}
+	}
+
+	renderText(source);
+
+	try{
+		for(int t=0,n=info.size(); t&lt;n; t++){
+			Future&lt;ImageData&gt; f = completionService.take();
+			ImageData imageData = f.get();
+			renderImage(imageData);
+		}
+	}catch(InterruptedException e){
+		Thread.currentThread().interrupt();
+	}catch(ExecutionException e){
+		throw launderThrowable(e.getCause());
+	}
+} }
+</code></pre>
+
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html" title="Java并发编程实践－线程安全性">&larr; 前一页</a></li>
+    
+    
+    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2015/04/15/Designing_design.html" title="设计中的设计">后一页 &rarr;</a></li>
+    
+  </ul>
+</section>
+
+<!-- <div id="disqus_thread"></div> -->
+
+<!-- 多说评论框 start -->
+<div class="ds-thread"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhenghua"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="33">读书 (33)</a></li>
+  
+  <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">邹政华学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>
