@@ -139,6 +139,31 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/06/17/grep_sed_awk_technich.html">grep|sed|awk组合清理日志文件</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: Jun 17, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>脚本代码托管在https://github.com/yihaozou/shellscript，文件名为autoclean.sh，用来清理程序运行产生的日志文件。</p>
+
+<p>以前对grep、sed、awk工具及正则表达式存在畏难情绪，这跟包含正则表达式的脚本可读性不高有关系。但是经过实践后发现，事情往往并不像表面看起来那样困难，与其观望徘徊，不如放手去做。</p>
+
+<p>计算机是个特别强调动手能力的学科，参加实际项目动手实践是效率最高的学习方式。倒不是说理论学习不重要，这些应该在学校阶段完成，而工作以后再一味的研究文档、教材容易陷入为学习而学习的怪圈。学习以及工作的目标应该指向有实际应用价值的产品。所谓的编程语言、编程工具、操作系统平台应该回归到”工具“本身。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/06/01/fu_bing_zhi_du_2.html">府兵制（下）</a>
       </h1>
       <p class="post-meta">
@@ -498,31 +523,6 @@ return len;
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/04/22/undefined_symbol_in_so.html">动态链接库中的未定义符号</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Apr 22, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>由于一时疏忽，将c语言源码中的标准库函数strcmp写成了strcpm，然后使用xlc编译器编译成动态链接库so文件。在这个过程中没有报错。后来使用dlopen打开动态链接库so文件时，出现dlerr错误，具体为“Symbol strcpm was referenced from module apcomp.so, but a runtime definition was not found”。将源代码中的strcpm改成strcmp后重新编译，动态链接库文件正常工作。</p>
-
-<p>究其原因，是编译器在编译动态链接库时，并不检查符号的依赖项，也就是说如果如果引用了某符号却没有链接其对应的库，编译器仍然会编译通过。</p>
-
-<p>但是在加载动态链接库时会因为出现未定义符号而失败。编译器在生成可执行文件时，会严格检查符号是否都有定义。（还有一个与主题无关的问题，如果链接了一个未使用的库，其中的符号也会全部链接过来）</p>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -583,7 +583,7 @@ return len;
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="33">读书 (33)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="34">读书 (34)</a></li>
   
   <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
   
@@ -616,6 +616,9 @@ return len;
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
   
   
   
