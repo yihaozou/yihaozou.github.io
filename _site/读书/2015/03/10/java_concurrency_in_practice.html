@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>Java并发编程实践－线程安全性</title>
+<meta name="description" content="一个线程是否需要是线程安全的，取决于它是否被多个线程访问。当多个线程访问某个状态变量并且其中有一个线程执行写入操作时，必须采用同步机制来协同这些线程对变量的访问。访问某个变量的代码越少，就越容易确保对变量的所有访问能实现正确同步，程序状态的封装性约好，就越容易实现程序的线程安全性。">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html">
+<link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">邹政华学习笔记</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Java并发编程实践－线程安全性</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#读书">读书</a>&nbsp;
+     
+    
+    | 标签:
+    
+    <a href="/tags/#Java" title="Java">Java </a>
+    
+    
+    | 发表时间: Mar 10, 2015
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>一个线程是否需要是线程安全的，取决于它是否被多个线程访问。当多个线程访问某个状态变量并且其中有一个线程执行写入操作时，必须采用同步机制来协同这些线程对变量的访问。访问某个变量的代码越少，就越容易确保对变量的所有访问能实现正确同步，程序状态的封装性约好，就越容易实现程序的线程安全性。</p>
+
+<p>有时候，面向对象中的抽象和封装会降低程序的性能，但在编写并发应用程序时，一种正确的编程方法是，首先使程序正确运行，然后再提高代码的速度。即便如此，最好也只是当性能测试结果和应用需求告诉你必须提高性能，以及测量结果表明这种优化再实际环境中确实能带来性能提升时，才进行优化。</p>
+
+<p>无状态对象一定是线程安全的：无状态指的是既不包含任何域，也不包含任何对其他类中域的引用。</p>
+
+<p>当某个计算的正确性取决于多个线程的交替执行时序时，那么就会发生竞态条件，从而使结果变得不可靠。大多数竞态条件的本质，基于一种可能失效的观察结果来做出判断或者执行某个计算。这种类型的竞态条件称为“先检查后执行”，首先观察某个条件为真，然后根据这个观察结果采用相应的动作，但事实上，在你观察到这个结果以及开始创建文件之间，观察结果可能变得无效，从而导致各种问题。</p>
+
+<p>要保持状态的一致性，就需要在单个原子操作中更新所有相关的状态变量。</p>
+
+<p>重入：当线程请求一个由其他线程持有的锁时，发出请求的线程就会阻塞。但是某个线程试图获得一个已经由它自己持有的锁，那么这个请求就会成功。</p>
+
+<p>并非所有数据都需要锁的保护，只有被多个线程同时访问的可变数据才需要通过锁来保护。</p>
+
+<p>对在单个变量上实现原子操作来说，原子变量很有用，但由于我们已经使用了同步代码块来构造原子操作，而使用两种不同的同步机制不仅会带来混乱，也不会在性能或安全性上带来任何好处。</p>
+
+<p>在简单性和性能之间存在着相互制约因素。当实现某个同步策略时，一定不要盲目地为了性能而牺牲简单性，这可能会破坏安全性。</p>
+
+<p>当执行时间较长的计算或者可能无法快速完成的操作时（例如网络I/O或者控制台I/O），一定不要持有锁。</p>
+
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2015/02/16/yi_shui_bei_ge.html" title="易水悲歌">&larr; 前一页</a></li>
+    
+    
+    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2015/03/12/java_concurency_object_share.html" title="Java并发编程实践－Executor框架">后一页 &rarr;</a></li>
+    
+  </ul>
+</section>
+
+<!-- <div id="disqus_thread"></div> -->
+
+<!-- 多说评论框 start -->
+<div class="ds-thread"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhenghua"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="34">读书 (34)</a></li>
+  
+  <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">邹政华学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

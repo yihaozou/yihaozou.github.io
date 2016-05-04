@@ -4,9 +4,9 @@ comments: true
 date: 2014-05-11 04:40:10+00:00
 layout: post
 slug: c%e8%af%ad%e8%a8%80%e4%b8%ad%e6%95%b0%e6%8d%ae%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e7%9a%84%e5%ad%97%e8%8a%82%e6%95%b0
-title: 信息表示与处理
+title: 深入理解计算机系统－信息表示与处理
 wordpress_id: 382
-categories: 编程
+categories: 读书
 ---
 
 **C语言中数据类型的字节数**

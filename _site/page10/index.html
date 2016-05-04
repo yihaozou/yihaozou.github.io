@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>邹政华学习笔记</title>
+<meta name="description" content="Read Think Create.">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/page10/">
+<link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">邹政华学习笔记</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="home">
+  <div class="post">
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2013/12/16/manage_your_project.html">软件管理沉思录-管理你的项目</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#软件工程" title="软件工程">软件工程 </a>
+      
+      
+      | 发表时间: Dec 16, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p><strong>缺陷(defect)并非漏洞(bug)</strong>。一些人错误地把软件缺陷当做漏洞，这会让人们把一个危急的问题视为无足轻重并助长一种错误的对待态度。当软件工程师说在程序中仅存在少数几个漏洞时，人们的反应通常是如释重负。但是如果一名程序员告诉你，他已经对程序进行了彻底测试，其中仅有个别定时炸弹（缺陷），听众的好心情可能会消失殆尽。与漏洞相比，缺陷更像是炸弹。尽管不是所有的缺陷都会带来爆炸性影响，但是有一些缺陷的确会。。。此外，软件工程师是发现和更正自己所编写程序里的缺陷的最佳人选，因此，要软件工程师为自己的程序质量承担个人责任是软件质量管理中一个关键的措施。</p>
+
+<p><strong>质量是永无终止的流程。</strong>软件提升质量的旅程大致有下面会提到的几个阶段：1.测试并更正，在这一阶段提升质量的唯一方法是在测试上花费更多的时间和金钱；2.检查，在测试之前开始消除缺陷；3.局部测评，使用检查得到的数据改进检查过程，并将检查聚焦在最具破坏性的产品缺陷上；4.质量到人；5.个人测评，让开发人员了解自己引入及消除的缺陷、产品的规模以及他们花费的时间，并加以利用；6.设计；7.缺陷预防；8基于用户的测评。</p>
+
+<p><strong>以明确目标为起点</strong>。目标之所以重要，是因为它们提供了努力的焦点，而且建立了一种优先次序。当有人告诉你想让你做什么的时候，一般情况下他们心中已经有了一个目标，但是可能没有想办法清晰地表达出来。或者更加普遍的是，他们凭直觉知道什么是他们想要的，但是不能明确地定义它们。而只有你自己才知道是不是已经有了一个清晰的目标，即是同伴和管理者认为目标已经十分清楚，只要你对它有任何疑问，那么一定要大声地提出来。</p>
+
+<p><strong>制定计划。</strong>在特定情况下，管理者不知道某一个项目会花费多长时间，开发人员可能也不知道，在开发人员和管理者都在猜测的时候，管理者总是赢家。唯一能将开发人员解脱出来的方法就是去制定计划，并且尽最大努力去实现管理者想要达到的目标，之后，如果还是不能实现管理者给出的最后期限，开发人员会知道原因并为自己的进度辩解。在商业领域，产品计划是极其重要的，如果产品计划不准确，那么阶段计划也可能不准确。这样的话，管理层、营销部们、投资者甚至包括消费者就可能会被误导。相应的，意味着工程部门无法得到他们需要的资金。没有充足的资金，工程部门得消减它们的计划，这时又意味着开发人员可能会被解雇。</p>
+
+<p><strong>计划必须满足的要求。</strong>是否易于理解；是否清晰明白；是否详细描述；是否详细具体；是否精确缜密；是否准确无误；</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2013/12/04/lie_to_me.html">请对我撒谎</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+      
+      
+      | 发表时间: Dec 4, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>(写这种日志简直找抽，改了一部分）</p>
+
+<p>上周去理发，洗完头后我问理发师，“我前面是不是有点掉头发啊？”。理发师接过话茬，“是啊，很明显了，你可以戴假发或者去做手术，效果还不错，blabla……“。我听完后心里很不开心，哪有那么夸张，明明头发梳起来还蛮好的嘛。</p>
+
+<p>我发现有时候人们会说些言不由衷的话，是希望对方给出否定的答案，对于那些个性敏感且不够自信的人更是如此。比方说一个姑娘有时会说我是不是有点胖了啊，又或者我今天化的妆是不是很失败啊；一个父亲有时候会在外人面前说自己的儿子如何如何不懂事，上的大学也很一般；一个妻子会说（有时候会在亲人面前）丈夫某个细节上的瑕疵等等。这些情况下千万不能给出肯定的答案，相反可以扔出一个善意的谎言安抚对方的情绪。就好比正午的阳光照进房间，显得过于刺目了，然后我们用窗帘遮挡一下。</p>
+
+<p>还有一类情况呢是人们脆弱而膨胀的自尊心需要得到呵护。我曾经在一次聚会上碰到过这种情况，一位先生一脸骄傲地说到自己跟纽约市长握过手，尽管这种事情不值一提，但是我又能怎么办，只好一脸惊羡地说：哇塞！还有我们部门的一个小领导说，某大Boss一天跟自己谈心blabla….而据我猜测，那位大boss当时可能是正对着台下的一大群人在发表讲话呢，可是我不会拆穿，因为我是个好人，而且我也没打算辞职来着。</p>
+
+<p>不同于写程序，我们思考的是如何让机器和其他程序员快速理解自己的意图，人与人之间的交往要复杂的多。形形色色的人从我们身边走过，有人温驯、有人乖戾、有人野心勃勃眼睛里喷射出的都是欲望、也有人意志深沉你不知道他心里在想什么。对于其中大部分人，因为与我们的生活没什么交集，必要时虚与委蛇一下也没什么大不了的。而对于其中少部分人，因为你在乎他们，所以更要关注他们心中最柔嫩的地方，关心之，爱护之。从某种程度上说，当我们撒谎（必须是善意的）时，其实也是在扮演好人的角色。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2013/10/17/how_to_make_ppt_with_others.html">多人协同制作ppt</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
+      
+      
+      | 发表时间: Oct 17, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>最近我们组的一个项目要申请人行科技进步奖，前期的申报材料都已经准备好了，只剩下演示ppt还没有确定。组里开会讨论的结果是，由项目的主要开发人员确定PPT的内容，然后将材料发给我和另外一个新员工，我们俩负责制做最终报告用的ppt文档，扮演的是类似美工的角色。</p>
+
+<p>但是在实际操作中,出现了一些小麻烦。先是为我准备内容的一位同事发来一堆word文档就完事了，我得根据文档确定ppt的内容，这倒不是什么难事，关键是我还得在几个老图的基础上重新绘制软件的逻辑架构和物理部署架构。画完后发给同事们，反馈说图哪里哪里不对，要改。改完后发过去，又要改……</p>
+
+<p>作为新员工，做一些很杂碎的事也没什么好抱怨的。但是如果事前工作流程能够优化一下，大家都能节省不少时间。</p>
+
+<p>比方说有五个人要共同做一个PPT，姑且称他们为A、B、C、D、E。其中A是PPT的演示者；B、C、D是项目的开发人员，也是PPT内容的贡献者；E负责PPT的展现形式或者说美化。那么起初五人可以开一个小组讨论会确定PPT的结构，并确定好分工。比如PPT有六个章节，B就可以负责一二章（假如B很熟悉这部分的内容），C负责三四章，D负责五六章。要保证B、C、D作出的内容就是最终汇报PPT的相应章节。B、C、D在确定PPT的内容时要充分征求A的意见。为了加快进度，B、C、D每做好一个章节，可以发送给E，由E负责美化。接下来的过程很重要，E在设计PPT的时候要和A、B、C、D保持充分的沟通，在遇到模棱两可的内容一定要与对应的内容提供者（B、C、D）讨论。每做好一页PPT可以发给A、B、C、D预览，征求它们的意见。等到ppt初稿出来后，E可以将ppt发给组内的每个成员，让他们提出修改意见，E根据反馈对PPT作进一步完善。完事后，可以让A预演一次，查看效果。</p>
+
+<p>这次制作ppt的经历也让我认识到，在团队中，要学会调动队友的积极性，影响他人，向着共同的目标努力。有想法及时向领导反映，但是最终意见出来后，一定要对领导保持绝对的服从。</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2013/07/25/design_and_programming_C++.html">c++程序设计语言－设计与编程</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#c++" title="c++">c++ </a>
+      
+      
+      | 发表时间: Jul 25, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>（摘录自Bjarne Stroustrup《c++程序设计语言》特别版p633-668，在翻译上与原文有差异)</p>
+
+<p>面向对象程序设计和编程中最基本的观念是：程序应该是现实事物的模型。程序里的类代表着应用中的基本概念，真实世界中的对象和实现中所需的实体都通过这些类的对象来表示。本质上说，系统里存在两种类：直接反映应用领域中概念的类；为了实现而人工创造的类，也就是设计师和程序员用于描述他们的实现技术的那些类。</p>
+
+<p>将应用领域中的概念翻译到设计中的类绝不是一个简单的机械性操作，而是需要相当的洞察力。模拟真实世界并不意味着要奴隶式地追随我们之所见，而是要以它们作为设计的出发点、灵感的源泉。举个例子，我的PC屏幕并不真正像我的桌面，尽管其设计支持一种桌面的感觉，而我屏幕上的窗口与那些允许微风吹进我办公室的窗户实体之间只有极少的关系。</p>
+
+<p>程序设计的面向过程和面向对象的观点之间存在着本质性的差异，我们可以将设计集中于所采取的动作或者集中于所表示的实体，但无法同时做到这两者。功能分解方法将导致不充分的数据抽象，所以不适合用于并行开发和并发执行，但这并不意味着在进行“面向对象”的设计中应该避免使用非成员函数或者系统中的任何部分都不能是面向过程的。关键问题在于松弛程序不同部分之间的联系，以更好地反映应用中的概念。典型情况下，将设计工作的基本点放在类上而不是函数上，能更好地达到这个目的。</p>
+
+<p>继承不仅仅是一种实现细节，它可以用来模拟应用领域领域中概念之间的关系。类层次结构并不是每个好程序中必不可少的一部分，但它们能有助于理解应用问题，有助于解的描述。虽然一些人会说“继承破坏了信息隐藏”或者“继承使得c++与其他软件的合作更加困难”，但这些只能作为谨慎行事的理由，而不是禁止使用的理由。</p>
+
+<p>一个强类型的界面能在某种程度上保证软件中只有相互兼容的片段才能通过编译连接到一起，这就使这些软件片段可以对其他片段做出比较强的假设。这些假设由类型系统保证，可以减少运行时检测（动态检查）的使用，从而提高效率。值得指出的是，动态检查和静态检查的运行时间上的差异可能非常明显，动态检查的额外开销通常在3到10倍的样子。</p>
+
+<p>设计工具、库和框架是一种最高形式的设计和编程。为某个应用领域构造出一种有用的基于数学的模型是一种最高形式的分析。这样提供出的工具、语言、框架等将使这种工作的成果能为成千上万的程序员使用，这也是使设计师和程序员逃出陷阱和避免被变成制造某类人工制品的工匠的一种方法。成功的大系统都是多层次的、模块化的、随着时间演化的。</p>
+
+<p>硬把所有东西塞进一个类层次结构里，将会引进一些人为的相似性，并搞模糊真实的关系。只用通过分析揭示出的概念间的共性，或是在设计和编程中发现了结构中存在着有利于实现概念的有用共性时，才 应该使用类层次结构。</p>
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2013/07/22/inheritation_and_using_in_C++.html">c++程序设计语言－继承和使用声明</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#c++" title="c++">c++ </a>
+      
+      
+      | 发表时间: Jul 22, 2013
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>（摘自Bjarne Stroustrup的《C++程序设计语言》p349)</p>
+
+<p>在C++多重继承中，重载解析的使用不会跨越不同类的作用域。来自不同基类的函数之间的歧义性不能根据参数类型完成解析。</p>
+
+<p>如果在不同基类中使用同样名字是一种精心策划的设计决策，或者用户希望能够基于实际参数类型做出选择，我们可以使用声明（using declaration)将这些函数引进一个公共的作用域中。举个例子。</p>
+
+<pre><code>class A {
+public:
+      int f(int);
+      char f(char);
+      //...
+};
+
+class B{
+public:
+      double f(double);
+      //...
+};
+
+class AB:public A,public B{
+public:
+      using A::f;
+      using B::f;
+     char f(char)  //屏蔽A::f(char);
+};
+
+//驱动程序
+void g(AB&amp; ab)
+{
+      ab.f(1);     //A::f(int)
+      ab.f('a');    //AB::f(char)
+      ab.f(2.0);    //B::f(double)
+      ab.f(ab);    //AB::f(AB)
+}
+</code></pre>
+
+<p>使用声明(using declaration)使程序员可以组合起一组来自不同基类的和来自派生类的重载函数。在派生类里声明的函数就会遮蔽在基类里那些原本可用的函数，来自基类的虚函数还是像以往一样可以覆盖。</p>
+
+<p>在一个类定义里的使用声明所应用的必须是基类的成员，不能通过使用声明取用这个类、派生它的类以及他们的成员之外的某个类的成员。使用指示(using directive)不能出现在类定义里，也不能对一个类使用。</p>
+
+<p>使用声明也不能用于获取对于更多信息的访问权，它只是一种使可访问信息能够以更方便的方式使用的机制。</p>
+
+    </article> <hr />
+    
+    
+  
+  </div>
+</div>
+
+    <section class="pager">
+  
+  
+  <li class="previous"><a href="/page9/" title="后一页">&larr; 后一页</a></li>
+  
+  
+  
+  <li class="next"><a href="/page11/" title="前一页">前一页 &rarr;</a></li>
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/07/30/too_big_too_know.html" title="知识的边界" rel="bookmark">知识的边界</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="34">读书 (34)</a></li>
+  
+  <li><a href="/categories/#行业观察" title="行业观察" rel="1">行业观察 (1)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">邹政华学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

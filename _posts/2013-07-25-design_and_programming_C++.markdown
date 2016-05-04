@@ -3,10 +3,11 @@ author: 邹政华
 comments: true
 date: 2013-07-25 13:05:10+00:00
 layout: post
+tags: c++
 slug: '%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0%ef%bc%9a%e7%b1%bb'
-title: 读书笔记：设计与编程
+title: c++程序设计语言－设计与编程
 wordpress_id: 150
-categories: 编程
+categories: 读书
 ---
 
 （摘录自Bjarne Stroustrup《c++程序设计语言》特别版p633-668，在翻译上与原文有差异)

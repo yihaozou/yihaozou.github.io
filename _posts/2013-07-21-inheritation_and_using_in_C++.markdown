@@ -3,10 +3,11 @@ author: 邹政华
 comments: true
 date: 2013-07-21 17:09:33+00:00
 layout: post
+tags: c++
 slug: '%e7%bb%a7%e6%89%bf%e5%92%8c%e4%bd%bf%e7%94%a8%e5%a3%b0%e6%98%8e'
-title: 继承和使用声明
+title: c++程序设计语言－继承和使用声明
 wordpress_id: 144
-categories: 编程
+categories: 读书
 ---
 
 （摘自Bjarne Stroustrup的《C++程序设计语言》p349)
