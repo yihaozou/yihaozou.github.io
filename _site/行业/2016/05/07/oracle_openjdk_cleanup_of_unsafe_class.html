@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>Java 9发布在即, Oracle着手清理Unsafe类</title>
+<meta name="description" content="java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是JEP 261, 该JEP实现了java平台的模块系统, 具体说明可以参见JSR376。 模块系统依赖于JEP260（封装了大部分内部API），导致的结果是JEP193定义的多个句柄会暴露sun.misc.Unsaf...">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html">
+<link rel="alternate" type="application/atom+xml" title="邹政华学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">邹政华学习笔记</a></h1>
+    <h3 class="site-meta">^o^</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Java 9发布在即, Oracle着手清理Unsafe类</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#行业">行业</a>&nbsp;
+     
+    
+    | 标签:
+    
+    <a href="/tags/#java" title="java">java </a>
+    
+    
+    | 发表时间: May 7, 2016
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是<a href="http://openjdk.java.net/jeps/261">JEP 261</a>, 该JEP实现了java平台的模块系统, 具体说明可以参见<a href="http://openjdk.java.net/projects/jigsaw/spec/">JSR376</a>。 模块系统依赖于<a href="http://openjdk.java.net/jeps/260">JEP260</a>（封装了大部分内部API），导致的结果是<a href="http://openjdk.java.net/jeps/193">JEP193</a>定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info<a href="http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe">报道</a>过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见<a href="http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World">另一篇报道</a>。 </p>
+
+<p><a href="https://bugs.openjdk.java.net/browse/JDK-8149159">Bug 8149159</a>最近被提交到JDK Bug管理系统, 建议优化和清理Unsafe类, 包括将参数检查从本地代码移入Java（简化JIT）、 sun.misc.Unsafe类和jdk.internal.misc.Unsafe类的统一、 以及本地代码的整体清理。</p>
+
+<p>2月18日，Oracle工程师Mikael Vidstedt向OpenJDK开发者社区提交了两个补丁（分别针对OpenJDK和OpenJDK HotSpot VM）  </p>
+
+<p>关于这两个补丁，Vidstedt总结道：</p>
+
+<ul>
+  <li>避免代码重复，sun.misc.Unsafe将全部实现委托给jdk.internal.misc.Unsafe，这意味着java虚拟机(特别是unsafe.cpp）不再需要关心s.m.Unsafe的实现。 </li>
+  <li>s.m.Unsafe的委托方法通常会被内联，但是为了避免性能下降的风险，仍然添加了@ForceInline注解 </li>
+  <li>更新文档，指明用户应该确保Unsafe类的参数正确 </li>
+  <li>参数检查从Unsage.cpp移入java，简化本地代码以及允许JIT进一步优化</li>
+  <li>放松了特定参数的检查，比方说最近引入的U.copySwapMemory没有检查空指针。具体原因可以参考j.i.m.U.checkPointer的文档。除了U.copySwapMemory，现在Unsafe类方法也都没有对参数执行NULL检查 </li>
+  <li>在U.copySwapMemory类的基础上，对j.i.m.U.copyMemory增加了一个测试案例。请随时提醒我合并过来（本该如此）  </li>
+</ul>
+
+<p>在Vidstedt看来，Usage类的清理算是“相当激进”了，值得注意的地方有：  </p>
+
+<ul>
+  <li>
+    <p>Unsafe_方法以及unsafe.cpp中的其他本地方法被申明为静态方法  </p>
+  </li>
+  <li>新增unsafe.hpp代码文件，文件中移入VM其他组件的一些方法。移除部分“extern”函数声明（不要过度使用extern）  </li>
+  <li>对于不怎么用到的UNSAFE_LEAF，移除警告性质的注释（没有必要，只是个VM_LEAF） </li>
+  <li>一些简单的leaf方法使用UNSAFE_LEAF  </li>
+  <li>UNSAFE_ENTRY/UNSAFE_END代码块新增大括号，帮助自动缩进</li>
+  <li>移除未使用的Unsafe_&lt;…&gt;##140形式的函数和宏 </li>
+  <li>更新宏参数，与unsafe.cpp的宏定义保持一致</li>
+  <li>更换带断言的参数检查，正如前面提及，这些检查移入了j.i.m.Unsafe，移除所有s.m.Unsafe相关的代码</li>
+</ul>
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优">&larr; 前一页</a></li>
+    
+    
+    <li class="disabled"><a>后一页 &rarr;</a>
+    
+  </ul>
+</section>
+
+<!-- <div id="disqus_thread"></div> -->
+
+<!-- 多说评论框 start -->
+<div class="ds-thread"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhenghua"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html" title="Java 9发布在即, Oracle着手清理Unsafe类" rel="bookmark">Java 9发布在即, Oracle着手清理Unsafe类</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl%E2%80%98s%20god.html" title="卡尔.萨根的上帝" rel="bookmark">卡尔.萨根的上帝</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2015/11/30/politics_of_dongjin_dynasty.html" title="田余庆－东晋门阀政治" rel="bookmark">田余庆－东晋门阀政治</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="35">读书 (35)</a></li>
+  
+  <li><a href="/categories/#行业" title="行业" rel="2">行业 (2)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+  <li><a href="/categories/#工具箱" title="工具箱" rel="1">工具箱 (1)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">邹政华学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

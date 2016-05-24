@@ -6,7 +6,7 @@ layout: post
 slug: '10'
 title: IT行业分析
 wordpress_id: 10
-categories: 行业观察
+categories: 行业
 ---
 
 一、PC产业链：............................................................................ 2

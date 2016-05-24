@@ -5,9 +5,54 @@
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Apr 2016 20:56:00 +0800</pubDate>
-    <lastBuildDate>Mon, 11 Apr 2016 20:56:00 +0800</lastBuildDate>
+    <pubDate>Mon, 23 May 2016 16:13:44 +0800</pubDate>
+    <lastBuildDate>Mon, 23 May 2016 16:13:44 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
+    
+      <item>
+        <title>Java 9发布在即, Oracle着手清理Unsafe类</title>
+        <description>&lt;p&gt;java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是&lt;a href=&quot;http://openjdk.java.net/jeps/261&quot;&gt;JEP 261&lt;/a&gt;, 该JEP实现了java平台的模块系统, 具体说明可以参见&lt;a href=&quot;http://openjdk.java.net/projects/jigsaw/spec/&quot;&gt;JSR376&lt;/a&gt;。 模块系统依赖于&lt;a href=&quot;http://openjdk.java.net/jeps/260&quot;&gt;JEP260&lt;/a&gt;（封装了大部分内部API），导致的结果是&lt;a href=&quot;http://openjdk.java.net/jeps/193&quot;&gt;JEP193&lt;/a&gt;定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info&lt;a href=&quot;http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe&quot;&gt;报道&lt;/a&gt;过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见&lt;a href=&quot;http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World&quot;&gt;另一篇报道&lt;/a&gt;。 &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bugs.openjdk.java.net/browse/JDK-8149159&quot;&gt;Bug 8149159&lt;/a&gt;最近被提交到JDK Bug管理系统, 建议优化和清理Unsafe类, 包括将参数检查从本地代码移入Java（简化JIT）、 sun.misc.Unsafe类和jdk.internal.misc.Unsafe类的统一、 以及本地代码的整体清理。&lt;/p&gt;
+
+&lt;p&gt;2月18日，Oracle工程师Mikael Vidstedt向OpenJDK开发者社区提交了两个补丁（分别针对OpenJDK和OpenJDK HotSpot VM）  &lt;/p&gt;
+
+&lt;p&gt;关于这两个补丁，Vidstedt总结道：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;避免代码重复，sun.misc.Unsafe将全部实现委托给jdk.internal.misc.Unsafe，这意味着java虚拟机(特别是unsafe.cpp）不再需要关心s.m.Unsafe的实现。 &lt;/li&gt;
+  &lt;li&gt;s.m.Unsafe的委托方法通常会被内联，但是为了避免性能下降的风险，仍然添加了@ForceInline注解 &lt;/li&gt;
+  &lt;li&gt;更新文档，指明用户应该确保Unsafe类的参数正确 &lt;/li&gt;
+  &lt;li&gt;参数检查从Unsage.cpp移入java，简化本地代码以及允许JIT进一步优化&lt;/li&gt;
+  &lt;li&gt;放松了特定参数的检查，比方说最近引入的U.copySwapMemory没有检查空指针。具体原因可以参考j.i.m.U.checkPointer的文档。除了U.copySwapMemory，现在Unsafe类方法也都没有对参数执行NULL检查 &lt;/li&gt;
+  &lt;li&gt;在U.copySwapMemory类的基础上，对j.i.m.U.copyMemory增加了一个测试案例。请随时提醒我合并过来（本该如此）  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在Vidstedt看来，Usage类的清理算是“相当激进”了，值得注意的地方有：  &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Unsafe_方法以及unsafe.cpp中的其他本地方法被申明为静态方法  &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;新增unsafe.hpp代码文件，文件中移入VM其他组件的一些方法。移除部分“extern”函数声明（不要过度使用extern）  &lt;/li&gt;
+  &lt;li&gt;对于不怎么用到的UNSAFE_LEAF，移除警告性质的注释（没有必要，只是个VM_LEAF） &lt;/li&gt;
+  &lt;li&gt;一些简单的leaf方法使用UNSAFE_LEAF  &lt;/li&gt;
+  &lt;li&gt;UNSAFE_ENTRY/UNSAFE_END代码块新增大括号，帮助自动缩进&lt;/li&gt;
+  &lt;li&gt;移除未使用的Unsafe_&amp;lt;…&amp;gt;##140形式的函数和宏 &lt;/li&gt;
+  &lt;li&gt;更新宏参数，与unsafe.cpp的宏定义保持一致&lt;/li&gt;
+  &lt;li&gt;更换带断言的参数检查，正如前面提及，这些检查移入了j.i.m.Unsafe，移除所有s.m.Unsafe相关的代码&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 07 May 2016 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html</guid>
+        
+        <category>java</category>
+        
+        
+        <category>行业</category>
+        
+      </item>
     
       <item>
         <title>Java程序员修炼之道－性能调优</title>
@@ -283,6 +328,97 @@
       </item>
     
       <item>
+        <title>分布式一致性－PAXOS算法</title>
+        <description>&lt;p&gt;在分布式系统中，每一个机器节点虽然读能够明确地知道自己在进行事物操作过程中的结果是成功还是失败，但却无法直接获取到其他分布式节点的操作结果。因此，当一个事物操作需要跨越多个分布式节点的时候，为了保持事物处理的ACID特性，就需要映入一个称为”协调者”(Coordinator)的组件来统一调度所有分布式节点的执行逻辑，这些被调度的分布式节点则被称为”参与者”(Participant)。&lt;/p&gt;
+
+&lt;p&gt;假设有一组可以提出提案的进程集合，那么对于一个一致性算法来说需要保证以下几点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在这些被提出的提案中，只有一个会被选定&lt;/li&gt;
+  &lt;li&gt;如果没有提案被提出，那么就不会有被选定的提案&lt;/li&gt;
+  &lt;li&gt;当一个提案被选定后，进程应该可以获取被选定的提案信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;对于一致性来说，安全性(sagety)需求如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;只有被提出的提案才能被选定(chosen)&lt;/li&gt;
+  &lt;li&gt;只能有一个值被选定&lt;/li&gt;
+  &lt;li&gt;如果某个进程认为某个提案被选定了，那么这个提案必须是真的被选定的那个&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;从整体上来说，Paxos算法的目标就是要保证最终有一个提案会被选定，当提案被选定后，进程最终也能获取到被选定的提案。&lt;/p&gt;
+
+&lt;p&gt;在Paxos算法中，有三种参与角色，我们用Proposer,Acceptor和Learner来表示。在具体实现中，一个进程可能充当不止一种角色，在这里我们并不关心进程如何映射到各种角色。假设不同参与者之间可以通过收发消息来进行通信，那么：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;每个参与者以任意速度执行，可能会因为出错而停止，也可能重启。同时，即使一个提案被选定后，所有的参与者也都有可能失败或重启，因此除非那些失败或重启的参与者可以记录某些信息，否则将无法确定最终的值。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;消息在传输过程中可能会出现不可预知的延迟，也可能会重复或丢失，但是消息不会被损坏，即消息内容不会被篡改&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;提案的选定&lt;/h3&gt;
+
+&lt;p&gt;可以使用多个Acceptor来避免Acceptor的单点问题。在存在多个Acceptor的情况下，Proposer向一个Acceptor集合发送提案，集合中的每个Acceptor都可能会批准(Accept)该提案，当有足够多的Acceptor批准这个提案的时候，我们就可以认为该提案被选定了。什么是足够多呢？我们假定足够多的Acceptor是整个Acceptor集合的一个子集，并且让这个集合大得可以包含Acceptor集合中的大多数成员，因为任意两个包含大多数Acceptor的自己至少有一个公共成员。另外我们再规定，每一个Acceptor最多只能批准一个提案，那么就能保证只有一个提案被选定了。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;算法陈述&lt;/h3&gt;
+
+&lt;p&gt;阶段一：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Proposer选择一个提案编号M，然后向Accpter的某个超过半数的子集成员发送编号为M的Prepara请求&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;如果一个Acceptor收到一个编号为M的prepare请求，且编号M大于该Acceptor已经响应的所有Prepare请求的编号，那么它就会将它已经批准过的最大编号的提案作为响应反馈给Proposer，同时该Acceptor会承诺不会再批准任何编号小于M的提案。举个例子，假定一个Acceptor已经响应过的所有Prepare请求对应的提案编号分别为1,2,…5和7，那么该Acceptor在接收到一个编号为8的Prepare请求后，就会将编号为7的提案作为响应反馈给Proposer&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;阶段二：
+1. 如果Proposer收到半数以上的Acceptor对于其发出的编号为M的prepare请求的响应那么他就会发送一个针对［M, V]提案的Accept请求给Acceptor。注意，V的值就是收到的响应中编号最大的提案的值，如果响应中不包含任何提案，那么它就是任意值。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;如果Acceptor收到这个针对[M，V]提案的Accept请求，只要该Acceptor尚未对编号大于M的Prepare请求做出响应，它就可以通过这个提案。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;提案的获取&lt;/h3&gt;
+
+&lt;p&gt;方案一：&lt;/p&gt;
+
+&lt;p&gt;Learner获取一个已经被选定的提案的前提是，该提案已经被半数以上的Acceptor皮春，因此最简单的做法就是一旦Acceptor批准了一个提案，就将该提案发送给所有的Learner。&lt;/p&gt;
+
+&lt;p&gt;这种做法需要每个Acceptor和所有的Learner逐个进行一次通信，通信次数至少为二者个数的乘积&lt;/p&gt;
+
+&lt;p&gt;方案二：&lt;/p&gt;
+
+&lt;p&gt;让所有的Acceptor将它们对提案的批准情况，统一发送给一个特定Learner（称为“主Learner”），在不考虑拜占庭将军问题的前提下我们假定Learner之间可以通过消息通信来互相感知提案的选定情况。基于这样的前提，当主Learner被通知一个提案已经被选定时，它会负责通知其他的Learner。&lt;/p&gt;
+
+&lt;p&gt;这种做法的风险在于：主Learner随时可能出现鼓掌。&lt;/p&gt;
+
+&lt;p&gt;方案三：&lt;/p&gt;
+
+&lt;p&gt;针对方案二的单点问题，可以将主Learner的范围扩大，即Acceptor可以将批准的提案发送给一个特定的Learner集合，该集合中的每个Learner都可以在一个提案被选定后通知所有其他的Learner。这个Leaner集合的元素个数越多，可靠性就约好，但同时网络通信的复杂度也就越高。&lt;/p&gt;
+
+&lt;h3 id=&quot;proposer&quot;&gt;通过选取主proposer保证算法的活性&lt;/h3&gt;
+
+&lt;p&gt;可能会存在这样一种极端情况，有两个Proposer依次提出了一系列编号递增的议案，但是最终都无法被选定。解决这个问题可以选择一个主Proposer，并规定只有主Proposer才能提出议案。这样一来，只要主Proposer和过半Acceptor能够正常进行网络通信，那么但凡主Proposer提出一个编号更高的提案，该提案终将会被批准。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 23 Jun 2015 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/06/23/from_paxos_to_zookeeper.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/06/23/from_paxos_to_zookeeper.html</guid>
+        
+        <category>分布式系统</category>
+        
+        
+        <category>读书</category>
+        
+      </item>
+    
+      <item>
         <title>大教堂与集市</title>
         <description>&lt;p&gt;一&lt;/p&gt;
 
@@ -339,7 +475,7 @@
       </item>
     
       <item>
-        <title>网站高可用架构</title>
+        <title>大型网站技术架构-网站高可用架构</title>
         <description>&lt;p&gt;&lt;strong&gt;一、网站可用性度量&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -421,126 +557,6 @@
         
         
         <category>读书</category>
-        
-      </item>
-    
-      <item>
-        <title>代码大全－软件工艺</title>
-        <description>&lt;p&gt;计算机编程美学话题——程序源代码的布局。布局好的代码看起来不仅感觉漂亮而且结构也清晰。&lt;/p&gt;
-
-&lt;p&gt;单条语句常规限制不超过80个字符，原因：超过了很难读、80个字符也防止了深层嵌套、80字符内方便打印。&lt;/p&gt;
-
-&lt;p&gt;单条语句布局建议：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;逻辑表达式使用空格可增强可读性&lt;/li&gt;
-  &lt;li&gt;用空格使数组下标更好读&lt;/li&gt;
-  &lt;li&gt;用空格使子程序参数更好读&lt;/li&gt;
-  &lt;li&gt;使续行明显 放在第一行那部分要清楚的表明它是语句的一部分。最好方法是第一行部分独立出来则有明显的语法错误&lt;/li&gt;
-  &lt;li&gt;把紧密关联的元素放在一起&lt;/li&gt;
-  &lt;li&gt;子程序调用的续行可后退标准格数&lt;/li&gt;
-  &lt;li&gt;使续行的结尾易于发现&lt;/li&gt;
-  &lt;li&gt;每行仅写一条语句&lt;/li&gt;
-  &lt;li&gt;数据类型定义布局&lt;/li&gt;
-  &lt;li&gt;注意数据类型定义的对齐&lt;/li&gt;
-  &lt;li&gt;每行定义一个数据&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;注释布局:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;一个好的注释能极大提高程序的可读性;&lt;/li&gt;
-  &lt;li&gt;若注释不成功，则会帮倒忙;&lt;/li&gt;
-  &lt;li&gt;注释行与相应的代码行同样缩排;&lt;/li&gt;
-  &lt;li&gt;把注释行至少用一个空行分开&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;如何将子程序布局好：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;用空行把子程序各部分分开；&lt;/li&gt;
-  &lt;li&gt;对子程序的参数用标准缩排；&lt;/li&gt;
-  &lt;li&gt;文件、模块和程序布局；&lt;/li&gt;
-  &lt;li&gt;把一板块放在一个文件里;&lt;/li&gt;
-  &lt;li&gt;把一个文件内的子程序区分清楚;&lt;/li&gt;
-  &lt;li&gt;如果文件里有多个模块，要把这些模块区分得清清楚楚;&lt;/li&gt;
-  &lt;li&gt;各子程序按照字母顺序排列&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;一些培养求知欲和把学习当做第一要务的特定方法：在开发过程中建立自我意识、对编程和开发过程做试验、阅读解决问题的有关方法、在行动之前做分析和计划、学习成功项目的开发经验、阅读文档、阅读其他书本期刊、同专业人士交往。&lt;/p&gt;
-
-&lt;p&gt;最有关系的性格为：谦虚、求知欲、诚实、创造力和纪律、高明的偷懒。&lt;/p&gt;
-
-&lt;p&gt;很多程序员不愿意主动吸收新知识和技术，只依靠工作时偶尔接触新的信息。如果你能抽出少量时间阅读和学习编程知识，要不了多久就能鹤立鸡群。&lt;/p&gt;
-
-&lt;p&gt;好性格与培养正确的习惯关系很大。要成为杰出的程序员，先要养成良好的习惯，其他自然水到渠成。&lt;/p&gt;
-
-&lt;p&gt;什么思想决定什么样行为;什么样行为决定什么样的习惯,什么样的习惯决定什么样性格,而什么性格决定什么样的命运。&lt;/p&gt;
-
-&lt;p&gt;合作开发要求团队成员之间进行广泛沟通，其次同计算机交互；而单人开发是自我交流，其次才是与计算机。&lt;/p&gt;
-
-&lt;p&gt;编程应基于问题域而非解决方案，这样便于复杂度管理。&lt;/p&gt;
-
-&lt;p&gt;开发时迭代次数越多，产品的质量越好。&lt;/p&gt;
-
-&lt;p&gt;墨守成规的方法有悖于高质量的软件开发。请将编程工具箱中填满各种编程工具，不断提高自己挑选合适工具的能力。&lt;/p&gt;
-
-&lt;p&gt;软件开发资料库由几类信息构成：一类核心数据解释有效编程的基础概念；相关的数据解释编程技术管理及知识背景；还有关于编程语言、操作系统、环境和硬件等面向特定主题的参考书等。&lt;/p&gt;
-</description>
-        <pubDate>Sun, 10 May 2015 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/05/10/code_complete_process.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2015/05/10/code_complete_process.html</guid>
-        
-        <category>软件工程</category>
-        
-        
-        <category>读书</category>
-        
-      </item>
-    
-      <item>
-        <title>sql优化实践</title>
-        <description>&lt;p&gt;1.索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率.一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有必要;&lt;/p&gt;
-
-&lt;p&gt;2.任何地方都不要使用 select * from t ，用具体的字段列表代替“*”，不要返回用不到的任何字段;&lt;/p&gt;
-
-&lt;p&gt;3.嵌套一般不要超过3层，尽量使用联结替换嵌套查询;&lt;/p&gt;
-
-&lt;p&gt;4.对查询进行优化，应尽量避免全表扫描，首先应考虑在where及order by涉及的列上建立索引;&lt;/p&gt;
-
-&lt;p&gt;5.使用like进行模糊查询时应注意避免在关键词前加%
-&amp;gt;select*from contact where username like ‘%story%’&lt;br /&gt;
-   关键词%story%，由于story前面用到了“%”，因此该查询必然走全表扫描，除非必要，否则不要在关键词前加%，&lt;/p&gt;
-
-&lt;p&gt;6.不要以字符格式声明数字，要以数字格式声明字符值。（日期同样）否则会使索引无效，产生全表扫描;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;SELECT emp.name, emp.job FROM emp WHERE emp.empno = 6789;
-不要使用：SELECT emp.name, emp.job FROM emp WHERE emp.empno = ‘6789’&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;7.避免使用耗费资源的操作，带有DISTINCT,UNION,MINUS,INTERSECT,ORDER BY的SQL语句会启动SQL引擎 执行，耗费资源的排序(SORT)功能. DISTINCT需要一次排序操作, 而其他的至少需要执行两次排序;&lt;/p&gt;
-
-&lt;p&gt;8.避免在WHERE子句中使用in，not  in，or 或者having,
-可以使用 exist 和not exist代替 in和not in;&lt;/p&gt;
-
-&lt;p&gt;9.在WHERE 语句中，尽量避免对索引字段进行计算操作,对索引字段进行计算操作可能会导致无法使用索引，降低效率&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;……
-where trunc(create_date)=trunc(:date1)
-虽然已对create_date 字段建了索引，但由于加了TRUNC，使得索引无法用上。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-</description>
-        <pubDate>Mon, 20 Apr 2015 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E7%BC%96%E7%A8%8B/2015/04/20/sql_utilization.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E7%BC%96%E7%A8%8B/2015/04/20/sql_utilization.html</guid>
-        
-        <category>数据库</category>
-        
-        
-        <category>编程</category>
         
       </item>
     
