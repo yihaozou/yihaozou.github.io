@@ -5,13 +5,15 @@
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 23 May 2016 16:13:44 +0800</pubDate>
-    <lastBuildDate>Mon, 23 May 2016 16:13:44 +0800</lastBuildDate>
+    <pubDate>Wed, 01 Jun 2016 17:06:27 +0800</pubDate>
+    <lastBuildDate>Wed, 01 Jun 2016 17:06:27 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
         <title>Java 9发布在即, Oracle着手清理Unsafe类</title>
-        <description>&lt;p&gt;java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是&lt;a href=&quot;http://openjdk.java.net/jeps/261&quot;&gt;JEP 261&lt;/a&gt;, 该JEP实现了java平台的模块系统, 具体说明可以参见&lt;a href=&quot;http://openjdk.java.net/projects/jigsaw/spec/&quot;&gt;JSR376&lt;/a&gt;。 模块系统依赖于&lt;a href=&quot;http://openjdk.java.net/jeps/260&quot;&gt;JEP260&lt;/a&gt;（封装了大部分内部API），导致的结果是&lt;a href=&quot;http://openjdk.java.net/jeps/193&quot;&gt;JEP193&lt;/a&gt;定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info&lt;a href=&quot;http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe&quot;&gt;报道&lt;/a&gt;过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见&lt;a href=&quot;http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World&quot;&gt;另一篇报道&lt;/a&gt;。 &lt;/p&gt;
+        <description>&lt;p&gt;( &lt;a href=&quot;http://www.infoq.com/cn/news/2016/05/29&quot;&gt;原文&lt;/a&gt;和英文原文&lt;a href=&quot;https://www.infoq.com/news/2016/02/29&quot;&gt;Oracle’s OpenJDK Cleanup of “Unsafe” Implementation&lt;/a&gt;发布于infoq中文站.)&lt;/p&gt;
+
+&lt;p&gt;java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是&lt;a href=&quot;http://openjdk.java.net/jeps/261&quot;&gt;JEP 261&lt;/a&gt;, 该JEP实现了java平台的模块系统, 具体说明可以参见&lt;a href=&quot;http://openjdk.java.net/projects/jigsaw/spec/&quot;&gt;JSR376&lt;/a&gt;。 模块系统依赖于&lt;a href=&quot;http://openjdk.java.net/jeps/260&quot;&gt;JEP260&lt;/a&gt;（封装了大部分内部API），导致的结果是&lt;a href=&quot;http://openjdk.java.net/jeps/193&quot;&gt;JEP193&lt;/a&gt;定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info&lt;a href=&quot;http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe&quot;&gt;报道&lt;/a&gt;过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见&lt;a href=&quot;http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World&quot;&gt;另一篇报道&lt;/a&gt;。 &lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://bugs.openjdk.java.net/browse/JDK-8149159&quot;&gt;Bug 8149159&lt;/a&gt;最近被提交到JDK Bug管理系统, 建议优化和清理Unsafe类, 包括将参数检查从本地代码移入Java（简化JIT）、 sun.misc.Unsafe类和jdk.internal.misc.Unsafe类的统一、 以及本地代码的整体清理。&lt;/p&gt;
 
@@ -42,6 +44,8 @@
   &lt;li&gt;更新宏参数，与unsafe.cpp的宏定义保持一致&lt;/li&gt;
   &lt;li&gt;更换带断言的参数检查，正如前面提及，这些检查移入了j.i.m.Unsafe，移除所有s.m.Unsafe相关的代码&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;查看英文原文：&lt;a href=&quot;https://www.infoq.com/news/2016/02/29&quot;&gt;Oracle’s OpenJDK Cleanup of “Unsafe” Implementation&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 07 May 2016 00:00:00 +0800</pubDate>
         <link>http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html</link>
