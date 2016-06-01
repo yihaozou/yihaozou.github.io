@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>邹政华学习笔记</title>
+    <title>学习笔记</title>
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 01 Jun 2016 17:06:27 +0800</pubDate>
-    <lastBuildDate>Wed, 01 Jun 2016 17:06:27 +0800</lastBuildDate>
+    <pubDate>Wed, 01 Jun 2016 17:14:44 +0800</pubDate>
+    <lastBuildDate>Wed, 01 Jun 2016 17:14:44 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
