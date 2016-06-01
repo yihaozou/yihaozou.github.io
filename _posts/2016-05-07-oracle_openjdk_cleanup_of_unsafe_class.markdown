@@ -9,7 +9,7 @@ title: Java 9发布在即, Oracle着手清理Unsafe类
 categories: 行业 
 ---
 
- ( [原文](http://www.infoq.com/cn/news/2016/05/29)和英文原文[Oracle's OpenJDK Cleanup of "Unsafe" Implementation](https://www.infoq.com/news/2016/02/29)发布于infoq中文站.)
+ ( [原文](http://www.infoq.com/cn/news/2016/05/29)和英文原文[Oracle's OpenJDK Cleanup of "Unsafe" Implementation](https://www.infoq.com/news/2016/02/29)发布于infoq.)
 
 java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是[JEP 261](http://openjdk.java.net/jeps/261), 该JEP实现了java平台的模块系统, 具体说明可以参见[JSR376](http://openjdk.java.net/projects/jigsaw/spec/)。 模块系统依赖于[JEP260](http://openjdk.java.net/jeps/260)（封装了大部分内部API），导致的结果是[JEP193](http://openjdk.java.net/jeps/193)定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info[报道](http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe)过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见[另一篇报道](http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World)。 
 

@@ -5,13 +5,13 @@
     <description>Read Think Create.</description>
     <link>http://zhenghua.info/</link>
     <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 01 Jun 2016 17:30:58 +0800</pubDate>
-    <lastBuildDate>Wed, 01 Jun 2016 17:30:58 +0800</lastBuildDate>
+    <pubDate>Wed, 01 Jun 2016 17:33:45 +0800</pubDate>
+    <lastBuildDate>Wed, 01 Jun 2016 17:33:45 +0800</lastBuildDate>
     <generator>Jekyll v2.5.2</generator>
     
       <item>
         <title>Java 9发布在即, Oracle着手清理Unsafe类</title>
-        <description>&lt;p&gt;( &lt;a href=&quot;http://www.infoq.com/cn/news/2016/05/29&quot;&gt;原文&lt;/a&gt;和英文原文&lt;a href=&quot;https://www.infoq.com/news/2016/02/29&quot;&gt;Oracle’s OpenJDK Cleanup of “Unsafe” Implementation&lt;/a&gt;发布于infoq中文站.)&lt;/p&gt;
+        <description>&lt;p&gt;( &lt;a href=&quot;http://www.infoq.com/cn/news/2016/05/29&quot;&gt;原文&lt;/a&gt;和英文原文&lt;a href=&quot;https://www.infoq.com/news/2016/02/29&quot;&gt;Oracle’s OpenJDK Cleanup of “Unsafe” Implementation&lt;/a&gt;发布于infoq.)&lt;/p&gt;
 
 &lt;p&gt;java 9正式版预计在2017年2季度发布，目前大部分JEP已经基本成型。其中，最关键特性或许是&lt;a href=&quot;http://openjdk.java.net/jeps/261&quot;&gt;JEP 261&lt;/a&gt;, 该JEP实现了java平台的模块系统, 具体说明可以参见&lt;a href=&quot;http://openjdk.java.net/projects/jigsaw/spec/&quot;&gt;JSR376&lt;/a&gt;。 模块系统依赖于&lt;a href=&quot;http://openjdk.java.net/jeps/260&quot;&gt;JEP260&lt;/a&gt;（封装了大部分内部API），导致的结果是&lt;a href=&quot;http://openjdk.java.net/jeps/193&quot;&gt;JEP193&lt;/a&gt;定义的多个句柄会暴露sun.misc.Unsafe类的功能。此前Info&lt;a href=&quot;http://www.infoq.com/news/2015/07/oracle-plan-remove-unsafe&quot;&gt;报道&lt;/a&gt;过致力于解决sun.misc.Unsafe句柄问题的团队，可能的解决方案细节亦可参见&lt;a href=&quot;http://www.infoq.com/articles/A-Post-Apocalyptic-sun.misc.Unsafe-World&quot;&gt;另一篇报道&lt;/a&gt;。 &lt;/p&gt;
 
