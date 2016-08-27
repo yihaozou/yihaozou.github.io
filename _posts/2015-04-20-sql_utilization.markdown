@@ -31,9 +31,10 @@ categories: 编程
 8.避免在WHERE子句中使用in，not  in，or 或者having,
 可以使用 exist 和not exist代替 in和not in;
 
-9.在WHERE 语句中，尽量避免对索引字段进行计算操作,对索引字段进行计算操作可能会导致无法使用索引，降低效率
+9.在WHERE 语句中，尽量避免对索引字段进行计算操作,对索引字段进行计算操作可能会导致无法使用索引，降低效率，对索引列进行运算，需要建立函数索引。
 
 >......
 where trunc(create_date)=trunc(:date1)
 虽然已对create_date 字段建了索引，但由于加了TRUNC，使得索引无法用上。
 
+10. 查询字段的记录数量过大，超过总数据条目的15%，会引发索引失效。

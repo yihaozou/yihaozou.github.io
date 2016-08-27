@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>为什么应该租赁而不是创建离岸团队</title>
+<meta name="description" content="关于离岸开发中心的运用，有几篇文章提到”拥有”比”租赁”更具优势。平心而论，这些文章写得不错，但是我并不赞成创建自己的开发中心要优于外包的观点。我在圣迭戈拥有外包公司以及附属的两个离岸开发中心，说“租赁”更好有屁股决定脑袋的嫌疑，所以澄清一下，这么说并非出于推销服务的目的，实在是因为成立离岸开发中心比想象中要困难。">
+<meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
+
+<link rel="icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html">
+<link rel="alternate" type="application/atom+xml" title="学习笔记" href="http://zhenghua.info/zfeed.xml" />
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+
+$(document).ready(function(){
+  $(".flip").click(
+      function(){
+        $(".panel").toggle(500);
+      });
+});
+</script>
+
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+
+  <div class="wrapper">
+
+    <h1 class="site-title"><a href="/">学习笔记</a></h1>
+    <h3 class="site-meta">slow is fast.</h3>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+        
+        <a class="page-link" href="/">主页</a>
+        
+        
+        
+        <a class="page-link" href="/about/">关于我</a>
+        
+        
+        
+        <a class="page-link" href="/archives/">写作记录</a>
+        
+        
+        
+        <a class="page-link" href="/categories/">文章分类</a>
+        
+        
+        
+        <a class="page-link" href="/guestbook/">留言簿</a>
+        
+        
+        
+        
+        
+        
+        
+        <a class="page-link" href="/tags/">标签</a>
+        
+        
+        
+        <a class="page-link" href="/zfeed.xml">订阅我</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    
+
+  <div class="page-content col-sm-8">
+    <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">为什么应该租赁而不是创建离岸团队</h1>
+    <p class="post-meta">
+    目录:
+    
+    <a href="/categories/#行业">行业</a>&nbsp;
+     
+    
+    | 标签:
+    
+    <a href="/tags/#经营" title="经营">经营 </a>
+    
+    
+    | 发表时间: Jun 21, 2016
+    </p>
+  </header>
+
+  <article class="post-content">
+    <p>关于离岸开发中心的运用，有几篇文章提到”拥有”比”租赁”更具优势。平心而论，这些文章写得不错，但是我并不赞成创建自己的开发中心要优于外包的观点。我在圣迭戈拥有外包公司以及附属的两个离岸开发中心，说“租赁”更好有屁股决定脑袋的嫌疑，所以澄清一下，这么说并非出于推销服务的目的，实在是因为成立离岸开发中心比想象中要困难。</p>
+
+<p>将软件开发工作转移到海外，并不意味着一定要创建自己的开发中心。一般来说，在海外寻求四五十人规模的开发团队，务实的做法是花一二年时间去调研，外包然后维护，只需要按照流程不出纰漏就好了。但是对于那些要从头创建离岸团队的人来说，特别需要注意：这是在创建一个跨国公司，必然要碰到与之相关的法律，税收，基础设施等各种问题。</p>
+
+<p>多数情况下，针对不同规模的企业，合适的外包伙伴意味着更少的风险、更高的效率和质量，也可以节省时间和配套设施。这可以理解为另一种形式的“云”，为什么要单独建立自己的电塔呢？为什么为了开汽车而去发掘石油呢？用现有的设施就好了！接下来我会分别说明外包开发团队相较于自己创建团队的几项优势。</p>
+
+<h3 id="section">投资</h3>
+
+<p>使用海外开发测试人员以及削减成本时，业内有“garbage in, garbage out”的说法。我们向其他大陆的开发中心投入资源（“垃圾”），结果吃惊地发现出来的并不是定制化的产品。或者我们雇佣了当地的优秀开发人员，沾沾自喜之余，却发现六个月后，他通过外国人工作签证离职去了微软。</p>
+
+<p>在外包开发中，作为客户和企业我都有切身的体验。有一些客户因为商务联系、现有基础设施以及独特的文化背景，建立自己的开发中心相对容易。但是这并不典型，实际情况是：</p>
+
+<ul>
+  <li>许多企业没有很强的海外联系；</li>
+  <li>许多企业无力在海外创建品牌，基础设施以及进行人力资源管理，尤其是那些小公司或创业公司；</li>
+  <li>许多企业试图减少管理相关的工作，将精力集中在代码质量、app、产品和性能上；</li>
+  <li>多数企业运营海外设施时会付出额外的管理费用，而且维护这些设施复杂、昂贵、消耗时间；</li>
+  <li>多数企业想避免复杂、风险和节省时间，但是如果创建自己的开发中心的话，这些是无法避免的。</li>
+</ul>
+
+<p>创建自己的海外开发中心需要格外关注以上提及的五个方面。解决这些问题困难、琐碎并且花费不菲。我感同身受，因为这就是我的日常工作：提供人力给创业公司和中小企业，帮助他们解决宽带、人力、质量之类的问题。</p>
+
+<p>我有两个离岸开发中心，并成立了公司去管理它们，员工们（超过130人）通过不同方式当天向我汇报。我们是个完整的公司，有专业的团队，业务扩展到了圣迭戈、阿曼和开罗。</p>
+
+<p>客户可能在技能和人力上存在不足，我们将自己的团队集成进去，提升他们的能力。需要指出的是，我们并不是二流的团队，或者处于配合地位。我们是一流的，员工的技能和产出达到甚至超出客户的最好水平。</p>
+
+<p>后面我会详细的解释如何吸引和留住这些高水平的员工（其实并不容易）。</p>
+
+<p>但是我更想强调的是，客户应该利用海外人才的优势而不用承担背后的负担。除非他们本身是这方面的专家，在海外拥有公司，不然创建开发中心的劣势是全方位的。通过与我们的合作，客户可以减少许多麻烦。</p>
+
+<h3 id="section-1">基础设施</h3>
+
+<p>上个月，我们位于开罗的办公罗收到一笔物业账单，250000美元。显然，物业公司认为我们钱没有给够。谈判过程开始后，出现了律师、文件、政治在内的各种问题。我是怎么解决的呢？跟创建海外开发中心碰到的其他问题一样，委托给了一个顶级的人力资源和法律团队，该团队熟谙竞争对手、规则以及业务。整个过程对我们而言很痛苦，却是开展业务不得不考虑的因素。客户感觉不到这些，他们接触的是我们的人力、高质量的代码、优秀的团队协作以及靠谱的承诺。若是硅谷的创业公司，突然遇到这类问题，可能就认栽了。</p>
+
+<p>还有个例子。我的朋友，开了很多公司，有一家在墨西哥，曾经碰到了很有意思的问题。在边境南端，他的公司因为涉嫌故意不向“住户”提供足够的停车位而被开出120万美元的罚单。但问题的关键是，该项业务是处理50英亩的墓地，墓地也需要“停车位”。这是要丧尸出笼么？最终我的朋友通过当地的合作伙伴将罚款降低4000美元（不得不承认这很聪明）。这类问题除了带来潜在的风险外，也很容易分散注意力，以及可能的工期延误。</p>
+
+<p>总体来说，国际规则、承诺、税法以及商业法，往轻了说是非常复杂，往重了说关系业务的生存。</p>
+
+<h3 id="section-2">品牌</h3>
+
+<p>（在建立外包团队时）不能指望随便走进当地的酒吧，就能找到合适的优秀工程师。首先，你的品牌得根植于当地的环境和文化，取得潜在员工的信任。当然，如果你自己熟悉或者来自当地，这个过程会简单些。然而，大部分人都不具备这个条件，即便具备了（比方说我），仍然有很长的路要走。建立品牌花费巨大，不仅包括广告和时间成本，还有雇佣不到合适员工的机会成本。</p>
+
+<p>我的第一个外包开发中心设立于约旦安曼，我在当地有深厚的人脉，仍然很难招聘和留住合适的员工。</p>
+
+<p>我的第二个开发中心设立于埃及开罗，开罗和安曼差不多隔了圣迭戈和旧金山的距离。虽然我自己来自并且活跃于这个地区，在成立开发中心亮出招牌时，仍然没有顶级的工程师应聘，一个也没有，只有一些差强人意的候选人。你可能会问为什么？其实在一些欠发达的经济体，稳定的工作机会非常有限，有家室拖累的开发人员很少愿意跳槽，除非确定新的工作机会稳定、有合理的经济回报以及上升预期。发展中国家的雇员们见惯了“明星”企业带着资金和愿景过来，然后又开始打退堂鼓的现象，如此这般，他们也变得精明和谨慎起来。，我们需要时间和资源，来建立能够吸引顶级工程师的招聘品牌，从而满足不同层次客户的需求。</p>
+
+<p>建立招聘品牌非常重要，但是既不容易也不便宜。大多数情况下，最开始你都不知道目标国家的位置和地理，也没有时间和人手去布置展位或者去大会演讲，只好干等一到两年去获取人力市场的信任。</p>
+
+<p>花费不仅仅是在市场推广方面，也包括基础设施的投入。举个例子，在开罗创建开发中心的时候，我估计一层楼就可以装下所有员工，但是我仍然租用了整个四层办公楼。我这么做只不过是为了向过来面试的候选人展示留在当地的决心，以及公司未来的扩展规模。（按照我的经验和务实的估计，即便在像班加罗尔这样的地方开设外包研发中心，花一年时间去招聘，最终只能招聘到四五人）。</p>
+
+<h3 id="section-3">吸引和留住人才</h3>
+
+<p>海外开发团队成功的关键是能够吸引和留住人才。理解当地的文化，尊重当地团队，用同样标准去运营海外团队，以及为工程师提供激励。</p>
+
+<p>针对最后一项工程师激励。提升产品质量，需要多样化的开发测试团队。有人负责解决棘手的问题，有人负责重构和解决错误，有人负责选用合适的协议和文档规范，诸如此类的。与之对应，有人想要物质奖励，有人想要丰厚的年终奖金，额外一周的假期，或者商务度假性质的旅行等等。你得明白，没有一揽子的解决方案，不能依靠“棒棒糖”来打造伟大的团队。但是如果将团队管理委托给第三方，并且合作方靠谱的话，就可以节省很多精力，何乐而不为呢？</p>
+
+<p>作为个体和团队成员，员工需要关心和呵护。这意味着，运营海外开发团队时，也需要有配套的人力资源管理、福利、财务、法律、设施。在硅谷，创业公司或者SMB中流行将支持性的工作委托给专业公司或者直接外包，那么在使用海外开发中心时就更没有必要亲自创建运营了。</p>
+
+<h3 id="section-4">机构，外包，第三方</h3>
+
+<p>并非所有的企业或者合作伙伴使用同样的方式管理员工、团队以及客户关系。多数企业会指定项目经理。我们提供的开发团队，会完全集成到客户的团队，具体的工作方式可以参见<a href="http://www.integrant.com/team/tech2tech-structure/">另一篇文章</a>。</p>
+
+<h3 id="section-5">另一种选择</h3>
+
+<p>没有必要从头创建海外开发中心，最好避免这种情况。然而，选择合适的海外开发合作伙伴也很重要。 不谦虚地讲，我自己的公司就不错。</p>
+
+<p>举个例子，有个老客户，曾经是某大型电子商务公司技术部门负责人，他一直有个不错的想法，并为此离了职去创业，工程相关的工作包括最新的app和插件。他第一时间找到我们，相信我们能够帮他组建团队、实现他的想法，虽然这次已不是原来电商公司的团队。</p>
+
+<p>我们带他飞到埃及，参观我们的开发中心，面见团队成员。在那里他待了两个星期，之后除了发邮件感谢我们的款待外，还建议我们为他组建一个团队。他亲手挑选了那些自我驱动、勤奋、有想法的团队成员，接下来就不用再为亲手创建和维护海外开发中心而头痛。</p>
+
+<h3 id="section-6">不可承受之失败</h3>
+
+<p>百分之九十的创业公司会失败，创业者必须集中精力让自己的产品与众不同并且不犯错误。对大多数创业公司而言，从头创建海外开发中心是作死的行为。到时候，你一定会被团队选择、文化差异、沟通、妥协、规则搞得喘不过气来，这些本来是可以避免的。</p>
+
+<p>就我自己而言，宁愿选择一家信得过的公司外包。这也是我们公司努力的方向。</p>
+
+<h3 id="section-7">关于作者</h3>
+
+<p>Yousef Awad毕业于加州大学圣迭戈分校，获信息系统科学学士学位，在可定制软件开发行业浸淫20多年，拥有编程、数据库管理和项目管理等领域丰富的经验。Yousef 1997年加入Integran公司，Integrant专注于定制化的软件开发，为客户提供外包团队、IT项目管理服务等。Integrant在阿曼、约旦和埃及开罗拥有开发中心，雇佣了全职员工130名。工作之外，Yousef投入了大量的精力向青少年普及编程知识，让他们获得来自工业界的编程指导。</p>
+
+  </article>
+  <hr />
+</div>
+
+
+<section class="pager">
+  <ul>
+    
+    <li class="previous"><a href="/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html" title="Java 9发布在即, Oracle着手清理Unsafe类">&larr; 前一页</a></li>
+    
+    
+    <li class="next"><a href="/%E8%A1%8C%E4%B8%9A/2016/07/13/Benchmarking_netflix_dynomite.html" title="Netlix Dynomite性能基准测试，基于AWS和Redis">后一页 &rarr;</a></li>
+    
+  </ul>
+</section>
+
+<!-- <div id="disqus_thread"></div> -->
+
+<!-- 多说评论框 start -->
+<div class="ds-thread"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhenghua"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+    <section class="pager">
+  
+  
+</section>
+
+
+  </div>
+  <div class="col-sm-2">
+<div class="sidebar-module about">
+  <h4>关于我</h4>
+  <img title="Lijia YU" src="https://i.imgur.com/Mdc4szJl.jpg" alt="Lijia YU"/>
+  <span>Hi,我是邹政华，欢迎访问我的博客。</span>
+  <br />
+
+  
+
+
+
+  
+
+</div>
+
+<div class="sidebar-module">
+  <h4>近期文章</h4>
+  
+  <li>
+  <a href="/%E8%A1%8C%E4%B8%9A/2016/07/13/Benchmarking_netflix_dynomite.html" title="Netlix Dynomite性能基准测试，基于AWS和Redis" rel="bookmark">Netlix Dynomite性能基准测试，基于AWS和Redis</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html" title="为什么应该租赁而不是创建离岸团队" rel="bookmark">为什么应该租赁而不是创建离岸团队</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html" title="Java 9发布在即, Oracle着手清理Unsafe类" rel="bookmark">Java 9发布在即, Oracle着手清理Unsafe类</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  </li>
+  
+  <li>
+  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html" title="张文木－印度与印度洋" rel="bookmark">张文木－印度与印度洋</a>
+  </li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>分类目录</h4>
+  
+  <li><a href="/categories/#读书" title="读书" rel="36">读书 (36)</a></li>
+  
+  <li><a href="/categories/#行业" title="行业" rel="4">行业 (4)</a></li>
+  
+  <li><a href="/categories/#总结与遐想" title="总结与遐想" rel="9">总结与遐想 (9)</a></li>
+  
+  <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
+  
+</div>
+
+
+<div class="sidebar-module">
+  <h4>存档</h4>
+
+  
+  
+  
+  
+  
+  <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2015" > <a href="/archives/#2015">2015</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2014" > <a href="/archives/#2014">2014</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2013" > <a href="/archives/#2013">2013</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li id="2012" > <a href="/archives/#2012">2012</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+
+</div>
+
+
+</div>
+
+
+
+  
+
+  <footer class="site-footer">
+
+  <p>Copyright &copy; <a href="/">学习笔记</a></p>
+  <p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> 
+  on 
+  
+  <a href="https://github.com/">Github</a>
+  
+  | Theme <a href="https://github.com/yulijia/freshman21/">Freshman21</a> Design by <a href="http://yulijia.net">Lijia Yu</a>  
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>
