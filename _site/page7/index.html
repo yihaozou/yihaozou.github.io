@@ -123,6 +123,8 @@ $(document).ready(function(){
         
         
         
+        
+        
       </div>
     </nav>
 
@@ -136,6 +138,133 @@ $(document).ready(function(){
   <div class="page-content col-sm-8">
     <div class="home">
   <div class="post">
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/08/20/linxinliang_class_loader.html">林信良Java学习笔记－类加载器</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#Java" title="Java">Java </a>
+      
+      
+      | 发表时间: Aug 20, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>类加载器的实际职责就是载入.class文档, JDK本身有默认的类加载器, 也可以建立自己的类加载器加入现有的加载器层级。</p>
+
+<p>在文本模式下执行“java ***”指令后, java执行程序会尝试寻找JRE安装目录, 然后寻找JVM, 接着启动JVM并进行初始化动作, 然后产生Bootstrap Loader, Bootstrap Loader会产生Extended Loader, 并将Extended Loader的父加载器设为Bootstrap Loader, 接着Bootstrap Loader会产生System Loader, 并将System Loader的父加载器设为Extended Loader。</p>
+
+<p>Bootstrap Loader通常由C编写; Extended Loader通常由Java编写, 如果是Oracle/Sun JDK, 实际上是对应于sun.misc.Lancher.ExtClassLoader; System Loader是由Java编写, 是加上对应于sun.misc.Launcher.AppClassLoader。</p>
+
+<ul>
+  <li>
+    <p>Bootstrap类加载器-JRE/lib/rt.jar, Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器, 如果你调用String.class.getClassLoader(), 会返回null, 任何基于此的代码会抛出NUllPointerException异常。Bootstrap加载器被称为初始类加载器。</p>
+  </li>
+  <li>
+    <p>Extension类加载器-JRE/lib/ext或者java.ext.dirs指向的目录, Extension将加载类的请求先委托给它的父加载器，也就是Bootstrap, 如果没有成功加载的话，再从jre/lib/ext目录下或者java.ext.dirs系统属性定义的目录下加载类。Extension加载器由sun.misc.Launcher$ExtClassLoader实现。</p>
+  </li>
+  <li>
+    <p>Application类加载器-CLASSPATH环境变量, 由-classpath或-cp选项定义, 或者是JAR中的Manifest的classpath属性定义.System类加载器(又叫作Application类加载器)了.它负责从classpath环境变量中加载某些应用相关的类, classpath环境变量通常由-classpath或-cp命令行选项来定义, 或者是JAR中的Manifest的classpath属性. Application类加载器是Extension类加载器的子加载器. 通过sun.misc.Launcher$AppClassLoader实现.</p>
+  </li>
+</ul>
+
+<p>ClassLoader可以使用loadClass()方法加载类, 使用loadClass()方法加载类时, 默认不会执行静态区块, 真正使用类建立实例时才会执行静态区块。</p>
+
+<p>Java真正需要某个类时才会加载对应的.class文档，而非在程序启动就加载所有类. Bootstrap Loader,Extended Loader,System Loader在程序启动后，就无法再改变它们的搜索路径，如果在程序运行过程中，打算动态决定从其他路径加载类，就要产生新的类加载器，新的类加载器建立后，父加载器建立后，父加载器会设为System Loader.</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/08/19/lin_object_oriented.html">林信良Java学习笔记－面向对象</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#Java" title="Java">Java </a>
+      
+      
+      | 发表时间: Aug 19, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>private成员会被继承,只不过子类无法直接存取, 必须通过父类提供的方法来存取(如果父类愿意提供方法的话)。</p>
+
+<p>protected关键字，类内部和相同包类可以存取，非子类的不同包类不可存取。</p>
+
+<p>无关键字，类内部和相同包类可以存取，不同包类不可存取。</p>
+
+<p>如果对象成员被声明为final, 但没有明确使用=指定值,那表示延迟对象成员值的指定, 在构造函数执行流程中, 一定要有对该数据成员指定值的动作, 否则编译错误.</p>
+
+<p>如果子类中没有指定执行父类中哪个构造函数,默认会调用父类中无参数构造函数。如果向执行父类中某构造函数，可以调用super方法.</p>
+
+<p>无法通过变量参考的对象，就是GC认定的垃圾对象。</p>
+
+<p>如果class前使用了final关键字，表明该类是不可以被继承的。同理，如果方法前有final修饰，表明该方法是不可被重定义的。</p>
+
+<p>多态指的是用单一接口操作多种类型对象。</p>
+
+<p>如果方法中没有任何程序代码操作，可以使用abstract标示该方法为抽象方法，该方法不用撰写{}区块，直接”:”结束即可。</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/08/12/a_way_to_solve_dead_lock_problem.html">一种进程死锁场景及解决方案</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: Aug 12, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>在网络服务器使用进程池模式来响应客户请求时，多个进程在监听同一描述字时调用了accept。但是system V内核以库函数形式实现accept函数，并非原子操作，如果我们仍然用多个进程同时accpt套接字描述符的话，某个子进程的accept就会返回EPROTO错误，表示协议错。解决问题的方法是在应用进程调用accpt前后设置某种形式的锁（lock），这样每次只有一个子进程阻塞在accpt调用，其他进程则阻塞在试图获取锁权限上。</p>
+
+<p>我们在设计ARE进程管理框架时同样使用了进程池模式，也使用了信号量方式用来保证accept操作的原子性。但是实际运行以后经常会出现无法响应客户请求的情况。经排查后发现，问题出现在信号处理函数上。</p>
+
+<pre><code>ppm_sig_handler_install(SIGHUP, worker_suicide);
+ppm_sig_handler_install(SIGTERM, worker_suicide);
+</code></pre>
+
+<p>worker_suicide为信号处理函数，接收到SIGHUP和SIGTERM信号后，终止子进程。但是进程终止后却没有释放信号量。于是其他的子进程一直阻塞在等待获取信号量上。</p>
+
+<p>解决方案非常简单，在信号处理函数worker_suicide中添加锁释放代码。</p>
+
+<pre><code>struct sembuf sop;
+sop.sem_op=1;
+sop.semflg=0;
+semop(mutex_id, &amp;sop, 1);
+</code></pre>
+
+    </article> <hr />
     
     
   
@@ -228,95 +357,6 @@ $(document).ready(function(){
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/07/08/full_permutation_problem.html">全排列，递归及筛选</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Jul 8, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>一个朋友工作中遇到的问题：已知一个任意的自然数T，和一个大于1小于T的自然数L。求小于L的自然数R1，R2，R3…Rn, n个数不限但越小越好，使得R1xR2xR3…xRn大于等于T并最接近于T。同时有多个解取任意解。</p>
-
-<p>我想到的一种方法是全排列，即将所有可能的组合全部尝试一遍。目标组合的乘积R与T的差最小（前提是R&gt;=T),并且目标组合的元素个数最少（在差一样的情况下）。但是这样会碰到两个问题：</p>
-
-<ol>
-  <li>
-    <p>全排列的组合数目太大，对于数组{1,2…N},全排列的数量将是N！，在用递归来解决的时候，对机器性能要求过高（在n很大的情况下）。</p>
-  </li>
-  <li>
-    <p>在n较大的情况下，乘法运算容易导致溢出。而32位整数能够表示的最大自然数为0X7FFFFFFF.</p>
-  </li>
-</ol>
-
-<p>所以对排列进行筛选十分必要，在已有的条件下如果能够判断出候选组合不能满足条件，就没有必要继续递归了。比方说，目标组合有10个元素，但是其中4个元素的乘积与T的差已经大于当前最优方案了，那么就没有必要再计算所有10个元素的乘积了,目标组合被排除。这样可以节约时间并且防止溢出。</p>
-
-<p>解决方案是用c语言实现的，代码托管在https://github.com/yihaozou/select_permutaion</p>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/07/01/thoughts_2.html">遐想（二）</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#总结与遐想">总结与遐想</a>&nbsp;
-      
-      
-      | 发表时间: Jul 1, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>人在年轻的时候总是热心于追逐虚幻遥远的目标，却在不经意间让真正重要的东西从身边溜走。</p>
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/06/23/backblogdb1_0_0.html">Backblogdb插件1.0.0版本</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Jun 23, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>花了一周的时间（下班后）做了这个wordpress插件。功能是备份wordpress数据库并发送到指定的邮箱。经过初步测试后，现在已经能够正常使用。</p>
-
-<p><img src="/images/2014/2014-06-27-backblogdb_01.jpg" alt="Backblogdb界面1" /></p>
-
-<p><img src="/images/2014/2014-06-27-backblogdb_02.jpg" alt="Backblogdb界面2" /></p>
-
-<p>原先没有接触过PHP语言，这次试用以后感觉上手还是挺快的。但是Backblogdb插件的实现结果绝对称不上优雅。主程序Backblogdb.php使用PHP的过程式语言风格写成的，后来为了发送邮件使用了外部邮件库class.simple_mail.php（https://github.com/eoghanobrien/php-simple-mail），这个是用类实现的（PHP的面向对象特性）。</p>
-
-<p>面向对象的优势之一在于可复用性。对于同一个对象，使用类来抽象，可以将该对象所有的行为打包在一起。而如果使用面向过程的方法来抽象的话，会显得过于凌乱。</p>
-
-<p>下一个版本会将插件用面向对象的方式来实现，同时增加备份文件功能（例如wordpress并没有把图片放到数据库里面）和博客自动备份功能。</p>
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -352,6 +392,10 @@ $(document).ready(function(){
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E4%B9%A6%E6%91%98/2016/07/23/elite's%20fail.html" title="精英的兴衰-书摘" rel="bookmark">精英的兴衰-书摘</a>
+  </li>
+  
+  <li>
   <a href="/%E8%A1%8C%E4%B8%9A/2016/07/13/Benchmarking_netflix_dynomite.html" title="Netlix Dynomite性能基准测试，基于AWS和Redis" rel="bookmark">Netlix Dynomite性能基准测试，基于AWS和Redis</a>
   </li>
   
@@ -364,11 +408,7 @@ $(document).ready(function(){
   </li>
   
   <li>
-  <a href="/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html" title="Java 9发布在即, Oracle着手清理Unsafe类" rel="bookmark">Java 9发布在即, Oracle着手清理Unsafe类</a>
-  </li>
-  
-  <li>
-  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  <a href="/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html" title="历史的教训-书摘" rel="bookmark">历史的教训-书摘</a>
   </li>
   
 </div>
@@ -385,7 +425,7 @@ $(document).ready(function(){
   
   <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
   
-  <li><a href="/categories/#书摘" title="书摘" rel="1">书摘 (1)</a></li>
+  <li><a href="/categories/#书摘" title="书摘" rel="4">书摘 (4)</a></li>
   
 </div>
 
@@ -399,6 +439,15 @@ $(document).ready(function(){
   
   
   <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

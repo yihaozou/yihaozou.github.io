@@ -123,6 +123,8 @@ $(document).ready(function(){
         
         
         
+        
+        
       </div>
     </nav>
 
@@ -136,6 +138,269 @@ $(document).ready(function(){
   <div class="page-content col-sm-8">
     <div class="home">
   <div class="post">
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/06/23/from_paxos_to_zookeeper.html">分布式一致性－PAXOS算法</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#分布式系统" title="分布式系统">分布式系统 </a>
+      
+      
+      | 发表时间: Jun 23, 2015
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>在分布式系统中，每一个机器节点虽然读能够明确地知道自己在进行事物操作过程中的结果是成功还是失败，但却无法直接获取到其他分布式节点的操作结果。因此，当一个事物操作需要跨越多个分布式节点的时候，为了保持事物处理的ACID特性，就需要映入一个称为”协调者”(Coordinator)的组件来统一调度所有分布式节点的执行逻辑，这些被调度的分布式节点则被称为”参与者”(Participant)。</p>
+
+<p>假设有一组可以提出提案的进程集合，那么对于一个一致性算法来说需要保证以下几点：</p>
+
+<ul>
+  <li>在这些被提出的提案中，只有一个会被选定</li>
+  <li>如果没有提案被提出，那么就不会有被选定的提案</li>
+  <li>当一个提案被选定后，进程应该可以获取被选定的提案信息</li>
+</ul>
+
+<p>对于一致性来说，安全性(sagety)需求如下：</p>
+
+<ul>
+  <li>只有被提出的提案才能被选定(chosen)</li>
+  <li>只能有一个值被选定</li>
+  <li>如果某个进程认为某个提案被选定了，那么这个提案必须是真的被选定的那个</li>
+</ul>
+
+<p>从整体上来说，Paxos算法的目标就是要保证最终有一个提案会被选定，当提案被选定后，进程最终也能获取到被选定的提案。</p>
+
+<p>在Paxos算法中，有三种参与角色，我们用Proposer,Acceptor和Learner来表示。在具体实现中，一个进程可能充当不止一种角色，在这里我们并不关心进程如何映射到各种角色。假设不同参与者之间可以通过收发消息来进行通信，那么：</p>
+
+<ul>
+  <li>
+    <p>每个参与者以任意速度执行，可能会因为出错而停止，也可能重启。同时，即使一个提案被选定后，所有的参与者也都有可能失败或重启，因此除非那些失败或重启的参与者可以记录某些信息，否则将无法确定最终的值。</p>
+  </li>
+  <li>
+    <p>消息在传输过程中可能会出现不可预知的延迟，也可能会重复或丢失，但是消息不会被损坏，即消息内容不会被篡改</p>
+  </li>
+</ul>
+
+<h3 id="section">提案的选定</h3>
+
+<p>可以使用多个Acceptor来避免Acceptor的单点问题。在存在多个Acceptor的情况下，Proposer向一个Acceptor集合发送提案，集合中的每个Acceptor都可能会批准(Accept)该提案，当有足够多的Acceptor批准这个提案的时候，我们就可以认为该提案被选定了。什么是足够多呢？我们假定足够多的Acceptor是整个Acceptor集合的一个子集，并且让这个集合大得可以包含Acceptor集合中的大多数成员，因为任意两个包含大多数Acceptor的自己至少有一个公共成员。另外我们再规定，每一个Acceptor最多只能批准一个提案，那么就能保证只有一个提案被选定了。</p>
+
+<h3 id="section-1">算法陈述</h3>
+
+<p>阶段一：</p>
+
+<ol>
+  <li>
+    <p>Proposer选择一个提案编号M，然后向Accpter的某个超过半数的子集成员发送编号为M的Prepara请求</p>
+  </li>
+  <li>
+    <p>如果一个Acceptor收到一个编号为M的prepare请求，且编号M大于该Acceptor已经响应的所有Prepare请求的编号，那么它就会将它已经批准过的最大编号的提案作为响应反馈给Proposer，同时该Acceptor会承诺不会再批准任何编号小于M的提案。举个例子，假定一个Acceptor已经响应过的所有Prepare请求对应的提案编号分别为1,2,…5和7，那么该Acceptor在接收到一个编号为8的Prepare请求后，就会将编号为7的提案作为响应反馈给Proposer</p>
+  </li>
+</ol>
+
+<p>阶段二：
+1. 如果Proposer收到半数以上的Acceptor对于其发出的编号为M的prepare请求的响应那么他就会发送一个针对［M, V]提案的Accept请求给Acceptor。注意，V的值就是收到的响应中编号最大的提案的值，如果响应中不包含任何提案，那么它就是任意值。</p>
+
+<ol>
+  <li>如果Acceptor收到这个针对[M，V]提案的Accept请求，只要该Acceptor尚未对编号大于M的Prepare请求做出响应，它就可以通过这个提案。</li>
+</ol>
+
+<h3 id="section-2">提案的获取</h3>
+
+<p>方案一：</p>
+
+<p>Learner获取一个已经被选定的提案的前提是，该提案已经被半数以上的Acceptor皮春，因此最简单的做法就是一旦Acceptor批准了一个提案，就将该提案发送给所有的Learner。</p>
+
+<p>这种做法需要每个Acceptor和所有的Learner逐个进行一次通信，通信次数至少为二者个数的乘积</p>
+
+<p>方案二：</p>
+
+<p>让所有的Acceptor将它们对提案的批准情况，统一发送给一个特定Learner（称为“主Learner”），在不考虑拜占庭将军问题的前提下我们假定Learner之间可以通过消息通信来互相感知提案的选定情况。基于这样的前提，当主Learner被通知一个提案已经被选定时，它会负责通知其他的Learner。</p>
+
+<p>这种做法的风险在于：主Learner随时可能出现鼓掌。</p>
+
+<p>方案三：</p>
+
+<p>针对方案二的单点问题，可以将主Learner的范围扩大，即Acceptor可以将批准的提案发送给一个特定的Learner集合，该集合中的每个Learner都可以在一个提案被选定后通知所有其他的Learner。这个Leaner集合的元素个数越多，可靠性就约好，但同时网络通信的复杂度也就越高。</p>
+
+<h3 id="proposer">通过选取主proposer保证算法的活性</h3>
+
+<p>可能会存在这样一种极端情况，有两个Proposer依次提出了一系列编号递增的议案，但是最终都无法被选定。解决这个问题可以选择一个主Proposer，并规定只有主Proposer才能提出议案。这样一来，只要主Proposer和过半Acceptor能够正常进行网络通信，那么但凡主Proposer提出一个编号更高的提案，该提案终将会被批准。</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/06/12/the_cathedral_and_the_bazaar.html">大教堂与集市</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 发表时间: Jun 12, 2015
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>一</p>
+
+<p>在quora上看到的问题「为什么会有人无偿创建像维基百科这样的网站?」，吉米.威尔士本人的回答是，「因为这棒极了（awesome)」。我认为这个回答较好地体现了黑客精神，因此特意摘录了下来。</p>
+
+<p>二</p>
+
+<p>那么究竟什么是黑客精神呢？</p>
+
+<p>长期以来，存在一个崇尚高尚文化且成员都是编程专家和网络高手的社区（早期网络和主机普及度不高，所以用户大多来自学术圈或大公司实验室），这个社区的成员创造了黑客一词，黑客构建了互联网、UNIX操作系统、Usenet以及广泛应用的万维网WWW。</p>
+
+<p>这个世界充满了各种各样迷人的问题，黑客的使命是去解决这些问题。成为一名黑客意味着对解决问题、磨砺技能和智力挑战有着基本的兴奋感。</p>
+
+<p>黑客精神并不局限于软件文化中。人们会把黑客态度用在其他事情上，比如电子或音乐。对任何科学和艺术，在其最高水平的活动中都可以发现这种精神。</p>
+
+<p>三</p>
+
+<p>要向外行解释软件开发这个行当，可以用建筑业来进行类比，开发一个软件就像盖一栋房子。</p>
+
+<p>若要盖一个教堂，需要事先进行设计，收集原材料，然后将优秀的工匠集中在一起，这些人经过几个月或几年与外界相对隔绝的工作状态后最终产生了成果。大教堂的特点是封闭式建设、成本高、品质优异。传统的软件开发理念大多是基于这一模式。</p>
+
+<p>与大教堂相对应的是集市。集市的特点是开放式建设、成本低、品质平庸，但是如果将软件开发置于透明和民主的氛围中，更好的完善其开发过程，也同样能够减少最终Bug的产生。</p>
+
+<p>绝大多数商业公司采用了“大教堂”模式，而以Linux为代表的开源软件采用的是“集市”模式，两者根本不同点在于他们对软件排错有着完全对立的认识。从Linux的经验出发，证实了这样一个命题“只要眼睛多，bug容易捉”，这和那些由利己主义个体组成的自纠错系统有着异曲同工之妙。</p>
+
+<p>互联网的普及，使得黑客之间有了广泛的交流与合作，他们编些软件时所采用的便是集市模式。黑客们卓越的天赋和工作成果产生了广泛的影响，引发了后来轰轰烈烈的开源运动。</p>
+
+<p>现如今广泛使用的Linux、Apache、Nginx、Mysql等都是开源软件。</p>
+
+<p>四</p>
+
+<p>黑客们参与开源运动的热情可以归结为“礼物文化”。</p>
+
+<p>“礼物文化”指的是，参与者付出时间、精力和创意，去竞争获取声望的文化。这类似于法律和政治学里关于土地所有制的习惯法理论，如果边缘地区有一块土地，人们可以通过开垦、耕种、守护来获取土地所有权，与之相对应的是，黑客们通过贡献和维护代码来体现在项目中的地位。</p>
+
+<p>自由市场经济是全世界范围内通过合作获得经济效能的最佳方法，这一点看来已成为历史定论，同样，基于声誉竞争的礼物文化可能是通过合作产生（和检验）高质量创造性工作的最佳方法。</p>
+
+<p>五</p>
+
+<p>开源是一种手段，而不是目的。</p>
+
+<p>我们总能在宗教和政治领域看到各种各样的原教旨主义者。在软件开发领域也同样如此，比方说Richard Stallman坚持认为贩卖不附带源代码的二进制软件是十分不道德的。这种指责虽然尖刻，但并不能给竞争对手带来实质性的损害。</p>
+
+<p>软件开发附属于商业行为基础之上，否定这个基础并不是理性务实的做法。只有证明自己的商业潜力，开源运动才能获得主流媒体和华尔街的认同，进一步的发展和扩张才有可能持续。</p>
+
+
+    </article> <hr />
+    
+    
+  
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/05/25/High_availability_architecture.html">大型网站技术架构-网站高可用架构</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#架构" title="架构">架构 </a>
+      
+      
+      | 发表时间: May 25, 2015
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p><strong>一、网站可用性度量</strong></p>
+
+<ul>
+  <li>
+    <p>网站不可用时间(故障时间)=故障修复时间点－故障发现(报告)时间点</p>
+  </li>
+  <li>
+    <p>网站年度可用性指标＝(1-网站不可用时间/年度总时间)＊100%</p>
+  </li>
+</ul>
+
+<p>对于大多数网站而言,2个9是基本可用，网站年度不可用时间小于88小时；3个9是较高可用，网站年度不可用时间小于9小时；4个9是具有自动回复能力的高可用，网站年度不可用时间小于53分钟；5个9是极高可用，网站年度不可用时间小于5分钟。</p>
+
+<p><strong>二、网站可用性考核</strong></p>
+
+<p>故障权重分类：</p>
+
+<ul>
+  <li>事故级故障：严重故障，网站整体不可用，权重100；</li>
+  <li>A类故障：网站访问不顺畅或核心功能不可用，权重20；</li>
+  <li>B类故障：非核心功能不可用，或核心功能少数用户不可用，权重5；</li>
+  <li>C类故障：以上故障以外的其他故障，权重1.</li>
+</ul>
+
+<p>故障分＝故障时间(分钟)＊故障权重</p>
+
+<p>在年初或者考核季度的开始，会根据网站产品的可用性指标计算总的故障分，然后根据团队和个人的职责角色分摊故障分，这个可用性指标和故障分是管理预期。在实际发生故障的时候，根据故障分类和责任划分将故障产生的故障分分配给责任者承担。等年末或者考核季末的时候，个人级团队实际承担的故障分如果超过了年初分摊的故障分，绩效就会受到影响。</p>
+
+<p><strong>三、高可用的应用</strong></p>
+
+<p>一个典型的网站可以大致分为应用层、服务层、数据层三个层次。</p>
+
+<p>应用服务器的高可用架构设计主要基于服务无状态性这一特性，但是事实上，业务总是有状态的，比方说在电商网站中，需要有购物车记录用户的购买信息。Web应用中将这些多次请求修改使用的上下文对象称作会话(Session),单机情况下，Session可由部署在服务器上的Web容器（如JBoss）管理。在使用负载均衡的集群环境中，由于负载均衡服务器可能会将请求分发到集群任何一台应用服务器上，所以保证每次请求依然能够获得正确的Session比单机时要复杂很多。</p>
+
+<p>集群环境下Session管理主要有以下几种手段：</p>
+
+<ul>
+  <li>Session复制：每台服务器上都保存所有用户的Session信息，优点是简单，只能使用在在集群规模比较小的情况下。</li>
+  <li>Session绑定:利用负载均衡的源地址Hash算法实现，将来源于同一IP的请求分发到同一台服务器上（也可以根据Cookie信息将同一个用户的请求总是分发到同一台服务器上，前提是负载均衡服务器必须工作在HTTP协议层上）</li>
+  <li>利用Cookie记录Session，缺点是受Cookie大小限制</li>
+  <li>Session服务器，采用专门的Session服务器来同一管理Session。对于有状态的Session服务器，一种比较简单的方法是利用分布式缓存、数据库等，在这些产品的基础上进行包装，使其符合Session的存储和访问要求。如果业务场景对Session管理有比较高的要求，比如利用Session服务集成单点登录(SSO)、用户服务等功能，需要开发专门的Session服务管理平台。</li>
+</ul>
+
+<p><strong>四、高可用的服务</strong></p>
+
+<ul>
+  <li>
+    <p>分级管理：高优先级服务部署在不同的物理机上，核心服务和数据考虑部署在不同地域的数据中心。低优先级服务通过启动不同线程或者部署在不同的虚拟机上进行隔离。</p>
+  </li>
+  <li>超时设置：设置服务调用超时时间，一旦超时，抛出异常，服务调度策略可选择重试或将请求转移到提供相同服务的其他服务器上</li>
+  <li>异步调用：应用对服务的调用通过消息队列等异步方式完成，避免一个服务失败导致整个应用请求失败的情况。</li>
+</ul>
+
+<p>服务降级</p>
+
+<ul>
+  <li>拒绝服务：拒绝低优先级应用的调用，减少服务调用并发数，或者随机拒绝部分请求调用，节约资源</li>
+  <li>关闭服务：关闭部分不重要的服务</li>
+</ul>
+
+<p>冥等性设计</p>
+
+<p>服务重复调用是无法避免的，应用层也不需要关心服务是否真的失败，只要没有受到调用成功的响应，就可以认为调用失败，并重试服务调用。因此必须保证服务重复调用和调用一次产生的结果相同，即服务具有冥等性。（常见的如转账操作）</p>
+
+<p><strong>五、高可用的数据</strong></p>
+
+<p>CAP原理：一个提供数据服务的存储系统无法同时满足数据一致性(consistency)、数据可用性(Availability)、分区耐受性(Patition Tolerance,系统具有跨网络分区的伸缩性)。CAP原理对于可伸缩的分布式系统设计具有重要意义，在系统设计开发过程中，不恰当地迎合各种需求，企图打造一个完美的产品，可能会使设计进入两难境地，难以为继。</p>
+
+<p><strong>六、网站发布</strong></p>
+
+<p>灰度发布：大型网站的主要业务服务器集群规模非常庞大，一旦发现故障，即使想要发布回滚也需要很长时间才能完成。为了应付这种局面可以将集群服务器分成若干部分，每天只发布一部分服务器，观察运行稳定没有故障，然后继续发布一部分服务器，往往持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可。</p>
+
+
+    </article> <hr />
     
     
   
@@ -284,339 +549,6 @@ where trunc(create_date)=trunc(:date1)
     
     
   
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/04/15/Designing_design.html">设计中的设计</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#读书">读书</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#设计" title="设计">设计 </a>
-      
-      
-      | 发表时间: Apr 15, 2015
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>这本书的英文名《designing design》，直译为“设计（动词）设计（名词）”，其实表达的含义是“我理解的设计”，呼应书中“用语言表达设计是另一种设计行为”这一观点。引入中国后书名成了“设计中的设计”，读起来很顺口，但曲解了作者的意图，不过我暂时也找不到更合适的表述方式，只能作罢，免得从一开始就陷入细节中脱不出身来。</p>
-
-<p>选择阅读这本与工作并无相关的书有两方面原因。其一，大部分行业的门槛并没有高到普通人接受不了的地步，而要获得一个行业科普性的认识，往往只需要几个小时。这个过程并非毫无意义，生活中随处可见的误解和偏见经常是由缺乏基本的常识引发的，与其抱着轻浮的心态去评论别人的工作，不如沉下心来做一些功课，这也是认识和提升自我的机会。其二，对日本设计业的好奇和好感也诱发我打开了这本书，好奇之处在于，在成熟的工业国家里，产品的设计并不单单是为了满足使用功能，它们通常灌注了设计师的美学理念，日本的美学简单纯粹又容易趋向极端，比如樱花被春风吹成漫天粉雪，日本人认为这是极致的美，又如死亡也可以渲染成艺术，刚开始很难理解这种心理动机，仔细思考后还是会觉得困惑；好感之处在于日本的传统建筑、饮食、汽车、衣饰等，处处透露着简单、节约、谦逊的特点，特别能够打动人心。</p>
-
-<p>回归到书的内容，设计的想法，从广义上来讲，就是通过理性、综合性的创造来追求一种人类思维的普遍平衡与和谐。设计，就是通过做东西的过程对人类的生活与存在的意义进行阐释的行为。人们通常会混淆设计为艺术，俩者存在交集却有原则性的差异，艺术说到底是个人意愿对社会的一种表达，其起源带有非常个人化的性质。而设计，则基本上不是一种自我表达，它源于社会，设计的实质在于发现一个很多人都遇到的问题然后试着去解决的过程。</p>
-
-<p>在工业革命之前，大部分产品都是由手工打造的，传统手工文化的精细优雅风格在欧洲由来已久，这个时期的产品通常保有过分装饰的宫廷气息。机械化大生产给经济带来了活力，快速而大量的生产与消费是工业时代的产物，但是制造水平的落后使得产品的造型并不具备美感。追求美好是人的天性，人们的审美意识对工业机制产生反弹后，现代设计的概念由此而生。日本的设计观念来源于欧美，由于西方文化与日本传统文化迥异，日本设计师学习、吸纳、创新然后再回归传统是一个痛楚而漫长的过程。</p>
-
-<p>原研哉认为，“日本人时常把自己放到世界的边缘，而且在其内心深处，总有一颗乡下人般的灵魂。这不是自卑的恶习。与其像美国那样自以为是世界的中心，还不如置身边缘，保持更为审慎的世界观。”日本的审美意识，是以边缘意识平衡了所接受的各种文化感觉后形成的。日本因为地理位置形成的独特文化感受，再加上近代以来日本与世界生成的复杂关系，共同造就了今天的日本。日本文化所推崇的简单意象－在空无一物的空间里配置一点东西的构思方式，即使在亚洲也属于特例。</p>
-
-<p>在这本以作品集形式出现的《设计中的设计》中，日本传统美学理念以及原研哉个人设计思想得到了完整的体现。</p>
-
-<p><strong>一、RE-DESIGN再设计</strong></p>
-
-<p>用明亮的眼睛看待日常，得出设计的新思路。从零开始搞出新东西来是创造，而将已知变成未知也是一种创造行为。</p>
-
-<p><img src="/images/2015/2015-04-15-01－roll_paper.jpeg" alt="image" /></p>
-
-<p>“在抽取卷在四角形纸管的卫生纸时，一定会因为产生阻力而发出喀哒喀哒的声音，这个设计的用心之处正在于它造成的不便：因为四角形的卫生纸卷筒会产生阻力，这种阻力发出的信息和实现的功能便是节约资源。”</p>
-
-<p><img src="/images/2015/2015-04-15-02-match.jpeg" alt="image" /></p>
-
-<p>“这些火柴是把落在地上的小树枝收集起来，在小树枝的尖端涂上发火剂做成的。我的想法是在人们把这些小树枝还给地球母亲之前，让它们为人类再做点事情。我们在回顾人类与火的共同进化史的同时，想象着有关火的传说与故事。唤起人们对自然、火、人以及各种各样世间万物的印象。”</p>
-
-<p><strong>二、HAPTIC五感的觉醒</strong></p>
-
-<p>一个人就是一套努力认知世界的感觉系统。虽说今天的世界据说处于一种信息过剩状态，实际上可能并不富裕。泛滥的只是媒介中的零零碎碎的信息，每个碎片中的信息量实际上很少。在这种半生不熟的信息中，大脑怎么会不感到压抑呢？大脑的压抑力不是因为数量，而是因为有限的质量。</p>
-
-<p><img src="/images/2015/2015-04-15-03-ghost_lamp.jpg" alt="image" /></p>
-
-<p>基于日本传统鬼灯，以植发技术将毛发粘上去，给人一种惊悚感。</p>
-
-<p><img src="/images/2015/2015-04-15-04-tadpole.jpeg" alt="image" /></p>
-
-<p>蝌蚪杯垫。令人想起因表面张力而膨胀喷洒出来的水。</p>
-
-<p><strong>三SENSEWARE引人兴趣的媒介</strong></p>
-
-<p><img src="/images/2015/2015-04-15-05-book.jpg" alt="image" /></p>
-
-<p>为冬奥会设计的宣传手册，“使用白色松软的纸张，以压凹和烫透的表现技法，使得文字部分凹陷下去，而且凹陷下去的部分呈现出冰一般的半透明效果…就像脚踩在松软的雪地上，足迹变成半透明的冰渗透到黑色的泥土里，在雪地上留下一串串脚印…我的想法就是让观众们在触摸到这种纸张的时候能够唤醒起它们的脑海中曾经有过的记忆。“</p>
-
-<p><img src="/images/2015/2015-04-15-06-sign.jpg" alt="image" /></p>
-
-<p>为儿童医院做的标识，“特地使用不耐脏的白色棉布，可以向人们传递出一种信息：我们经常清洗容易脏的东西。院方正是通过这一行为向住院者表明了自己确保医院清洁的意志。”</p>
-
-<p><strong>四、MUJI无印良品</strong></p>
-
-<p>欲望有时牵涉到沉迷，引起自我中心主意，或敲响心酸的音符。如果人类这样一路随着欲望狂奔的话，最后可能会进入一个死胡同。追逐欲望、为胃口所驱使的消费社会与个性文化均会碰壁。今天我们应将价值赋予可接受的质量：节制、让步以及超然的理性。设计如同一颗树上的果实。在产品设计上，汽车和冰箱就是果实。如果你离开一段距离去看果实，你会看到结满果实的树下，是果实生长的土壤。对长出好果子的全过程重要的是土壤的状况。如果我们想要好果实，我们必须培育土壤，虽然那看起来离果实有点远。</p>
-
-<p><img src="/images/2015/2015-04-15-07-the_horizon.jpg" alt="image" /></p>
-
-<p>“…美丽的地平线，这是一副清新怡人的画面。这又是一个空无一物的容器，它能容纳每一个看到地平线的人的想法。”</p>
-
-<p><img src="/images/2015/2015-04-15-08-muji.jpg" alt="image" /></p>
-
-<p>“作为一个品牌，无印良品既无撼人的特质，亦无特定的美学。我们不想成为那种挑逗或刺激强烈胃口的玩意儿，我们想给顾客这种满足感：这东西就行，而非这就是我想要的。即便是在接受范围内，也有一个适当的度。我们的目标是把它提得尽量高。”</p>
-
-<p><strong>五、从亚洲的顶端看世界</strong></p>
-
-<p>日本的审美意识，是以边缘意识平衡了所接受的各种文化感觉后形成的。日本因为地理未知形成的独特文化感受，再加上近代以来日本与世界生成的复杂关系，共同造就了今天的日本。世界交流日益频繁，特意强调个别文化的独特性是没有意义的。然而，作为一名设计师，自觉意识到日本文化中的特质是有意义的。</p>
-
-<p>一个国家的告诉成长时期很像是一个人的青春期。而日本，已经历过了青春时代。不论是经济或文化都会走入成熟期，处于成熟期的人们应该清楚地意识到：人类的幸福并不是只能在持续增长的经济中找到。我们应该对“异国文化”、“经济”、“科技”等这些因素进行冷静的思考，意识到自身文化的长处所在，争取生成一种成熟文化应该具有的典雅气质。不然的话，日本就会成为一个无趣的国家。</p>
-
-<p><img src="/images/2015/2015-04-15-09-house_in_the_sky.jpg" alt="image" /></p>
-
-<p>天空之森。”与自然相关联便是等待，而在不会不绝的等待中，我们便被大自然的丰富包围了。“</p>
-
-<p><img src="/images/2015/2015-04-15-10-bottle.jpeg" alt="image" /></p>
-
-<p>酒瓶。“美好的设计是空灵虚无的“。</p>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/03/12/java_concurency_object_share.html">Java并发编程实践－Executor框架</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#读书">读书</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#Java" title="Java">Java </a>
-      
-      
-      | 发表时间: Mar 12, 2015
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>线程池简化了线程的管理工作，java.util.concurrent提供了一种灵活的线程池实现作为Executor框架的一部分.在Java类库中, 任务执行的主要抽象不是Thread, 而是Executor。</p>
-
-<p>public interface Executors{
-	void execute(Runnable command);
-}</p>
-
-<p>Executor基于生产者－消费者模式，提交任务的操作相当于生产者，执行任务的线程则相当于消费者。如果要在程序中实现一个生产者－消费者的设计，那么最简单的方式通常就是使用Executor。</p>
-
-<pre><code>class taskExecutionWebServer{
-	private static final int NTHREADS = 100;
-	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
-
-	public static void main(String[] args) throws IOException{
-		ServerSocket socket = new ServerSocket(80);
-		while(true){
-			final Socket connection = socket.accept();
-			Runnable task = new Runnable(){
-				public void run(){
-					handleRequest(connection);
-				}
-			};
-			exec.execute(task);
-		}
-	}
-}
-</code></pre>
-
-<p>在TaskExecutionWebServer中，通过使用Executor，将请求处理任务的提交与任务实际执行解耦开来，并且只需采用另一种Executor实现，就可以改变服务器的行为。改变Executor实现或配置所带来的影响要远远小于改变任务提交方式带来的影响。</p>
-
-<p>在线程池中执行任务比单独为每个任务分配一个线程优势更多。首先可分摊线程创建和销毁过程中产生的巨大开销，提高响应性能。同时通过适当调整线程池的大小，提高处理器利用效率；还能防止过多线程耗尽系统资源。</p>
-
-<p>Executor的集中静态工厂方法：newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool.</p>
-
-<pre><code>class taskExecutionWebServer{
-	private static final int NTHREADS = 100;
-	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
-
-	public static void main(String[] args) throws IOException{
-		ServerSocket socket = new ServerSocket(80);
-		while(！exec.isShutdown()){
-			try{
-				final Socket connection = socket.accept();
-				Runnable task = new Runnable(){
-					public void run(){
-						handleRequest(connection);
-					}
-				};
-				exec.execute(task);
-			}catch(RejectedExecutionException e){
-				if(!exec.isShutdown())
-					log("task submission rejected", e);
-			}
-			
-		}
-	}
-	public void stop(){
-		exec.shutdown();
-	}
-
-	void handleRequest(Socket connection){
-		Request req = readRequest(connection);
-		if(isShutdownRequest(req))
-			stop();
-		else
-			dispatchRequest(req);
-	}
-}
-</code></pre>
-
-<p>ExecutorService是java.util.concurrent包提供的接口，在Executor的基础上提供生命周期管理。ExecutorService的生命周期有三种：运行，关闭，和已终止。其中shutdown方法将执行平缓的关闭过程，不再接受新的任务，同时等待已经执行完毕的任务执行完毕。</p>
-
-<p>在单个客户请求中仍有可能存在可发掘的并行性，下面给出一个页面浏览器的例子。</p>
-
-<p>最简单的方式是对html文档进行串行处理。当遇到文本标签是，将其绘制到页面中。当遇到图像缓存时，先通过网络获取它，然后再将起绘制到图像缓存中。图像下载过程中的大部分时间都是再等待I/O操作执行完成，在这期间CPU几乎不做任何工作，因此这种串行执行的方法没有充分地利用CPU，使得用户再看到最终页面之前要等待过长的时间。</p>
-
-<pre><code>public class SingleThreadRenderer{
-	void renderPage(CharSequence source){
-		renderText(source);
-		List&lt;ImageData&gt; imageData = new ArrayList&lt;ImageData&gt;();
-		for(ImageInfo imageInfo: scanForImageInfo(source))
-			imageData.add(imageInfo.downloadImage());
-		for(ImageData data: imageData)
-			renderImage(data);
-	}
-}
-</code></pre>
-
-<p>通过将问题分解为多个独立的任务并发执行，能够获得更高的CPU利用率和响应灵敏度。</p>
-
-<p>Runnable是一种有很大局限的抽象，虽然run能写入到日志文件或者将结果放入某个共享的数据结构，但它不能返回或抛出一个受检查的异常。</p>
-
-<p>Callable是一种更好的抽象:它认为主入口点（即call）将返回一个值，并可能抛出一个异常。再Executor中包含了一些辅助方法能将其他类型的任务封装为一个Callable，，例如Runnable。</p>
-
-<p>再Executor框架中，已提交但尚未开始的任务可以取消，但对于那些已经开始执行的任务，只有当它们能响应中断时，才能取消，取消一个已经完成的任务不会有任何影响。</p>
-
-<p>Callable和Future有助于标示协同任务之间的交互。再FutureRenderer中，我们创建了一个Callable来下载所有的图像，并将其提交到一个ExecutorService。这将返回一个描述任务执行情况的Future。当祝任务需要图像时，它会等待Furure.get的调用结果，这样，图像的下载任务和渲染页面是同步进行的。
-public class FutureRenderer{
-	private final ExecutorService executor= …;</p>
-
-<pre><code>void renderPage(CharSequence source){
-	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
-	Callable&lt;List&lt;ImageData&gt; task = new Callable&lt;List&lt;ImageData&gt;&gt;(){
-		public List&lt;ImageData&gt; call(){
-			List&lt;ImageData&gt; result = new ArrayList&lt;ImageData&gt;();
-			for(ImageInfo imageInfo:ImageInfos)
-				result.add(ImageInfo.downloadImage());
-			return result;
-		}
-	};
-
-	Future&lt;List&lt;ImageData&gt;&gt; future = executor.submit(task);
-	renderText(source);
-
-	try{
-		List&lt;ImageData&gt; imageData = future.get();
-		for(ImageData data:imageData)
-			renderImage(Data);
-	}catch(InterruptedException e){
-		Thread.currentThread().interrupt();
-		future.cancel(true);
-	}catch(ExecutionException e){
-		throw launderThrowable(e.getCause());
-	}
-} }
-</code></pre>
-
-<p>如果渲染文本的速度远远高于下载图像的速度，那么程序的性能与串行执行时的性能差别不大，因此程序还有优化的空间。</p>
-
-<p>只有当大量相互独立且同构的任务可以并发进行处理时，才能体现出将程序的工作负载分配到多个任务中带来的真正性能提升。</p>
-
-<p>CompletionService将Executor和BlockingQueue的功能融合在一起，可以将Callable交给它来执行，然后使用类似于队列操作的take和poll方法来获得已完成的结果，而这些结果会在完成时被封装为Future。</p>
-
-<p>public class Renderer{
-	private final ExecutorService executor;</p>
-
-<pre><code>Renderer(ExecutorService executor){
-	this.executor = executor;
-}
-
-void renderPage(CharSequence source){
-	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
-	CompletionService&lt;ImageData&gt; completionService = new ExecutorCompletionService&lt;ImageData&gt;(executor);
-	for(final ImageInfo imageInfo:info){
-		completionService.submit(new Callable&lt;ImageData&gt;(){
-			public ImageData call(){
-				return imageInfo.downloadImage();
-			}
-		}
-	}
-
-	renderText(source);
-
-	try{
-		for(int t=0,n=info.size(); t&lt;n; t++){
-			Future&lt;ImageData&gt; f = completionService.take();
-			ImageData imageData = f.get();
-			renderImage(imageData);
-		}
-	}catch(InterruptedException e){
-		Thread.currentThread().interrupt();
-	}catch(ExecutionException e){
-		throw launderThrowable(e.getCause());
-	}
-} }
-</code></pre>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html">Java并发编程实践－线程安全性</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#读书">读书</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#Java" title="Java">Java </a>
-      
-      
-      | 发表时间: Mar 10, 2015
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>一个线程是否需要是线程安全的，取决于它是否被多个线程访问。当多个线程访问某个状态变量并且其中有一个线程执行写入操作时，必须采用同步机制来协同这些线程对变量的访问。访问某个变量的代码越少，就越容易确保对变量的所有访问能实现正确同步，程序状态的封装性约好，就越容易实现程序的线程安全性。</p>
-
-<p>有时候，面向对象中的抽象和封装会降低程序的性能，但在编写并发应用程序时，一种正确的编程方法是，首先使程序正确运行，然后再提高代码的速度。即便如此，最好也只是当性能测试结果和应用需求告诉你必须提高性能，以及测量结果表明这种优化再实际环境中确实能带来性能提升时，才进行优化。</p>
-
-<p>无状态对象一定是线程安全的：无状态指的是既不包含任何域，也不包含任何对其他类中域的引用。</p>
-
-<p>当某个计算的正确性取决于多个线程的交替执行时序时，那么就会发生竞态条件，从而使结果变得不可靠。大多数竞态条件的本质，基于一种可能失效的观察结果来做出判断或者执行某个计算。这种类型的竞态条件称为“先检查后执行”，首先观察某个条件为真，然后根据这个观察结果采用相应的动作，但事实上，在你观察到这个结果以及开始创建文件之间，观察结果可能变得无效，从而导致各种问题。</p>
-
-<p>要保持状态的一致性，就需要在单个原子操作中更新所有相关的状态变量。</p>
-
-<p>重入：当线程请求一个由其他线程持有的锁时，发出请求的线程就会阻塞。但是某个线程试图获得一个已经由它自己持有的锁，那么这个请求就会成功。</p>
-
-<p>并非所有数据都需要锁的保护，只有被多个线程同时访问的可变数据才需要通过锁来保护。</p>
-
-<p>对在单个变量上实现原子操作来说，原子变量很有用，但由于我们已经使用了同步代码块来构造原子操作，而使用两种不同的同步机制不仅会带来混乱，也不会在性能或安全性上带来任何好处。</p>
-
-<p>在简单性和性能之间存在着相互制约因素。当实现某个同步策略时，一定不要盲目地为了性能而牺牲简单性，这可能会破坏安全性。</p>
-
-<p>当执行时间较长的计算或者可能无法快速完成的操作时（例如网络I/O或者控制台I/O），一定不要持有锁。</p>
-
-
-    </article> <hr />
-    
-    
-  
   </div>
 </div>
 
@@ -652,6 +584,10 @@ void renderPage(CharSequence source){
   <h4>近期文章</h4>
   
   <li>
+  <a href="/%E4%B9%A6%E6%91%98/2016/07/23/elite's%20fail.html" title="精英的兴衰-书摘" rel="bookmark">精英的兴衰-书摘</a>
+  </li>
+  
+  <li>
   <a href="/%E8%A1%8C%E4%B8%9A/2016/07/13/Benchmarking_netflix_dynomite.html" title="Netlix Dynomite性能基准测试，基于AWS和Redis" rel="bookmark">Netlix Dynomite性能基准测试，基于AWS和Redis</a>
   </li>
   
@@ -664,11 +600,7 @@ void renderPage(CharSequence source){
   </li>
   
   <li>
-  <a href="/%E8%A1%8C%E4%B8%9A/2016/05/07/oracle_openjdk_cleanup_of_unsafe_class.html" title="Java 9发布在即, Oracle着手清理Unsafe类" rel="bookmark">Java 9发布在即, Oracle着手清理Unsafe类</a>
-  </li>
-  
-  <li>
-  <a href="/%E8%AF%BB%E4%B9%A6/2016/02/20/well_grounded_java_developer.html" title="Java程序员修炼之道－性能调优" rel="bookmark">Java程序员修炼之道－性能调优</a>
+  <a href="/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html" title="历史的教训-书摘" rel="bookmark">历史的教训-书摘</a>
   </li>
   
 </div>
@@ -685,7 +617,7 @@ void renderPage(CharSequence source){
   
   <li><a href="/categories/#编程" title="编程" rel="10">编程 (10)</a></li>
   
-  <li><a href="/categories/#书摘" title="书摘" rel="1">书摘 (1)</a></li>
+  <li><a href="/categories/#书摘" title="书摘" rel="4">书摘 (4)</a></li>
   
 </div>
 
@@ -699,6 +631,15 @@ void renderPage(CharSequence source){
   
   
   <li id="2016" > <a href="/archives/#2016">2016</a></li>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
