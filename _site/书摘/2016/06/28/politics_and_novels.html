@@ -7,13 +7,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width initial-scale=1">
 
-<title>c++ primer-using声明与using指示</title>
-<meta name="description" content="（摘录自Stanley B. Lippman等c++ primer人民邮电出版社英文版第四版，p723）">
+<title>政治和文学-书摘</title>
+<meta name="description" content="一般来说，人们说某本小说“重要”，是因为它抨击了社会现状，或者说它引入了某种技巧上的创新。">
 <meta name="keywords" content="zhenghua, 邹政华, meiyueyibenshu, zou zhenghua">
 
 <link rel="icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="/css/main.css">
-<link rel="canonical" href="http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2013/07/16/using_in_C++.html">
+<link rel="canonical" href="http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html">
 <link rel="alternate" type="application/atom+xml" title="学习笔记" href="http://zhenghua.info/zfeed.xml" />
 
 <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -137,56 +137,56 @@ $(document).ready(function(){
     <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">c++ primer-using声明与using指示</h1>
+    <h1 class="post-title">政治和文学-书摘</h1>
     <p class="post-meta">
     目录:
     
-    <a href="/categories/#读书">读书</a>&nbsp;
+    <a href="/categories/#书摘">书摘</a>&nbsp;
      
     
     | 标签:
     
-    <a href="/tags/#c++" title="c++">c++ </a>
+    <a href="/tags/#随笔" title="随笔">随笔 </a>
     
     
-    | 发表时间: Jul 16, 2013
+    | 发表时间: Jun 28, 2016
     </p>
   </header>
 
   <article class="post-content">
-    <p>（摘录自Stanley B. Lippman等c++ primer人民邮电出版社英文版第四版，p723）</p>
+    一般来说，人们说某本小说“重要”，是因为它抨击了社会现状，或者说它引入了某种技巧上的创新。
 
-<p>using声明（using declaration）一次引入命名空间（namespace)中的一个成员,该成员的作用范围是从using声明点开始，直到包含该using声明的作用域结尾。声明的名字仅仅在该作用域是可见，外部作用域中相同的名字被屏蔽。using声明的格式是 “using namespace name::member name”, 如”using std::map”用来声明使用std命名空间中的map容器。</p>
+佩剑的人会死于剑，没佩剑的人会死于疾病
 
-<p>using指示（using directives)使得引入的命名空间中的所有成员可见。using指示的形式是“using namespace (namespace name)”,如“using namespace std”表示使用命名空间std。using指示可以出现在命名空间（namespace）、函数或者块（block）中，但不能用于类中（class scope）。</p>
+文明而安全的生活的一个后果是，人们会过度敏感，这会使所有主要的感情显得可恶。慷慨跟吝啬一样让人难受，知恩图报与忘恩负义同样招人恨。
 
-<p>举个例子用来说明using声明和using指示的具体使用，考虑下面的代码样本：</p>
+将工厂国有化，取缔教会，颁布革命的命令，并不能使军队更有战斗力。(西班牙)法西斯之所以能赢，是因为他们拥有现代化的武器，而政府军没有。任何政治策略都解决不了这个问题。
 
-<pre><code>namespace exercise{
-      int ivar = 0;
-      double dvar = 0;
-      const int limit = 1000;
-}
-      
-int ivar = 0;
-//position 1
-      
-void manip() {
-      //position 2
-      double dvar = 3.1416;
-      int iobj = limit + 1;
-      ++ivar;
-      ++::ivar;
-}
-</code></pre>
 
-<p>对于以上代码，如果命名空间exercise中所有成员的using声明放在标记position 1的地方，则exercise中的成员在全局作用域中可见。using exercise::ivar会导致ivar重复定义，引起编译错误；函数manip()中的double dvar = 3.1416声明一个局部的变量dvar,在函数体作用域内它将屏蔽exercise::dvar。</p>
+在我们这个时代，政治演讲与政治写作多半是在为不可辩护的东西做辩护。对英国继续在印度实行殖民统治、俄国的清洗和流放、在日本扔原子弹这类事情，的确可以辩护，但是，辩护所用的论据，必定是极端残忍，以至于绝大多数人无法面对，并且是跟正当所宣示的目的是不相符合的。所以，政治语言不得不主要由委婉式、祈求问题式和纯属云山雾罩式的说法组成。
 
-<p>如果命名空间exercise中所有成员的using声明放在标记position 2的地方，则函数manip() 中的double dvar=3.1416是对dvar的重复定义，会引起编译错误；++ivar是对exercise中的ivar加1，++::ivar访问的是全局变量ivar。</p>
 
-<p>如果命名空间exercise的using指示放在标记position 1的地方，则manip中的double dvar  = 3.1416声明了一个局部的变量dvar，在函数体作用域内屏蔽exercise::dvar；++ivar访问的是exercise::ivar，++::ivar访问的是全局变量ivar。</p>
+托尔斯泰跟李尔王更深层次的相似之处在于，他们都是出于错误的动机，也没有得到所希望的生活。在托尔斯泰看来，每个人生活的目的，是追求幸福，而要得到幸福，只有按上帝的要求去做。但是按照上帝的要求去做事，就意味着要弃绝一切人间的快乐和野心，只为他人而活着。
 
-<p>如果命名空间exercise中的using指示放在标记position 2的地方，则exercise中的成员看来好像是声明在全局作用域中一样，manip中的double dvar=3.1416，声明了一个局部变量dvar，在函数体中它将屏蔽exercise::dvar；++ivar出现二义性错误，编译器无法分辨是访问exercise::ivar，还是访问全局变量ivar，而++::ivar访问的是全局变量ivar。</p>
+假如你的这边脸挨了打，你又把那边脸转过去，就会受到更猛烈的一击。并不一定总是如此，但你应该预计到这种情况，而且当它真的发生时，你也不该抱怨。你挨的第二次击打，是你把那边脸转过去这一行为本身的一部分。
+
+这些戏剧都首先以人道主义的假定开始，即生活尽管充满痛苦，仍然值得一活。
+
+绝大多数人都从生活中得到不少乐趣，但总的来说，生活是痛苦的，只有年轻人或者极愚蠢的人才不这么看。
+
+通观他的剧作，凡是尖锐批评社会的人，凡是不受通行的谎言所欺骗的人，不是小丑，就是恶棍疯子，或者是装疯卖傻的人，再不就是处于癫狂状态的人。
+
+如果你待在正在沉没的船上，那你的思想必定会围着沉船打转。
+
+所有的圣人，在被证明清白之前，都应当被判定为有罪
+
+在对甘地这样的人进行评判的时候，人们往往会不自觉地适用较高的标准，以至于忽视了他的一些优点
+
+判定文学作品的高下，除了看它流传时间的长短，没有任何别的标准－－流传的时间本身，就是反映多数人意见的指标。
+
+
+
+
 
   </article>
   <hr />
@@ -196,10 +196,10 @@ void manip() {
 <section class="pager">
   <ul>
     
-    <li class="previous"><a href="/%E8%AF%BB%E4%B9%A6/2013/05/01/jiu_pin_zhong_zheng_zhi_du.html" title="九品中正制">&larr; 前一页</a></li>
+    <li class="previous"><a href="/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html" title="为什么应该租赁而不是创建离岸团队">&larr; 前一页</a></li>
     
     
-    <li class="next"><a href="/%E8%AF%BB%E4%B9%A6/2013/07/22/inheritation_and_using_in_C++.html" title="c++程序设计语言－继承和使用声明">后一页 &rarr;</a></li>
+    <li class="next"><a href="/%E8%A1%8C%E4%B8%9A/2016/07/13/Benchmarking_netflix_dynomite.html" title="Netlix Dynomite性能基准测试，基于AWS和Redis">后一页 &rarr;</a></li>
     
   </ul>
 </section>
