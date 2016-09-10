@@ -143,43 +143,6 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/07/08/full_permutation_problem.html">全排列，递归及筛选</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 发表时间: Jul 8, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>一个朋友工作中遇到的问题：已知一个任意的自然数T，和一个大于1小于T的自然数L。求小于L的自然数R1，R2，R3…Rn, n个数不限但越小越好，使得R1xR2xR3…xRn大于等于T并最接近于T。同时有多个解取任意解。</p>
-
-<p>我想到的一种方法是全排列，即将所有可能的组合全部尝试一遍。目标组合的乘积R与T的差最小（前提是R&gt;=T),并且目标组合的元素个数最少（在差一样的情况下）。但是这样会碰到两个问题：</p>
-
-<ol>
-  <li>
-    <p>全排列的组合数目太大，对于数组{1,2…N},全排列的数量将是N！，在用递归来解决的时候，对机器性能要求过高（在n很大的情况下）。</p>
-  </li>
-  <li>
-    <p>在n较大的情况下，乘法运算容易导致溢出。而32位整数能够表示的最大自然数为0X7FFFFFFF.</p>
-  </li>
-</ol>
-
-<p>所以对排列进行筛选十分必要，在已有的条件下如果能够判断出候选组合不能满足条件，就没有必要继续递归了。比方说，目标组合有10个元素，但是其中4个元素的乘积与T的差已经大于当前最优方案了，那么就没有必要再计算所有10个元素的乘积了,目标组合被排除。这样可以节约时间并且防止溢出。</p>
-
-<p>解决方案是用c语言实现的，代码托管在https://github.com/yihaozou/select_permutaion</p>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
         <a class="post-link" href="/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2014/07/01/thoughts_2.html">遐想（二）</a>
       </h1>
       <p class="post-meta">
@@ -299,6 +262,48 @@ $(document).ready(function(){
     
     
   
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/05/19/makefile_sample.html">一种makefile编写范例</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 发表时间: May 19, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>makefile的编写应该考虑到代码移植的可能性，将可能发生改变的参数放在makefile文件起始部位定义成可配置的变量，从而减少修改makefile带来的工作量。</p>
+
+<pre><code>CC = gcc
+QFLAG =
+MACROS = -D_OS_LINUX_
+CCFLAGS= -m32
+INCL = ./
+C20 = $(CC)  $(QFLAG)  $(MACROS) ${CCFLAGS} -c $? -I$(INCL)
+O2E =  $(CC) ${MACROS} ${CCFLAGS} -O $@ $? -ldl
+</code></pre>
+
+<p>代码中的编译器定义成CC（考虑到了UNIX用户的习惯），C2O是将源文件编译成目标文件，O2E是将目标文件连接成可执行文件或库文件。使用这些定义成变量的编译参数来编译源代码，可以减少编写makefile文件时敲击键盘的次数，同时提高makefile文件的可读性和移植性。下面给出一个实际项目的编译例子。</p>
+
+<pre><code>all: ppmmonitor
+ppmmonitor: ppm_monitor.o snapshot.o ppm_loex.o
+            $(O2E) -lncurses
+ppm_monitor.o: ppm_socket.c ppm_log_ex.c snapshot.c ppm_monitor.c 
+            $(C2O)
+#此处省略snapshot.o和ppm_log_ex.o的编译
+</code></pre>
+
+<p>可以看出编写出的makefile文件非常的简洁。如果要移植到AIX系统，只需要将CC定义成cc，QFLAG定义成qcpluscmt,同时注释掉MACROS即可。另外，如果代码文件较多，并且需要在不同系统间迁移，也可以使用gnu的autotools工具来打包源代码，生成安装脚本。</p>
+
+    </article> <hr />
+    
+    
+  
   </div>
 </div>
 
@@ -359,7 +364,7 @@ $(document).ready(function(){
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="36">读书 (36)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="35">读书 (35)</a></li>
   
   <li><a href="/categories/#行业" title="行业" rel="4">行业 (4)</a></li>
   
@@ -413,9 +418,6 @@ $(document).ready(function(){
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
-  
-  
-  
   
   
   

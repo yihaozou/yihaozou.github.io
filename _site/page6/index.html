@@ -143,54 +143,6 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html">使用jekyll和markdown写作博客</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#编程">编程</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#jekyll" title="jekyll">jekyll </a>
-      
-      
-      | 发表时间: Dec 27, 2014
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
-后来在同学的建议下，转向了jekyll，博客空间也迁移到了github。</p>
-
-<p>经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：</p>
-
-<ol>
-  <li>
-    <p>我一直想了解CSS和页面设计相关的知识。搭建jekyll，挑选合适的主题，不断优化页面可以帮助我熟悉关于网页设计的技巧；</p>
-  </li>
-  <li>
-    <p>更灵活的写作的方式。使用markdown语言来写作可以我让更专注于写作本身，而不用花费心思在格式编辑上。即便我用vi写作，不考虑格式，最终也能得到统一的页面输出；</p>
-  </li>
-  <li>
-    <p>使用合适的主题来得到更简约的个人页面。大多数的jekyll模板非常简约，可以更加突
-出博客的内容。我个人比较的喜欢的主题除了整体风格的简约外，应该在首页显示最新发布
-博客的内容；侧边栏有文章分类;背景最好是白色的。满足这些要求的主题在github上非
-常容易找到，使用起来也很方便，直接fork即可。</p>
-  </li>
-  <li>
-    <p>博客发布非常方便简单。 发布博客就跟向github提交代码一样，只需几个命令即可。</p>
-  </li>
-</ol>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/11/09/shi_liu_guo_bei_chao.html">十六国北朝－无序的车辙</a>
       </h1>
       <p class="post-meta">
@@ -414,6 +366,53 @@ public  Object invoke(Object proxy, Method method, Object[] args) throws Throwab
     
     
   
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2014/08/20/linxinliang_class_loader.html">林信良Java学习笔记－类加载器</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#读书">读书</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#Java" title="Java">Java </a>
+      
+      
+      | 发表时间: Aug 20, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>类加载器的实际职责就是载入.class文档, JDK本身有默认的类加载器, 也可以建立自己的类加载器加入现有的加载器层级。</p>
+
+<p>在文本模式下执行“java ***”指令后, java执行程序会尝试寻找JRE安装目录, 然后寻找JVM, 接着启动JVM并进行初始化动作, 然后产生Bootstrap Loader, Bootstrap Loader会产生Extended Loader, 并将Extended Loader的父加载器设为Bootstrap Loader, 接着Bootstrap Loader会产生System Loader, 并将System Loader的父加载器设为Extended Loader。</p>
+
+<p>Bootstrap Loader通常由C编写; Extended Loader通常由Java编写, 如果是Oracle/Sun JDK, 实际上是对应于sun.misc.Lancher.ExtClassLoader; System Loader是由Java编写, 是加上对应于sun.misc.Launcher.AppClassLoader。</p>
+
+<ul>
+  <li>
+    <p>Bootstrap类加载器-JRE/lib/rt.jar, Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器, 如果你调用String.class.getClassLoader(), 会返回null, 任何基于此的代码会抛出NUllPointerException异常。Bootstrap加载器被称为初始类加载器。</p>
+  </li>
+  <li>
+    <p>Extension类加载器-JRE/lib/ext或者java.ext.dirs指向的目录, Extension将加载类的请求先委托给它的父加载器，也就是Bootstrap, 如果没有成功加载的话，再从jre/lib/ext目录下或者java.ext.dirs系统属性定义的目录下加载类。Extension加载器由sun.misc.Launcher$ExtClassLoader实现。</p>
+  </li>
+  <li>
+    <p>Application类加载器-CLASSPATH环境变量, 由-classpath或-cp选项定义, 或者是JAR中的Manifest的classpath属性定义.System类加载器(又叫作Application类加载器)了.它负责从classpath环境变量中加载某些应用相关的类, classpath环境变量通常由-classpath或-cp命令行选项来定义, 或者是JAR中的Manifest的classpath属性. Application类加载器是Extension类加载器的子加载器. 通过sun.misc.Launcher$AppClassLoader实现.</p>
+  </li>
+</ul>
+
+<p>ClassLoader可以使用loadClass()方法加载类, 使用loadClass()方法加载类时, 默认不会执行静态区块, 真正使用类建立实例时才会执行静态区块。</p>
+
+<p>Java真正需要某个类时才会加载对应的.class文档，而非在程序启动就加载所有类. Bootstrap Loader,Extended Loader,System Loader在程序启动后，就无法再改变它们的搜索路径，如果在程序运行过程中，打算动态决定从其他路径加载类，就要产生新的类加载器，新的类加载器建立后，父加载器建立后，父加载器会设为System Loader.</p>
+
+
+    </article> <hr />
+    
+    
+  
   </div>
 </div>
 
@@ -474,7 +473,7 @@ public  Object invoke(Object proxy, Method method, Object[] args) throws Throwab
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="36">读书 (36)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="35">读书 (35)</a></li>
   
   <li><a href="/categories/#行业" title="行业" rel="4">行业 (4)</a></li>
   
@@ -528,9 +527,6 @@ public  Object invoke(Object proxy, Method method, Object[] args) throws Throwab
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
-  
-  
-  
   
   
   

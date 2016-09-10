@@ -240,197 +240,6 @@ $(document).ready(function(){
   
     <header class="post-header">
       <h1 class="post-title">
-        <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/03/12/java_concurency_object_share.html">Java并发编程实践－Executor框架</a>
-      </h1>
-      <p class="post-meta">
-      目录:
-      
-      <a href="/categories/#读书">读书</a>&nbsp;
-      
-      
-      | 标签:
-      
-      <a href="/tags/#Java" title="Java">Java </a>
-      
-      
-      | 发表时间: Mar 12, 2015
-      </p>
-    </header>
-
-    <article class="post-content">
-      <p>线程池简化了线程的管理工作，java.util.concurrent提供了一种灵活的线程池实现作为Executor框架的一部分.在Java类库中, 任务执行的主要抽象不是Thread, 而是Executor。</p>
-
-<p>public interface Executors{
-	void execute(Runnable command);
-}</p>
-
-<p>Executor基于生产者－消费者模式，提交任务的操作相当于生产者，执行任务的线程则相当于消费者。如果要在程序中实现一个生产者－消费者的设计，那么最简单的方式通常就是使用Executor。</p>
-
-<pre><code>class taskExecutionWebServer{
-	private static final int NTHREADS = 100;
-	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
-
-	public static void main(String[] args) throws IOException{
-		ServerSocket socket = new ServerSocket(80);
-		while(true){
-			final Socket connection = socket.accept();
-			Runnable task = new Runnable(){
-				public void run(){
-					handleRequest(connection);
-				}
-			};
-			exec.execute(task);
-		}
-	}
-}
-</code></pre>
-
-<p>在TaskExecutionWebServer中，通过使用Executor，将请求处理任务的提交与任务实际执行解耦开来，并且只需采用另一种Executor实现，就可以改变服务器的行为。改变Executor实现或配置所带来的影响要远远小于改变任务提交方式带来的影响。</p>
-
-<p>在线程池中执行任务比单独为每个任务分配一个线程优势更多。首先可分摊线程创建和销毁过程中产生的巨大开销，提高响应性能。同时通过适当调整线程池的大小，提高处理器利用效率；还能防止过多线程耗尽系统资源。</p>
-
-<p>Executor的集中静态工厂方法：newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool.</p>
-
-<pre><code>class taskExecutionWebServer{
-	private static final int NTHREADS = 100;
-	private static final Executor exec =  Executors.newFixedThreadPool(NTHREADS);
-
-	public static void main(String[] args) throws IOException{
-		ServerSocket socket = new ServerSocket(80);
-		while(！exec.isShutdown()){
-			try{
-				final Socket connection = socket.accept();
-				Runnable task = new Runnable(){
-					public void run(){
-						handleRequest(connection);
-					}
-				};
-				exec.execute(task);
-			}catch(RejectedExecutionException e){
-				if(!exec.isShutdown())
-					log("task submission rejected", e);
-			}
-			
-		}
-	}
-	public void stop(){
-		exec.shutdown();
-	}
-
-	void handleRequest(Socket connection){
-		Request req = readRequest(connection);
-		if(isShutdownRequest(req))
-			stop();
-		else
-			dispatchRequest(req);
-	}
-}
-</code></pre>
-
-<p>ExecutorService是java.util.concurrent包提供的接口，在Executor的基础上提供生命周期管理。ExecutorService的生命周期有三种：运行，关闭，和已终止。其中shutdown方法将执行平缓的关闭过程，不再接受新的任务，同时等待已经执行完毕的任务执行完毕。</p>
-
-<p>在单个客户请求中仍有可能存在可发掘的并行性，下面给出一个页面浏览器的例子。</p>
-
-<p>最简单的方式是对html文档进行串行处理。当遇到文本标签是，将其绘制到页面中。当遇到图像缓存时，先通过网络获取它，然后再将起绘制到图像缓存中。图像下载过程中的大部分时间都是再等待I/O操作执行完成，在这期间CPU几乎不做任何工作，因此这种串行执行的方法没有充分地利用CPU，使得用户再看到最终页面之前要等待过长的时间。</p>
-
-<pre><code>public class SingleThreadRenderer{
-	void renderPage(CharSequence source){
-		renderText(source);
-		List&lt;ImageData&gt; imageData = new ArrayList&lt;ImageData&gt;();
-		for(ImageInfo imageInfo: scanForImageInfo(source))
-			imageData.add(imageInfo.downloadImage());
-		for(ImageData data: imageData)
-			renderImage(data);
-	}
-}
-</code></pre>
-
-<p>通过将问题分解为多个独立的任务并发执行，能够获得更高的CPU利用率和响应灵敏度。</p>
-
-<p>Runnable是一种有很大局限的抽象，虽然run能写入到日志文件或者将结果放入某个共享的数据结构，但它不能返回或抛出一个受检查的异常。</p>
-
-<p>Callable是一种更好的抽象:它认为主入口点（即call）将返回一个值，并可能抛出一个异常。再Executor中包含了一些辅助方法能将其他类型的任务封装为一个Callable，，例如Runnable。</p>
-
-<p>再Executor框架中，已提交但尚未开始的任务可以取消，但对于那些已经开始执行的任务，只有当它们能响应中断时，才能取消，取消一个已经完成的任务不会有任何影响。</p>
-
-<p>Callable和Future有助于标示协同任务之间的交互。再FutureRenderer中，我们创建了一个Callable来下载所有的图像，并将其提交到一个ExecutorService。这将返回一个描述任务执行情况的Future。当祝任务需要图像时，它会等待Furure.get的调用结果，这样，图像的下载任务和渲染页面是同步进行的。
-public class FutureRenderer{
-	private final ExecutorService executor= …;</p>
-
-<pre><code>void renderPage(CharSequence source){
-	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
-	Callable&lt;List&lt;ImageData&gt; task = new Callable&lt;List&lt;ImageData&gt;&gt;(){
-		public List&lt;ImageData&gt; call(){
-			List&lt;ImageData&gt; result = new ArrayList&lt;ImageData&gt;();
-			for(ImageInfo imageInfo:ImageInfos)
-				result.add(ImageInfo.downloadImage());
-			return result;
-		}
-	};
-
-	Future&lt;List&lt;ImageData&gt;&gt; future = executor.submit(task);
-	renderText(source);
-
-	try{
-		List&lt;ImageData&gt; imageData = future.get();
-		for(ImageData data:imageData)
-			renderImage(Data);
-	}catch(InterruptedException e){
-		Thread.currentThread().interrupt();
-		future.cancel(true);
-	}catch(ExecutionException e){
-		throw launderThrowable(e.getCause());
-	}
-} }
-</code></pre>
-
-<p>如果渲染文本的速度远远高于下载图像的速度，那么程序的性能与串行执行时的性能差别不大，因此程序还有优化的空间。</p>
-
-<p>只有当大量相互独立且同构的任务可以并发进行处理时，才能体现出将程序的工作负载分配到多个任务中带来的真正性能提升。</p>
-
-<p>CompletionService将Executor和BlockingQueue的功能融合在一起，可以将Callable交给它来执行，然后使用类似于队列操作的take和poll方法来获得已完成的结果，而这些结果会在完成时被封装为Future。</p>
-
-<p>public class Renderer{
-	private final ExecutorService executor;</p>
-
-<pre><code>Renderer(ExecutorService executor){
-	this.executor = executor;
-}
-
-void renderPage(CharSequence source){
-	final List&lt;ImageInfo&gt; imageInfos = scanForImageInfo(source);
-	CompletionService&lt;ImageData&gt; completionService = new ExecutorCompletionService&lt;ImageData&gt;(executor);
-	for(final ImageInfo imageInfo:info){
-		completionService.submit(new Callable&lt;ImageData&gt;(){
-			public ImageData call(){
-				return imageInfo.downloadImage();
-			}
-		}
-	}
-
-	renderText(source);
-
-	try{
-		for(int t=0,n=info.size(); t&lt;n; t++){
-			Future&lt;ImageData&gt; f = completionService.take();
-			ImageData imageData = f.get();
-			renderImage(imageData);
-		}
-	}catch(InterruptedException e){
-		Thread.currentThread().interrupt();
-	}catch(ExecutionException e){
-		throw launderThrowable(e.getCause());
-	}
-} }
-</code></pre>
-
-
-    </article> <hr />
-    
-    
-  
-    <header class="post-header">
-      <h1 class="post-title">
         <a class="post-link" href="/%E8%AF%BB%E4%B9%A6/2015/03/10/java_concurrency_in_practice.html">Java并发编程实践－线程安全性</a>
       </h1>
       <p class="post-meta">
@@ -548,6 +357,54 @@ void renderPage(CharSequence source){
     
     
   
+    <header class="post-header">
+      <h1 class="post-title">
+        <a class="post-link" href="/%E7%BC%96%E7%A8%8B/2014/12/27/move_blog_to_jekyll.html">使用jekyll和markdown写作博客</a>
+      </h1>
+      <p class="post-meta">
+      目录:
+      
+      <a href="/categories/#编程">编程</a>&nbsp;
+      
+      
+      | 标签:
+      
+      <a href="/tags/#jekyll" title="jekyll">jekyll </a>
+      
+      
+      | 发表时间: Dec 27, 2014
+      </p>
+    </header>
+
+    <article class="post-content">
+      <p>我最初租用了wopus的虚拟主机，使用wordpress来搭建自己的独立博客。
+后来在同学的建议下，转向了jekyll，博客空间也迁移到了github。</p>
+
+<p>经过一段时间的熟悉后，我发现使用jekyll和markdown至少在以下几个方面更能满足我的需求：</p>
+
+<ol>
+  <li>
+    <p>我一直想了解CSS和页面设计相关的知识。搭建jekyll，挑选合适的主题，不断优化页面可以帮助我熟悉关于网页设计的技巧；</p>
+  </li>
+  <li>
+    <p>更灵活的写作的方式。使用markdown语言来写作可以我让更专注于写作本身，而不用花费心思在格式编辑上。即便我用vi写作，不考虑格式，最终也能得到统一的页面输出；</p>
+  </li>
+  <li>
+    <p>使用合适的主题来得到更简约的个人页面。大多数的jekyll模板非常简约，可以更加突
+出博客的内容。我个人比较的喜欢的主题除了整体风格的简约外，应该在首页显示最新发布
+博客的内容；侧边栏有文章分类;背景最好是白色的。满足这些要求的主题在github上非
+常容易找到，使用起来也很方便，直接fork即可。</p>
+  </li>
+  <li>
+    <p>博客发布非常方便简单。 发布博客就跟向github提交代码一样，只需几个命令即可。</p>
+  </li>
+</ol>
+
+
+    </article> <hr />
+    
+    
+  
   </div>
 </div>
 
@@ -608,7 +465,7 @@ void renderPage(CharSequence source){
 <div class="sidebar-module">
   <h4>分类目录</h4>
   
-  <li><a href="/categories/#读书" title="读书" rel="36">读书 (36)</a></li>
+  <li><a href="/categories/#读书" title="读书" rel="35">读书 (35)</a></li>
   
   <li><a href="/categories/#行业" title="行业" rel="4">行业 (4)</a></li>
   
@@ -662,9 +519,6 @@ void renderPage(CharSequence source){
   
   
   <li id="2015" > <a href="/archives/#2015">2015</a></li>
-  
-  
-  
   
   
   
