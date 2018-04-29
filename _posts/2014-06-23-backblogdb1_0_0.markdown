@@ -1,6 +1,7 @@
 ---
 author: 邹政华
 comments: true
+published: false
 date: 2014-06-23 04:22:36+00:00
 layout: post
 slug: backblogdb%e6%8f%92%e4%bb%b61-0-0%e7%89%88%e6%9c%ac

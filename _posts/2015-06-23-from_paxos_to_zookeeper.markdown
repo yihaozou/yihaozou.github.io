@@ -1,6 +1,7 @@
 ---
 author: 邹政华
-comments: true
+comments: false
+published: false
 date: 2015-06-23
 layout: post
 slug: '10'

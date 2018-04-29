@@ -5,7 +5,7 @@ date: 2016-05-20
 published: true 
 tags: 地理
 layout: post
-title:  历史的教训-书摘
+title:  历史的教训(摘录)
 categories: 书摘
 ---
 

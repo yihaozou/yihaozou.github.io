@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-08-06
-published: true 
+published: false 
 tags: Java
 layout: post
 title:  深入理解Java虚拟机－垃圾收集与内存分配

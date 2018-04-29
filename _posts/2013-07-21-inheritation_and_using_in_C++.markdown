@@ -1,6 +1,7 @@
 ---
 author: 邹政华
 comments: true
+published: false
 date: 2013-07-21 17:09:33+00:00
 layout: post
 tags: c++

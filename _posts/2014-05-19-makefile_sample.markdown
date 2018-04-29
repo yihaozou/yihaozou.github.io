@@ -1,6 +1,7 @@
 ---
 author: 邹政华
 comments: true
+published: false
 date: 2014-05-19 06:28:11+00:00
 layout: post
 slug: '%e4%b8%80%e7%a7%8dmakefile%e7%bc%96%e5%86%99%e8%8c%83%e4%be%8b'

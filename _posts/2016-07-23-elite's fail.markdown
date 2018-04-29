@@ -5,7 +5,7 @@ date: 2016-07-23
 published: true 
 tags: 马基雅维里style
 layout: post
-title:  精英的兴衰-书摘
+title:  精英的兴衰(摘录)
 categories: 书摘
 ---
 

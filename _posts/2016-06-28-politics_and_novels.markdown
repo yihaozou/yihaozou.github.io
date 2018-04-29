@@ -5,7 +5,7 @@ date: 2016-06-28
 published: true 
 tags: 随笔
 layout: post
-title:  政治和文学-书摘
+title:  政治和文学(摘录)
 categories: 书摘
 ---
 

@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-3-10
-published: true 
+published: false 
 tags: Java
 layout: post
 title:  Java并发编程实践－线程安全性

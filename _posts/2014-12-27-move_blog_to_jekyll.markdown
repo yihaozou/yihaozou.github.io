@@ -1,6 +1,7 @@
 ---
 author: 邹政华
 date: 2014-12-27
+published: false
 tags: jekyll
 layout: post
 title: 使用jekyll和markdown写作博客

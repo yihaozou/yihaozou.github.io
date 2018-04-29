@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2016-07-13
-published: true 
+published: false 
 tags: Dynomite
 layout: post
 title:  Netlix Dynomite性能基准测试，基于AWS和Redis

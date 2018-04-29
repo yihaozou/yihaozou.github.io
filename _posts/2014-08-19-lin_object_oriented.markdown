@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2014-8-19
-published: true 
+published: false 
 tags: Java
 layout: post
 title:  林信良Java学习笔记－面向对象

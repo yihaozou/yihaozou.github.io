@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-5-25
-published: true 
+published: false 
 tags: 架构
 layout: post
 title:  大型网站技术架构-网站高可用架构

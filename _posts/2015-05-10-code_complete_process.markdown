@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-5-10
-published: true 
+published: false 
 tags: 软件工程
 layout: post
 title:  代码大全－软件工艺

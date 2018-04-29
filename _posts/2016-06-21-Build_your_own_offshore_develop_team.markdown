@@ -5,7 +5,7 @@ date: 2016-06-21
 published: true 
 tags: 经营
 layout: post
-title:  为什么应该租赁而不是创建离岸团队
+title:  为什么应该租赁而不是创建离岸团队(译)
 categories: 行业
 ---
 

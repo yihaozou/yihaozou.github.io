@@ -2,7 +2,7 @@
 author: 邹政华
 comments: true
 date: 2015-04-20
-published: true 
+published: false 
 tags: 数据库
 layout: post
 title: sql优化实践 
