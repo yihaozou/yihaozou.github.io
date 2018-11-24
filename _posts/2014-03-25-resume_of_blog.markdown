@@ -1,6 +1,7 @@
 ---
 author: 邹政华
 comments: true
+published: false
 date: 2014-03-25 10:50:54+00:00
 layout: post
 slug: '%e5%8d%9a%e5%ae%a2%e6%81%a2%e5%a4%8d%e6%ad%a3%e5%b8%b8'
