@@ -61,3 +61,6 @@ Blogroll:
 markdown: kramdown
 highlighter: pygments
 paginate: 5
+
+# Gems
+plugins: [jekyll-paginate]
