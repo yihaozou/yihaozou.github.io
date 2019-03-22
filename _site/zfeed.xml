@@ -3,11 +3,48 @@
   <channel>
     <title>学习笔记</title>
     <description>Read Think Create.</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 27 Nov 2018 13:29:58 +0800</pubDate>
-    <lastBuildDate>Tue, 27 Nov 2018 13:29:58 +0800</lastBuildDate>
+    <link>http://zhenghua.info/</link>
+    <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 22 Mar 2019 23:56:35 +0800</pubDate>
+    <lastBuildDate>Fri, 22 Mar 2019 23:56:35 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>舌尖上的历史</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/images/2019/2019-03-10-edible_history.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;作者的视角很独特，将历史看成是一连串由食物导致、促成和影响的转变过程。但是我们仍然能够从略显琐碎的描述中，发现技术、制度、群体的组织行为等因素的关键作用，食物只是一个表象。&lt;/p&gt;
+
+&lt;p&gt;首先看技术的作用。&lt;/p&gt;
+
+&lt;p&gt;今天广泛种植的小麦、水稻等农作物，某种程度上可以称之为人造物。长着大穗的植株有利于采集和加工，却不利于繁殖后代。为了让植物生长，谷粒必须从穗轴上取下，以足够的间隔分开种植，这项工作必须依靠人类完成。一代代的的农民经过无意或有意的选择，造就了今天的动植物，育种也越来越成为一种专门的技术和产业。&lt;/p&gt;
+
+&lt;p&gt;人类走出非洲很长一段时间内，以狩猎和采集为生。随着工具的制作使用、知识的积累，部落的规模也逐渐扩大。增加的人口和工具不便于迁徙，于是一些水草丰美之处产生了最初的定居部落和农牧业。&lt;/p&gt;
+
+&lt;p&gt;现代的考古证据表明，相较于狩猎，农民必须更辛苦地工作，以生产种类较少，缺乏营养的食物，农民也更容易生病。但是农牧业使得单位土地面积产出更多的食物，承载更多的人口。人口聚集能够加强交流和创新，促进新技术的发明和复杂社会制度的产生。新技术和社会制度反过来又能提升部落的生产效率和组织效率，使得部落在生存竞争中占据优势。所以我们最终看到，农牧业技术以一种推进波的形式，从点到面扩散到世界各个地区。&lt;/p&gt;
+
+&lt;p&gt;再看制度的影响。&lt;/p&gt;
+
+&lt;p&gt;社会作为一个整体很复杂，认识和处理这种复杂性，一种重要的方式是分层（金字塔结构），分层能够分解复杂性，同时又引入了新的复杂性，例如如何界定层与层之间的边界和关系？对边界和关系的描述、定义、维护，形成了各项制度和规则。&lt;/p&gt;
+
+&lt;p&gt;社会制度的运行通过食物的生产和分配体现出来。首先是大人物的出现，部分人通过声望或者武力掌握了食物分配的权力；其次是专业的分工，通过从农民那儿征收多余的食物，养活了全职的士兵、工匠和官僚阶层。这是一个渐进的过程，制度从粗放变得精密。我们的官员选拔、考试、土地、军事等制度无一例外地经历了这个过程。&lt;/p&gt;
+
+&lt;p&gt;社会制度反过来又会影响食物的生产，以苏联的工业化为例，政府募集资金的方法，是将农场“集体化”，农场的产品属于国家，因此政府能够名正言顺地拿去外销。农民本身对这项新政策并不热衷。生产力最高的农民尤其反感这种安排。因此，新制度对于农业生产力的冲击可想而知。1933年，乌克兰地区发生严重的饥荒。&lt;/p&gt;
+
+&lt;p&gt;这项计划的主导者斯大林是个充满争议的人物，将苏联建设成工业强国、打赢二战、与罗斯福联手主导建立新的世界秩序，显示出他作为一个领导人，能力和智慧远超后续的继任者们。但是在富饶辽阔的黑土地制造大饥荒这一事件，又展示了他本人以及所在组织的巨大破坏力。苏联在与美国竞争中的失败，从五十年代大规模进口粮食就已经注定了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/meiyueyibenshu.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Mar 2019 00:00:00 +0800</pubDate>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</guid>
+        
+        <category>历史</category>
+        
+        
+        <category>读书</category>
+        
+      </item>
     
       <item>
         <title>低智商社会</title>
@@ -32,8 +69,8 @@
 &lt;p&gt;社会分层并不是日本独有的现象。对应到国内，按照纵向时间的维度，50后半部分和60后前半部分这一批人，也就是文革一代，由于社会动荡，教育和认知受到较大的影响，倾向于把事情简单化处理，如黑白/敌我/中外/左右/胜负等，跟作者在文中评判的有些类似。70后到85前这一批经历了农业社会到工业社会的转型，整体上扮演的是建设者的角色，知乎上的工业党符合这个特点。85后到00后这批人，成长在工业和信息化时代，具备复杂和多样性，很难简单地去归纳描述。从横向的空间范围来看，又可以分为一线城市、二线省会和计划单列市、三四线以及县域。总的来看这些地区的居民，接触的信息、认知和思维方式存在较大的差别。像快手和拼多多的崛起，好多人在惊呼，意识到原来还有另外一个庞大的社会群体。&lt;/p&gt;
 </description>
         <pubDate>Tue, 09 Oct 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</guid>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</guid>
         
         <category>社会</category>
         
@@ -57,8 +94,8 @@
 &lt;p&gt;6.需要定期的放空自己，瞎忙似乎等同于挥霍时间。&lt;/p&gt;
 </description>
         <pubDate>Sun, 17 Dec 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</guid>
+        <link>http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</guid>
         
         
         <category>总结与遐想</category>
@@ -129,8 +166,8 @@
 
 </description>
         <pubDate>Sun, 29 Jan 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</guid>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</guid>
         
         <category>城市规划</category>
         
@@ -163,8 +200,8 @@
 
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</guid>
+        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</guid>
         
         <category>马基雅维里style</category>
         
@@ -205,8 +242,8 @@
 
 </description>
         <pubDate>Tue, 28 Jun 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</guid>
+        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</guid>
         
         <category>随笔</category>
         
@@ -296,8 +333,8 @@
 &lt;p&gt;Yousef Awad毕业于加州大学圣迭戈分校，获信息系统科学学士学位，在可定制软件开发行业浸淫20多年，拥有编程、数据库管理和项目管理等领域丰富的经验。Yousef 1997年加入Integran公司，Integrant专注于定制化的软件开发，为客户提供外包团队、IT项目管理服务等。Integrant在阿曼、约旦和埃及开罗拥有开发中心，雇佣了全职员工130名。工作之外，Yousef投入了大量的精力向青少年普及编程知识，让他们获得来自工业界的编程指导。&lt;/p&gt;
 </description>
         <pubDate>Tue, 21 Jun 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</guid>
+        <link>http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</guid>
         
         <category>经营</category>
         
@@ -410,8 +447,8 @@
 
 </description>
         <pubDate>Fri, 20 May 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</guid>
+        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</guid>
         
         <category>地理</category>
         
@@ -456,8 +493,8 @@
 
 </description>
         <pubDate>Fri, 01 Apr 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</guid>
+        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</guid>
         
         <category>地缘政治</category>
         
@@ -493,60 +530,10 @@
 &lt;p&gt;后记: 假期无聊, 家里老人可能会对”中南海秘闻”之类的话题感兴趣, 正好补充一点素材.&lt;/p&gt;
 </description>
         <pubDate>Tue, 09 Feb 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</guid>
+        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</link>
+        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</guid>
         
         <category>印度</category>
-        
-        
-        <category>读书</category>
-        
-      </item>
-    
-      <item>
-        <title>卡尔.萨根的上帝</title>
-        <description>&lt;p&gt;&lt;img src=&quot;/images/2015/2015-12-27-kars's_god.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;文章的开头分享一个很有意思的观点(来自caoz)&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;互联网的高速发展, 很容易让人产生一种错觉, 以为信息都是公开透明的. 其实各行各业都有自己的小圈子, 真正有价值的信息往往在圈子内部流通.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;对于商业圈来说, 这没什么问题, 商业行为的套利基础在于信息的不对称. 但是对于科技、法律等需要公共经费支持或者受公众舆论影响的行业, 局限在自己的小圈子里并不是一个好的选择. 很多在专业领域取得成就的学者, 安于书房或实验室, 没有发出声音, 声音最大的反而是一些半吊子的读书人, 结果造成外行的隔阂和误解.&lt;/p&gt;
-
-&lt;p&gt;卡尔.萨根是个例外, 不但在自己专业领域内(天文学)做出了卓绝的贡献, 生前也一直致力于科学普及, 他经常在幼儿园、移民庆典、黑人社群发表演讲, 也参加电视节目, 在大学举办讲座等等. 为什么这么做呢? 他的道理是我们的社会某种程度上是建立在科学和现代技术的基础上, 如果人类中只有极少数人对其原理有一点肤浅的理解, 我们又怎么可能成为成熟社会中有责任感的公民, 并在面对挑战时做出理性的决策呢?&lt;/p&gt;
-
-&lt;p&gt;向公众普及科学并不是容易的事情. 由学校得到的经验, 对于特定的知识点, 看懂和会做题并不是真的懂了, 能够讲出來并让别人也听明白, 才算作真正的理解. 布道者首先需要具备扎实的专业基础, 除此之外, 也需要考虑接受者的能力和品味, 从微信公众号的传播来看, 很多流行的文章并没有体现出多少高级智力活动的特征. 让公众明白并接受自己的观点需要非凡的耐心和同理心.&lt;/p&gt;
-
-&lt;p&gt;《卡尔.萨根的上帝》是卡尔.萨根一系列努力中一环, 书的内容来自作者在苏格兰吉福德讲座的讲稿. 在讲座中, 作者发表了自己对科学和宗教之间边缘区域的观点. 所谓的边缘区域, 指的是宗教教条中由现代科学证伪或者无法通过科学思维证实的部分.&lt;/p&gt;
-
-&lt;p&gt;比如宗教中关于人的起源, 认定人类是上帝按照自己的形象制造出来的. 如果把目光投向星空, 就很容易指出这个观点的薄弱之处. 太阳系中地球之外的其他行星并没有空气, 上帝跟我们一样也有鼻子需要呼吸, 但是他为什么非要把自己局限在地球上呢?&lt;/p&gt;
-
-&lt;p&gt;比如人类是道德的动物, 这一点经常被用来作为上帝存在的证明. 但是深究起来这个观点同样很可疑, 很多动物拥有行为准则, 利他主义、乱伦禁忌、对幼崽的慈爱等, 这些本能的出现与其说来源于上帝的设计, 不如说是自然选择的结果, 因为拥有这些本能的群体更容易让自己的基因延续下去.&lt;/p&gt;
-
-&lt;p&gt;又比如人们遇到无法解释的自然现象或者超出理解范围的事物时往往会归因为神迹. 对此, 卡尔.萨根也作了很好的说明.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;在各个时代都有很多伪造的神迹、预言和超自然事件, 他们要么被相反的证据揭穿, 要么因其本身的荒谬站不住脚, 但是这足以证明人类有一种追求不寻常和非凡的强烈倾向, 所以我们对此类传言应当给予合理的怀疑. 明智的读者可能会说, 奇怪的是这类奇妙的事件在我们的时代从来没有发生过, 但是所有的时代都有谎言毫不奇怪.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;…在买二手车这样的小事上人们尚且会这么做, 在神学、伦理学、道德、世界的本源和人类的本性这些问题上, 难道我们不应该坚持至少同等的怀疑和审视？&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;书中涉及到的主题还包含了天文常识、生命起源、外星智慧、以及宗教体验等等, 全书行文流畅、幽默, 阅读起来就像跟充满智慧的长者对话一样.&lt;/p&gt;
-
-&lt;p&gt;刚开始我不太明白, 作者为什么费这么大劲写一整本书来说明上帝是否存在, 至少在小学阶段我就已经懂得, 所有的宗教偶像都是虚幻的. 后来我开始意识到宗教在西方社会占据着特殊地位, 有着巨大的影响力. 但是很少有宗教能够克制自己不对天文学、物理学和生物学发表意见, 在这些方面, 宗教得到的结论和得到结论的方式往往和科学相冲突 , 科学相信的是证据, 而不是盲从和信仰.&lt;/p&gt;
-
-&lt;p&gt;最后推荐一下作者其他著作《魔鬼出没的世界》, 《暗淡蓝点》.&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 27 Dec 2015 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl-s-god.html</link>
-        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2015/12/27/Karl-s-god.html</guid>
-        
-        <category>卡尔.萨根</category>
         
         
         <category>读书</category>
