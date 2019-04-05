@@ -17,7 +17,7 @@
     &:visited
     &:hover {
       color: $brand-top-color; //$grey-color-dark
-      border-bottom: 1px dotted;
+      //border-bottom: 1px dotted;
       text-decoration: none;
     }
   }
@@ -27,7 +27,7 @@
   font-size: 20px;
   line-height:56px;
   letter-spacing: -1px;
-  margin-bottom: 0;
+  margin-bottom: 1;
   text-align:center; 
   color: $grey-color;
 }
@@ -35,8 +35,9 @@
 .site-nav {
   /*float: right;*/
   line-height: 56px;
-  border-top: 1px solid $grey-color-light;
+  //border-top: 1px solid $grey-color-light;
   border-bottom: 1px solid $grey-color-light;
+  margin-bottom: 1;
   .menu-icon {
     display: none;
   }

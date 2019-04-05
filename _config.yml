@@ -1,7 +1,7 @@
 ### Site info:
 title: 学习笔记 
 tagline: slow is fast. 
-author: Lijia YU
+author: zhenghua
 email: sparkling.zou@gmail.com 
 description: "Read Think Create." # You can edit this line in _config.yml. It will appear in your document head meta and in your feed.xml site description
 keywords: "zhenghua, 邹政华, meiyueyibenshu, zou zhenghua"
@@ -14,8 +14,9 @@ twitter_username:
 github_username:  yihaozou 
 disqus_shortname: yihaozou 
 favicon:     "/images/favicon.ico"
-aboutme: Hi,我是邹政华，欢迎访问我的博客。 # these are shown on aboutme-sidebar.
-aboutme_photo: https://i.imgur.com/Mdc4szJl.jpg # your photo.
+aboutme: "Hi,我是邹政华，欢迎访问我的博客。
+邮箱：sparkling.zou@gmail.com    "# these are shown on aboutme-sidebar.
+aboutme_photo: "/images/favicon.ico" # your photo.
 
 
 ### Site setting:
@@ -60,7 +61,7 @@ Blogroll:
 ### Build settings
 markdown: kramdown
 highlighter: pygments
-paginate: 5
+paginate: 3
 
 # Gems
 plugins: [jekyll-paginate]
