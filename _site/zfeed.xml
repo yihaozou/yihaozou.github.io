@@ -3,10 +3,10 @@
   <channel>
     <title>学习笔记</title>
     <description>Read Think Create.</description>
-    <link>http://zhenghua.info/</link>
-    <atom:link href="http://zhenghua.info/zfeed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Apr 2019 11:33:12 +0800</pubDate>
-    <lastBuildDate>Fri, 05 Apr 2019 11:33:12 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/zfeed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 17 Apr 2019 21:33:36 +0800</pubDate>
+    <lastBuildDate>Wed, 17 Apr 2019 21:33:36 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -36,8 +36,8 @@
 &lt;p&gt;&lt;img src=&quot;/images/meiyueyibenshu.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 10 Mar 2019 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</guid>
+        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2019/03/10/edible_history.html</guid>
         
         <category>历史</category>
         
@@ -69,8 +69,8 @@
 &lt;p&gt;社会分层并不是日本独有的现象。对应到国内，按照纵向时间的维度，50后半部分和60后前半部分这一批人，也就是文革一代，由于社会动荡，教育和认知受到较大的影响，倾向于把事情简单化处理，如黑白/敌我/中外/左右/胜负等，跟作者在文中评判的有些类似。70后到85前这一批经历了农业社会到工业社会的转型，整体上扮演的是建设者的角色，知乎上的工业党符合这个特点。85后到00后这批人，成长在工业和信息化时代，具备复杂和多样性，很难简单地去归纳描述。从横向的空间范围来看，又可以分为一线城市、二线省会和计划单列市、三四线以及县域。总的来看这些地区的居民，接触的信息、认知和思维方式存在较大的差别。像快手和拼多多的崛起，好多人在惊呼，意识到原来还有另外一个庞大的社会群体。&lt;/p&gt;
 </description>
         <pubDate>Tue, 09 Oct 2018 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</guid>
+        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2018/10/09/low_iq_society.html</guid>
         
         <category>社会</category>
         
@@ -94,8 +94,8 @@
 &lt;p&gt;6.需要定期的放空自己，瞎忙似乎等同于挥霍时间。&lt;/p&gt;
 </description>
         <pubDate>Sun, 17 Dec 2017 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</guid>
+        <link>http://localhost:4000/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E6%80%BB%E7%BB%93%E4%B8%8E%E9%81%90%E6%83%B3/2017/12/17/thoughts5.html</guid>
         
         
         <category>总结与遐想</category>
@@ -166,8 +166,8 @@
 
 </description>
         <pubDate>Sun, 29 Jan 2017 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</guid>
+        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2017/01/29/triumph_of_the_city.html</guid>
         
         <category>城市规划</category>
         
@@ -200,8 +200,8 @@
 
 </description>
         <pubDate>Sat, 23 Jul 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</guid>
+        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/07/23/elite's-fail.html</guid>
         
         <category>马基雅维里style</category>
         
@@ -242,8 +242,8 @@
 
 </description>
         <pubDate>Tue, 28 Jun 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</guid>
+        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/06/28/politics_and_novels.html</guid>
         
         <category>随笔</category>
         
@@ -333,8 +333,8 @@
 &lt;p&gt;Yousef Awad毕业于加州大学圣迭戈分校，获信息系统科学学士学位，在可定制软件开发行业浸淫20多年，拥有编程、数据库管理和项目管理等领域丰富的经验。Yousef 1997年加入Integran公司，Integrant专注于定制化的软件开发，为客户提供外包团队、IT项目管理服务等。Integrant在阿曼、约旦和埃及开罗拥有开发中心，雇佣了全职员工130名。工作之外，Yousef投入了大量的精力向青少年普及编程知识，让他们获得来自工业界的编程指导。&lt;/p&gt;
 </description>
         <pubDate>Tue, 21 Jun 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</guid>
+        <link>http://localhost:4000/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%A1%8C%E4%B8%9A/2016/06/21/Build_your_own_offshore_develop_team.html</guid>
         
         <category>经营</category>
         
@@ -447,8 +447,8 @@
 
 </description>
         <pubDate>Fri, 20 May 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</guid>
+        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/05/20/lessons_from_history.html</guid>
         
         <category>地理</category>
         
@@ -493,8 +493,8 @@
 
 </description>
         <pubDate>Fri, 01 Apr 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</guid>
+        <link>http://localhost:4000/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E4%B9%A6%E6%91%98/2016/04/01/history_and_geography.html</guid>
         
         <category>地缘政治</category>
         
@@ -530,8 +530,8 @@
 &lt;p&gt;后记: 假期无聊, 家里老人可能会对”中南海秘闻”之类的话题感兴趣, 正好补充一点素材.&lt;/p&gt;
 </description>
         <pubDate>Tue, 09 Feb 2016 00:00:00 +0800</pubDate>
-        <link>http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</link>
-        <guid isPermaLink="true">http://zhenghua.info/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</guid>
+        <link>http://localhost:4000/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E8%AF%BB%E4%B9%A6/2016/02/09/india_and_india_sea.html</guid>
         
         <category>印度</category>
         
